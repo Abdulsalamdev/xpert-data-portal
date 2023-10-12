@@ -1,3 +1,74 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.sign {
+  box-shadow: 0px 31px 34px 0px rgba(16, 39, 246, 0.2);
+  color: white;
+}
+
+.sign-1 {
+  box-shadow: 0px 4px 44px 0px rgba(0, 0, 0, 0.16);
+}
+
+.home-bg {
+  background-image: url("/images/home-bg.png");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.secure-bg {
+  background-image: url("/images/secure-bg.png");
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+.mantine-TextInput-input {
+  background-color: white;
+}
+.mantine-PasswordInput-innerInput {
+  padding: 10px !important;
+  border: 1px solid #f0f0f1;
+  width: 100%;
+  background-color: white;
+}
+
+.mantine-PasswordInput-wrapper {
+  position: relative;
+}
+
+.mantine-PasswordInput-section {
+  position: absolute;
+  right: 20px;
+  top: 13px;
+}
+
+.mantine-PinInput-root {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+.mantine-PinInput-wrapper {
+  outline: 2px solid #f0f0f1;
+}
+
+.mantine-PinInput-pinInput {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.mantine-PinInput-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  font-weight: 500;
+  font-size: 20px;
+  text-align: center;
+}
+
+.mantine-PinInput-input::placeholder {
+  color: black;
+}
