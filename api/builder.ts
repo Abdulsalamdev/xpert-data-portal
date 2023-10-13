@@ -5,7 +5,8 @@ import { LOGINAPI } from "@/components/types/AllTypes";
 export const builder = createBuilder({
   auth: {
     api: {
-      login: (data:  LOGINAPI ) => AUTHAPI.post("/api/auth/login/" , data),
+      login: (data: LOGINAPI) => AUTHAPI.post("/api/auth/login/", data),
+      logout: () => AUTHAPI.post("/api/auth/logout")
     },
   },
   address: {

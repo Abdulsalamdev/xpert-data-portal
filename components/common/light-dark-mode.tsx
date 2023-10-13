@@ -5,8 +5,7 @@ import { useTheme } from "next-themes";
 export default function Mode() {
   const { resolvedTheme, theme, setTheme } = useTheme();
   return (
-    <button
-      type="button"
+    <div
       className="rounded-[8px] p-[5px] bg-[#F5F5F6] border-[1px] border-solid  border-[#DADADD] dark:bg-[#252D3D] dark:border-none"
       onClick={() => {
         setTheme(resolvedTheme === "light" ? "dark" : "light");
@@ -18,6 +17,6 @@ export default function Mode() {
         // <Moon size="20" color="#FFffff" />
         <Image src={"/images/moon.png"} alt={""} width={20} height={20} />
       )}
-    </button>
+    </div>
   );
 }

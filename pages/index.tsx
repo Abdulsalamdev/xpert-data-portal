@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import { Landing } from "@/components/auth/Home";
 
 const inter = Inter({ subsets: ["latin"] });

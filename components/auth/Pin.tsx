@@ -17,12 +17,12 @@ export function Pin() {
       <div className="justify-between items-center gap-[10px] flex">
         <Sso />
         <form className="p-[40px] bg-[#ffffff] sign-1 rounded-[16px]">
-          <p className="text-[#BF2018] text-[clamp(20px,1.4vw,24px)] flex justify-center font-nunito font-bold pb-[clamp(25px,2.4vw,40px)]">
+          <div className="text-[#BF2018] text-[clamp(20px,1.4vw,24px)] flex justify-center font-nunito font-bold pb-[clamp(25px,2.4vw,40px)]">
             AFEX SSO
-          </p>
-          <p className="flex justify-center fony-bold font-nunito text-[clamp(20px,1.5vw,27px)] text-BLUE-SASH pb-[clamp(10px,1.5vw,20px)]">
+          </div>
+          <div className="flex justify-center fony-bold font-nunito text-[clamp(20px,1.5vw,27px)] text-BLUE-SASH pb-[clamp(10px,1.5vw,20px)]">
             Forget Password?
-          </p>
+          </div>
           <div className="text-center flex justify-center max-w-[360px] text-BLUE-SASH text-[16px] pb-[clamp(15px,1.7vw,25px)]">
             Kindly enter the 6-digit pin sent to your email address provided
           </div>
@@ -30,9 +30,9 @@ export function Pin() {
           <div className="pt-[clamp(20px,2vw,25px)] pb-[5px]">
             <button
               type="submit"
-              className="block rounded-[8px] w-full py-[clamp(16px,1.3vw,22px)] bg-RED-INFERNO text-[#ffffff] font-nunito font-bold"
+              className="auth-btn justify-center items-center font-nunito font-bold"
             >
-              Submit
+              <span>Submit</span>
             </button>
           </div>
           <div className="flex justify-end pb-[10px]">
@@ -41,15 +41,15 @@ export function Pin() {
               <span className=" text-RED-INFERNO">Resend pin</span>
             </p>
           </div>
-          <div className="flex justify-center items-center pt-[20px]">
-            <Link
-              href={"/login"}
-              className="flex gap-[15px] items-center text-[20px] font-nunito font-medium text-SCRIPT-INK"
-            >
+          <Link
+            href={"/login"}
+            className="flex justify-center items-center pt-[20px]"
+          >
+            <div className="flex gap-[15px] items-center text-SCRIPT-INK font-nunito font-medium">
               <ArrowLeft2 size="20" color="#8F9198" />
               Back to sign in
-            </Link>
-          </div>
+            </div>
+          </Link>
         </form>
       </div>
     </div>

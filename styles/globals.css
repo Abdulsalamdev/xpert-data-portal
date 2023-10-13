@@ -2,9 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/*  */
 .sign {
   box-shadow: 0px 31px 34px 0px rgba(16, 39, 246, 0.2);
   color: white;
+}
+.auth-btn {
+  display: flex;
+  border-radius: 8px;
+  width: 100%;
+  padding-block: clamp(16px, 1.3vw, 22px);
+  background-color: #bf2018;
+  transition: linear 0.2s ease;
+  color: white;
+}
+.mantine-Menu-dropdown {
+  padding: 10px;
+  border-radius: 4px;
+  position: absolute;
+  border: none;
+  background-color: white;
+  top: 65px !important;
+}
+/* .mantine-Menu-item {
+  display: flex;
+  padding-bottom: 10px;
+  gap: 12px;
+  align-items: center;
+} */
+.mantine-Menu-itemLabel {
+  font-size: 13px;
+  color: #8f9198;
+}
+.auth-btn:hover {
+  background-color: #790b06;
 }
 
 .sign-1 {

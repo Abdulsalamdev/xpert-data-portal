@@ -36,7 +36,7 @@ module.exports = {
       "MOTE-OF-DUST": "#C1C2C6",
       "RED-INFERNO": "#BF2018",
       "KIKORANGI-BLUE": "#3045BC",
-      "": "",
+      bgdark: "#1A212E",
       "": "",
     },
   },

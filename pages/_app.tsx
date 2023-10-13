@@ -3,20 +3,20 @@ import type { AppProps } from "next/app";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MantineProvider } from "@mantine/core";
 import { ThemeProvider } from "next-themes";
+import { MantineProvider } from "@mantine/core";
 
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <MantineProvider>
-        <ToastContainer />
-        <ThemeProvider defaultTheme="system" attribute="class">
+    <ThemeProvider defaultTheme="system" attribute="class">
+      <QueryClientProvider client={queryClient}>
+        <MantineProvider>
+          <ToastContainer />
           <Component {...pageProps} />
-        </ThemeProvider>
-      </MantineProvider>
-    </QueryClientProvider>
+        </MantineProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

@@ -17,18 +17,18 @@ export function ResetPass() {
       <div className="justify-between items-center gap-[10px] flex">
         <Sso />
         <form className="p-[30px] bg-[#ffffff] sign-1 rounded-[16px]">
-          <p className="text-[#BF2018] text-[clamp(20px,1.4vw,24px)] flex justify-center font-nunito font-bold pb-[clamp(15px,1.6vw,25px)]">
+          <div className="text-[#BF2018] text-[clamp(20px,1.4vw,24px)] flex justify-center font-nunito font-bold pb-[clamp(15px,1.6vw,25px)]">
             AFEX SSO
-          </p>
-          <p className="flex justify-center fony-bold font-nunito text-[clamp(20px,1.5vw,27px)] text-BLUE-SASH pb-[clamp(5px,0.9vw,10px)]">
+          </div>
+          <div className="flex justify-center fony-bold font-nunito text-[clamp(20px,1.5vw,27px)] text-BLUE-SASH pb-[clamp(5px,0.9vw,10px)]">
             Forget Password?
-          </p>
+          </div>
           <div className="text-center flex justify-center max-w-[360px] text-BLUE-SASH text-[16px] pb-[clamp(15px,1.7vw,25px)]">
             Kindly provide a new password for your account
           </div>
 
           <div className="flex flex-col gap-[20px] pb-[13px] w-full">
-            <p className="text-[14px] text-BLUE-SASH ">New Password</p>
+            <div className="text-[14px] text-BLUE-SASH ">New Password</div>
             <PasswordInput
               visibilityToggleIcon={({ reveal }) =>
                 reveal ? (
@@ -40,7 +40,7 @@ export function ResetPass() {
             />
           </div>
           <div className="flex flex-col gap-[20px] pb-[13px] w-full">
-            <p className="text-[14px] text-BLUE-SASH ">Confirm Password</p>
+            <div className="text-[14px] text-BLUE-SASH ">Confirm Password</div>
             <PasswordInput
               visibilityToggleIcon={({ reveal }) =>
                 reveal ? (
@@ -54,20 +54,20 @@ export function ResetPass() {
           <div className="pt-[clamp(10px,1.2vw,15px)] pb-[5px]">
             <button
               type="submit"
-              className="block rounded-[8px] w-full py-[clamp(16px,1.3vw,22px)] bg-RED-INFERNO text-[#ffffff] font-nunito font-bold"
+              className="auth-btn font-nunito font-bold justify-center items-center"
             >
-              Submit
+              <span> Submit</span>
             </button>
           </div>
-          <div className="flex justify-center items-center pt-[10px]">
-            <Link
-              href={"/login"}
-              className="flex gap-[15px] items-center text-[20px] font-nunito font-medium text-SCRIPT-INK"
-            >
+          <Link
+            href={"/login"}
+            className="flex justify-center items-center pt-[20px]"
+          >
+            <div className="flex gap-[15px] items-center text-SCRIPT-INK font-nunito font-medium">
               <ArrowLeft2 size="20" color="#8F9198" />
               Back to sign in
-            </Link>
-          </div>
+            </div>
+          </Link>
         </form>
       </div>
     </div>
