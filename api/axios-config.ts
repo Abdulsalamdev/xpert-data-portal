@@ -7,9 +7,10 @@ export const AUTHAPI = axios.create({
 });
 
 export const token = JSON.parse(
-  sessionStorage.getItem("my-user") as string
-)?.token;
+  cookieStorage.getItem("my-user") as string
 
+)?.tokens.refresh;
+  console.log(token)
 export const USETOKEN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
@@ -17,9 +18,9 @@ export const USETOKEN = axios.create({
   },
 });
 
-AUTHAPI.interceptors.request.use(
+USETOKEN.interceptors.request.use(
   (req) => {
-    let token = sessionStorage.getItem("my-user");
+    let token = cookieStorage.getItem("my-user");
     // console.log(token1);
     if (token) {
       JSON.parse(token);

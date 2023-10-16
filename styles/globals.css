@@ -103,3 +103,15 @@
 .mantine-PinInput-input::placeholder {
   color: black;
 }
+
+.sideBar {
+  height: calc(100vh - 61.68px);
+}
+
+.sideblue {
+  background-color: #e1e5fa;
+}
+
+.sidedark {
+  background-color: #3045bc;
+}

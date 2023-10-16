@@ -28,7 +28,7 @@ export function Sign_in() {
     onSuccess(data, variables, context) {
       push("/home");
       toast.success("login successful");
-      sessionStorage.setItem("my-user", JSON.stringify(data.data));
+      cookieStorage.setItem("my-user", JSON.stringify(data.data));
       myForm.reset();
     },
     onError(err) {

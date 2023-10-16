@@ -1,5 +1,5 @@
 import React from "react";
 
-export function StaffOverview() {
+export function Overview() {
   return <div>S</div>;
 }
