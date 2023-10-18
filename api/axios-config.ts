@@ -18,7 +18,7 @@ export const USETOKEN = axios.create({
   },
 });
 
-USETOKEN.interceptors.request.use(
+AUTHAPI.interceptors.request.use(
   (req) => {
     let token = cookieStorage.getItem("my-user");
     // console.log(token1);

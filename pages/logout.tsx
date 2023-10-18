@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 export default function Logout() {
   const { push } = useRouter();
-  push("/login");
   cookieStorage.clear();
+  push("/login");
   return null;
 }

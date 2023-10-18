@@ -115,3 +115,24 @@
 .sidedark {
   background-color: #3045bc;
 }
+.overview {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0px 0px 1px 0px rgba(193, 194, 198, 0.4),
+    0px 6px 6px -6px rgba(193, 194, 198, 0.16);
+}
+.mantine-y08onz > thead > tr > th {
+  font-weight: 500;
+  color: #4a4c58;
+  font-size: 14px;
+}
+.mantine-y08onz > tbody > tr > td {
+  color: #4a4c58;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.notification {
+  border-bottom: 1px solid
+    var(--foundation-xdse-neutral-xds-eneutral-4, #f0f0f1);
+}
