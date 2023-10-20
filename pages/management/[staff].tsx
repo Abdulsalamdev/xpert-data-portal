@@ -8,7 +8,7 @@ export default function StaffManagement() {
       <NavBar />
       <div className="flex gap-[clamp(10px,1.3vw,20px)]">
         <Sidebar />
-        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow"></div>
+        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow "></div>
       </div>
     </div>
   );

@@ -82,7 +82,7 @@ const elements = [
 
 export function StaffTable() {
   const rows = elements.map((element) => (
-    <tr key={element.name}>
+    <tr key={element.tribe}>
       <td>{element.name}</td>
       <td>{element.Email}</td>
       <td>{element.Mobile}</td>
@@ -93,7 +93,7 @@ export function StaffTable() {
 
   return (
     <div className="">
-      <Table>
+      <Table horizontalSpacing="md" highlightOnHover verticalSpacing="md">
         <thead className="bg-[#F5F5F6]">
           <tr>
             <th className="">Name</th>
