@@ -14,20 +14,14 @@ export function EmptyTribe() {
               Export
             </span>
           </div>
-          <div className="flex items-center bg-[#F7F9FC] rounded-[8px] border-solid border-[1px] border-[#A1A9B8]">
-            <div className="flex items-center gap-[3px]  px-[12px] py-[6px] rounded-l-[8px] ">
-              <Filter size="13" color="#5E606A" variant="Bold" />
-              <span className="text-[14px] text-[#5E606A] font-nunito font-medium">
-                Filter
-              </span>
-            </div>
+          <div className="flex items-center rounded-[8px] border-solid border-[1px] border-[#A1A9B8]">
             <Input
               styles={{
                 input: {
                   border: "1px #A1A9B8",
                   boxShadow:
                     "0px 0px 0px 1px rgba(134, 143, 160, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
-                  borderRadius: "0px 8px 8px 0px",
+                  borderRadius: "8px 8px 8px 8px",
                 },
               }}
               placeholder="Search"
