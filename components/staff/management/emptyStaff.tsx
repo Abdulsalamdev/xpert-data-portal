@@ -1,9 +1,13 @@
+import { AddStaff } from "@/components/modals/addStaff";
 import { Input } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { Add, ExportCurve, Filter, SearchNormal1 } from "iconsax-react";
 import Image from "next/image";
 import React from "react";
 
 export function EmptyStaff() {
+  const [openedStaff, { open: openStaff, close: closeStaff }] =
+    useDisclosure(false);
   return (
     <div>
       <div className="flex justify-between pl-[20px] pb-[32px] border-b-[1px] border-[#afb4bd] pr-[20px]">
@@ -35,7 +39,10 @@ export function EmptyStaff() {
             />
           </div>
         </div>
-        <div className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium">
+        <div
+          className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium"
+          onClick={openStaff}
+        >
           <span>Add Member</span>
         </div>
       </div>
@@ -58,12 +65,16 @@ export function EmptyStaff() {
             You are yet to onboard any staff, a list of staff created will
             appear here
           </p>
-          <div className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium mt-[10px]">
+          <div
+            className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium mt-[10px]"
+            onClick={openStaff}
+          >
             <Add size="18" color="#FFFFFF" />
             <span>Add Member</span>
           </div>
         </div>
       </div>
+      <AddStaff opened={openedStaff} close={closeStaff} />
     </div>
   );
 }

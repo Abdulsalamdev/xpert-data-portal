@@ -84,8 +84,9 @@ export function Drop({ upImg, setImg }: any) {
           <div className="flex justify-center">
             <div className="flex gap-[8px] items-center">
               <DocumentUpload size="18" color="#8F9198" />
-              <p>
-                Drop files to attach or <span>browse</span>
+              <p className="text-[14px] text-[#8F9198] font-nunito font-bold">
+                Drop files to attach or{" "}
+                <span className="text-[#458EE6] ">browse</span>
               </p>
             </div>
           </div>

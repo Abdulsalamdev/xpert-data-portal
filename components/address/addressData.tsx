@@ -5,6 +5,7 @@ import React from "react";
 import { AddressSucess } from "../modals/addressSuccess";
 import { DeleteAddress } from "../modals/deleteAddress";
 import { AddAddress } from "../modals/addAddress";
+import { StaffSucess } from "../modals/staffSucess";
 
 export function AddressData() {
   const [openedSucess, { open: openSuccess, close: closeSucess }] =

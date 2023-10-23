@@ -209,3 +209,25 @@
 .mantine-189n011 {
   height: 70px;
 }
+
+.deactivate {
+  border-radius: 6px;
+  background: var(--xds-neutral-white, #fff);
+  box-shadow: 0px 0px 0px 1px rgba(94, 96, 106, 0.16),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+.mantine-1qnz2ae {
+  border-top-left-radius: 62px;
+}
+
+.mantine-Accordion-label {
+  font-size: 16px;
+  color: #4a4c58;
+  font-weight: 600;
+}
+.clear {
+  border-radius: 6px;
+  background: var(--xds-neutral-white, #fff);
+  box-shadow: 0px 0px 0px 1px rgba(94, 96, 106, 0.16),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.1);
+}

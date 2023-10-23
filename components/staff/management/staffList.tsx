@@ -5,6 +5,9 @@ import Image from "next/image";
 import { StaffActive, StaffInActive } from "./action";
 import { useDisclosure } from "@mantine/hooks";
 import { AddStaff } from "@/components/modals/addStaff";
+import { StaffSucess } from "@/components/modals/staffSucess";
+import { DeactivateStaff } from "@/components/modals/deactivateStaff";
+import { FilterStaff } from "@/components/drawer/filterStaff";
 
 const elements = [
   {
@@ -112,6 +115,8 @@ const elements = [
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
     useDisclosure(false);
+  const [openedFilter, { open: openFilter, close: closeFilter }] =
+    useDisclosure(false);
   const rows = elements.map((element) => (
     <tr key={element.id}>
       <td>{element.check}</td>
@@ -157,7 +162,10 @@ export function MemberList() {
             </span>
           </div>
           <div className="flex items-center  rounded-[8px] border-solid border-[1px] border-[#A1A9B8]">
-            <div className="flex items-center gap-[3px]  px-[12px] py-[6px] rounded-l-[8px] ">
+            <div
+              className="flex items-center gap-[3px]  px-[12px] py-[6px] rounded-l-[8px] "
+              onClick={openFilter}
+            >
               <Filter size="13" color="#5E606A" variant="Bold" />
               <span className="text-[14px] text-[#5E606A] font-nunito font-medium">
                 Filter
@@ -211,6 +219,7 @@ export function MemberList() {
         </Table>
       </div>
       <AddStaff opened={openedStaff} close={closeStaff} />
+      <FilterStaff opened={openedFilter} close={closeFilter} />
     </div>
   );
 }

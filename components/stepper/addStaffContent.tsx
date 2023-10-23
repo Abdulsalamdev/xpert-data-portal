@@ -3,6 +3,8 @@ import { Stepper, Button, Group } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
 import { AddStaffStep1 } from "./steps/add-staff-step1";
 import { ArrowRight, ArrowLeft } from "iconsax-react";
+import { AddStaffStep2 } from "./steps/add-staff-step2";
+import { AddStaffStep3 } from "./steps/add-staff-step3";
 
 export function AddStaffContent() {
   const [active, setActive] = useState(0);
@@ -27,11 +29,12 @@ export function AddStaffContent() {
         <Stepper.Step label="Personal information" description="">
           <AddStaffStep1 upImg={upload} setImg={setUplode} />
         </Stepper.Step>
-        <Stepper.Step
-          label="Organization information"
-          description=""
-        ></Stepper.Step>
-        <Stepper.Step label="Next of Kin" description=""></Stepper.Step>
+        <Stepper.Step label="Organization information" description="">
+          <AddStaffStep2 />
+        </Stepper.Step>
+        <Stepper.Step label="Next of Kin" description="">
+          <AddStaffStep3 />
+        </Stepper.Step>
       </Stepper>
 
       <Group position="apart" mt="xl">
@@ -44,6 +47,11 @@ export function AddStaffContent() {
           Back
         </Button>
         <Button
+          style={{
+            borderRadius: "6px",
+            boxShadow:
+              "0px 0px 0px 1px rgba(94, 96, 106, 0.16), 0px 1px 1px 0px rgba(0, 0, 0, 0.10)",
+          }}
           rightIcon={
             active > 1 ? null : <ArrowRight size="22" color="#FFFFFF" />
           }
