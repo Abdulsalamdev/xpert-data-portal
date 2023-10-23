@@ -10,7 +10,7 @@ export function AddStaff({ opened, close }: AddressSucess) {
       onClose={close}
       title="Create Staff"
       centered
-      size={"70%"}
+      size={"80%"}
       styles={{
         content: {
           borderRadius: "16px",

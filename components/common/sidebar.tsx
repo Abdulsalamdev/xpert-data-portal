@@ -43,7 +43,7 @@ export function Sidebar() {
         <BrifecaseTick
           size="25"
           color={
-            pathname.includes("/mangement/")
+            pathname.includes("/mangement")
               ? theme === "light"
                 ? "#3045BC"
                 : "#ffffff"
@@ -53,7 +53,7 @@ export function Sidebar() {
           }
         />
       ),
-      link: "/management/",
+      link: "/management",
     },
     {
       id: "3",
@@ -62,7 +62,7 @@ export function Sidebar() {
         <People
           size="25"
           color={
-            pathname.includes("/tribes/")
+            pathname.includes("/tribes")
               ? theme === "light"
                 ? "#3045BC"
                 : "#ffffff"
@@ -72,7 +72,7 @@ export function Sidebar() {
           }
         />
       ),
-      link: "/tribes/",
+      link: "/tribes",
     },
 
     {

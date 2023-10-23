@@ -201,3 +201,11 @@
   display: flex;
   gap: 10px;
 }
+.mantine-phlbul {
+  height: 28px !important;
+  min-height: 28px !important;
+}
+
+.mantine-189n011 {
+  height: 70px;
+}
