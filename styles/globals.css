@@ -231,3 +231,17 @@
   box-shadow: 0px 0px 0px 1px rgba(94, 96, 106, 0.16),
     0px 1px 1px 0px rgba(0, 0, 0, 0.1);
 }
+
+.mantine-l28z15 {
+  padding: 8px;
+  background-color: #f5f5f6;
+  border-radius: 6px;
+  border: none;
+}
+.mantine-1hher0m[data-active] {
+  color: #3851dd;
+  background-color: white;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+}
