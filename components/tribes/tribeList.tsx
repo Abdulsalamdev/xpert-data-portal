@@ -1,119 +1,195 @@
 import { Input, Table } from "@mantine/core";
-import { ExportCurve, Filter, SearchNormal1 } from "iconsax-react";
+import { Edit2, ExportCurve, Filter, SearchNormal1 } from "iconsax-react";
 import React from "react";
-const elements = [
-  {
-    id: "1",
+import { AddTribe } from "../modals/addTribe";
+import { useDisclosure } from "@mantine/hooks";
 
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Carbon",
-
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "2",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Nitrogen",
-
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "3",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Yttrium",
-
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "4",
-    name: "abdulsalam",
-
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Barium",
-
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "5",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "6",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "7",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "8",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-
-  {
-    id: "9",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "10",
-
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-
-    squad: "gsghghsghsggg",
-  },
-];
 export function TribeList() {
+  const elements = [
+    {
+      id: "1",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Carbon",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "2",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Nitrogen",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "3",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Yttrium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "4",
+      name: "abdulsalam",
+
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Barium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "5",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Cerium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "6",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Cerium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "7",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Cerium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "8",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Cerium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+
+    {
+      id: "9",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Cerium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+    {
+      id: "10",
+
+      name: "abdulsalam",
+      Email: "abdulsalam@gmail.com",
+      Mobile: "0812838738787",
+      tribe: "Cerium",
+
+      action: (
+        <div className="flex gap-[16px] items-center">
+          <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+            View Tribe
+          </div>
+        </div>
+      ),
+    },
+  ];
+
+  const [openedTribe, { open: openTribe, close: closeTribe }] =
+    useDisclosure(false);
   const rows = elements.map((element) => (
     <tr key={element.id}>
       <td>{element.name}</td>
       <td>{element.Email}</td>
       <td>{element.Mobile}</td>
       <td>{element.tribe}</td>
-      <td>{element.squad}</td>
+      <td className="flex gap-[16px] items-center">
+        <div
+          onClick={openTribe}
+          className="flex items-center gap-[4px] py-[5px] px-[10px] rounded-[8px] border-solid border-[1px] border-[#3851DD] "
+        >
+          <Edit2 size="22" color="#3851DD" />
+          <span className="text-[#3851DD] text-[12px] font-medium">Edit</span>
+        </div>
+        {element.action}
+      </td>
     </tr>
   ));
+
   return (
     <div>
       <div className="flex justify-between pl-[20px] pb-[32px] border-b-[1px] border-[#afb4bd] pr-[20px]">
@@ -139,7 +215,10 @@ export function TribeList() {
             />
           </div>
         </div>
-        <div className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium">
+        <div
+          className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium"
+          onClick={openTribe}
+        >
           <span>Create Tribe</span>
         </div>
       </div>
@@ -163,6 +242,7 @@ export function TribeList() {
           <tbody className="overflow-auto">{rows}</tbody>
         </Table>
       </div>
+      <AddTribe opened={openedTribe} close={closeTribe} />
     </div>
   );
 }
