@@ -3,7 +3,12 @@ import type { NextRequest } from "next/server";
 
 export const config = {
   matcher: [
-    "/dashboard",
+    "/management",
+    "/tribes",
+    "/address",
+    "/notification",
+    "/profile",
+    "/home"
   ],
 };
 

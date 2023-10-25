@@ -10,7 +10,7 @@ export const token = JSON.parse(
   cookieStorage.getItem("my-user") as string
 
 )?.tokens.refresh;
-  console.log(token)
+
 export const USETOKEN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   headers: {
