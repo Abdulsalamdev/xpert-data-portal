@@ -4,7 +4,25 @@ import React from "react";
 import Link from "next/link";
 import { Sso } from "../common/sso";
 import Image from "next/image";
+import { useForm } from "@mantine/form";
+import { cookieStorage } from "@ibnlanre/portal";
+import { useMutation } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { toast } from "react-toastify";
 export function Pin() {
+  const { mutate } = useMutation({
+    mutationFn: () => builder.use().auth.api.verifyPin(myForm.values),
+    mutationKey: builder.auth.api.verifyPin.get(),
+    onSuccess(data, variables, context) {
+      toast.success("OTP verified");
+    },
+  });
+  const myForm = useForm({
+    initialValues: {
+      email: cookieStorage.getItem("userEmail") || "",
+      verification_code: "",
+    },
+  });
   return (
     <div className="w-[80%] m-auto pt-[30px] ">
       <Image

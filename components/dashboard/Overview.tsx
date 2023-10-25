@@ -25,8 +25,10 @@ export function Overview() {
               size={100}
               thickness={16}
               roundCaps
-              sections={[{ value: 70, color: "#3851DD" }]}
-              rootColor="#8F9198"
+              sections={[
+                { value: 70, color: "#3851DD" },
+                { value: 30, color: "#8F9198" },
+              ]}
             />
             <div className="flex flex-col gap-[5px]">
               <div className="text-[12px] text-[#8F9198] font-nunito font-medium flex items-center gap-[4px]">

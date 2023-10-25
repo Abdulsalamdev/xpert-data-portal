@@ -4,9 +4,33 @@ import { Sso } from "../common/sso";
 import { TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ArrowLeft2 } from "iconsax-react";
+import { useForm } from "@mantine/form";
+import { cookieStorage } from "@ibnlanre/portal";
+import { useMutation } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 export function ForgetPass() {
+  const { push } = useRouter();
+  const { mutate } = useMutation({
+    mutationFn: () => builder.use().auth.api.forgetPassword(myForm.values),
+    mutationKey: builder.auth.api.forgetPassword.get(),
+    onSuccess(data, variables, context) {
+      toast.success("OTP sent, pls check your mail");
+      cookieStorage.setItem("userEmail", myForm.values.email);
+      push("/otp");
+    },
+  });
+  const myForm = useForm({
+    initialValues: {
+      email: "",
+    },
+  });
   return (
-    <div className="w-[80%] m-auto pt-[30px] ">
+    <form
+      onSubmit={myForm.onSubmit(() => mutate())}
+      className="w-[80%] m-auto pt-[30px] "
+    >
       <Image
         src={"/images/logo.png"}
         alt={""}
@@ -28,6 +52,7 @@ export function ForgetPass() {
             reset your password.
           </div>
           <TextInput
+            {...myForm.getInputProps("email")}
             placeholder="Enter email address"
             styles={{
               input: {
@@ -58,6 +83,6 @@ export function ForgetPass() {
           </Link>
         </form>
       </div>
-    </div>
+    </form>
   );
 }

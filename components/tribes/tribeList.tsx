@@ -3,6 +3,7 @@ import { Edit2, ExportCurve, Filter, SearchNormal1 } from "iconsax-react";
 import React from "react";
 import { AddTribe } from "../modals/addTribe";
 import { useDisclosure } from "@mantine/hooks";
+import { TablePagination } from "../common/pagination";
 
 export function TribeList() {
   const elements = [
@@ -241,6 +242,9 @@ export function TribeList() {
           </thead>
           <tbody className="overflow-auto">{rows}</tbody>
         </Table>
+        <div className="pb-[10px]">
+          <TablePagination />
+        </div>
       </div>
       <AddTribe opened={openedTribe} close={closeTribe} />
     </div>

@@ -8,6 +8,7 @@ import { AddStaff } from "@/components/modals/addStaff";
 import { StaffSucess } from "@/components/modals/staffSucess";
 import { DeactivateStaff } from "@/components/modals/deactivateStaff";
 import { FilterStaff } from "@/components/drawer/filterStaff";
+import { TablePagination } from "@/components/common/pagination";
 
 const elements = [
   {
@@ -217,6 +218,9 @@ export function MemberList() {
           </thead>
           <tbody className="overflow-auto">{rows}</tbody>
         </Table>
+        <div className="pb-[10px]">
+          <TablePagination />
+        </div>
       </div>
       <AddStaff opened={openedStaff} close={closeStaff} />
       <FilterStaff opened={openedFilter} close={closeFilter} />

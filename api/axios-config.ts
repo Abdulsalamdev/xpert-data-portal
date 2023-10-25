@@ -9,7 +9,7 @@ export const AUTHAPI = axios.create({
 export const token = JSON.parse(
   cookieStorage.getItem("my-user") as string
 
-)?.tokens.refresh;
+)?.tokens.access;
 
 export const USETOKEN = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,

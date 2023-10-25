@@ -11,6 +11,7 @@ import { DatePickerInput } from "@mantine/dates";
 import { useState } from "react";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
+import { TablePagination } from "../common/pagination";
 const elements = [
   {
     name: "abdulsalam",
@@ -142,22 +143,7 @@ export function NotificationList() {
         </Table>
       </div>
       <div className=" py-[15px] px-[24px]">
-        {/* <Pagination
-          value={activePage}
-          onChange={setPage}
-          total={10}
-          styles={(theme) => ({
-            control: {
-              "&[data-active]": {
-                backgroundImage: theme.fn.gradient({
-                  from: "#195B3E",
-                  to: "#195B3E",
-                }),
-                border: 0,
-              },
-            },
-          })}
-        /> */}
+        <TablePagination />
       </div>
     </div>
   );
