@@ -1,6 +1,6 @@
 import { createBuilder } from "@ibnlanre/portal";
 import { AUTHAPI, USETOKEN } from "./axios-config";
-import { AddressLisResult, AddressListData, FORGETPASSWORD, LOGINAPI, VERIFY_CODE } from "@/components/types/AllTypes";
+import { AddressLisResult, AddressListData, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, VERIFY_CODE } from "@/components/types/AllTypes";
 
 export const builder = createBuilder({
   auth: {
@@ -8,9 +8,9 @@ export const builder = createBuilder({
       login: (data: LOGINAPI) => AUTHAPI.post("/api/auth/login/", data),
       forgetPassword: (data: FORGETPASSWORD) =>
         AUTHAPI.post("/api/auth/forget-password/", data),
-      verifyPin: (paylode: any) =>
+      verifyPin: (paylode: VERIFY_CODE) =>
         AUTHAPI.post("/api/auth/verify-pin/", paylode),
-      passwordreset: (data: any) =>
+      passwordreset: (data: PASSWORDRESET) =>
         AUTHAPI.post("/api/auth/reset-password/", data),
       activityLog: () => AUTHAPI.get("/api/address/{id}/update"),
       activityLogExorted: () => AUTHAPI.get("/api/auth/activity-log/export"),

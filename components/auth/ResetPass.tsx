@@ -4,9 +4,35 @@ import Link from "next/link";
 import React from "react";
 import { Sso } from "../common/sso";
 import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { useForm } from "@mantine/form";
+import { cookieStorage } from "@ibnlanre/portal";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 export function ResetPass() {
+  const { push } = useRouter();
+  const { mutate } = useMutation({
+    mutationFn: () => builder.use().auth.api.passwordreset(myForm.values),
+    mutationKey: builder.auth.api.forgetPassword.get(),
+    onSuccess(data, variables, context) {
+      toast.success("password reset successful ");
+      push("/login");
+    },
+  });
+
+  const myForm = useForm({
+    initialValues: {
+      email: cookieStorage.getItem("userEmail") || "",
+      new_password: "",
+      confirm_password: "",
+    },
+  });
   return (
-    <div className="w-[80%] m-auto pt-[30px] ">
+    <form
+      className="w-[80%] m-auto pt-[30px] "
+      onSubmit={myForm.onSubmit(() => mutate())}
+    >
       <Image
         src={"/images/logo.png"}
         alt={""}
@@ -30,6 +56,7 @@ export function ResetPass() {
           <div className="flex flex-col gap-[20px] pb-[13px] w-full">
             <div className="text-[14px] text-BLUE-SASH ">New Password</div>
             <PasswordInput
+              {...myForm.getInputProps("new_password")}
               visibilityToggleIcon={({ reveal }) =>
                 reveal ? (
                   <Eye size="20" color="#C1C2C6" />
@@ -42,6 +69,7 @@ export function ResetPass() {
           <div className="flex flex-col gap-[20px] pb-[13px] w-full">
             <div className="text-[14px] text-BLUE-SASH ">Confirm Password</div>
             <PasswordInput
+              {...myForm.getInputProps("confirm_password")}
               visibilityToggleIcon={({ reveal }) =>
                 reveal ? (
                   <Eye size="20" color="#C1C2C6" />
@@ -70,6 +98,6 @@ export function ResetPass() {
           </Link>
         </form>
       </div>
-    </div>
+    </form>
   );
 }

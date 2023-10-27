@@ -46,3 +46,10 @@ export interface VERIFY_CODE {
   email: string;
   verification_code: string;
 }
+
+// password reset
+export interface PASSWORDRESET {
+  email: string;
+  new_password: string;
+  confirm_password: string;
+}

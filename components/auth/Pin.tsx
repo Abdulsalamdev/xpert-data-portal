@@ -9,12 +9,15 @@ import { cookieStorage } from "@ibnlanre/portal";
 import { useMutation } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 export function Pin() {
+  const { push } = useRouter();
   const { mutate } = useMutation({
     mutationFn: () => builder.use().auth.api.verifyPin(myForm.values),
     mutationKey: builder.auth.api.verifyPin.get(),
     onSuccess(data, variables, context) {
       toast.success("OTP verified");
+      push("/reset");
     },
   });
   const myForm = useForm({
@@ -24,7 +27,10 @@ export function Pin() {
     },
   });
   return (
-    <div className="w-[80%] m-auto pt-[30px] ">
+    <form
+      className="w-[80%] m-auto pt-[30px] "
+      onSubmit={myForm.onSubmit(() => mutate())}
+    >
       <Image
         src={"/images/logo.png"}
         alt={""}
@@ -44,7 +50,12 @@ export function Pin() {
           <div className="text-center flex justify-center max-w-[360px] text-BLUE-SASH text-[16px] pb-[clamp(15px,1.7vw,25px)]">
             Kindly enter the 6-digit pin sent to your email address provided
           </div>
-          <PinInput size="xl" length={6} placeholder="0" />
+          <PinInput
+            size="xl"
+            length={6}
+            placeholder="0"
+            {...myForm.getInputProps("verification_code")}
+          />
           <div className="pt-[clamp(20px,2vw,25px)] pb-[5px]">
             <button
               type="submit"
@@ -70,6 +81,6 @@ export function Pin() {
           </Link>
         </form>
       </div>
-    </div>
+    </form>
   );
 }
