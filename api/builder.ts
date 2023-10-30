@@ -1,6 +1,6 @@
 import { createBuilder } from "@ibnlanre/portal";
 import { AUTHAPI, USETOKEN } from "./axios-config";
-import { AddressLisResult, AddressListData, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, VERIFY_CODE } from "@/components/types/AllTypes";
+import { ADDADDRESS, AddressLisResult, AddressListData, CITYADDRESSDATA, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, REGIONDATA, VERIFY_CODE } from "@/components/types/AllTypes";
 
 export const builder = createBuilder({
   auth: {
@@ -19,6 +19,7 @@ export const builder = createBuilder({
   },
   address: {
     api: {
+      addAddress: (data: ADDADDRESS) => USETOKEN.post("/api/address/create/" ,data),
       addressList: () => USETOKEN.get<AddressListData>("/api/address/"),
       editAddress: (id: any) => USETOKEN.put(`/api/address/${id}/update`),
       deleteAddress: (id: any) => USETOKEN.delete(`/api/address/${id}/delete`),
@@ -26,13 +27,13 @@ export const builder = createBuilder({
   },
   region: {
     api: {
-      regionList: () => USETOKEN.get("/api/regions/"),
+      regionList: () => USETOKEN.get<REGIONDATA>("/api/regions/"),
     },
   },
   schema: {
     api: {
-      schemaList: () => USETOKEN.get("/api/schema/"),
-      cityAddress: (region_pk: any) =>
+  
+      cityAddress: (region_pk: number) =>
         USETOKEN.get(`/api/address/${region_pk}/city-address`),
       sendCityAddress: (region_pk: any) =>
         USETOKEN.post(`/api/address/${region_pk}/city-address`),

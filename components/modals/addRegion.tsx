@@ -2,8 +2,21 @@ import React from "react";
 import { AddressSucess } from "../types/AllTypes";
 import { Modal, Select } from "@mantine/core";
 import { ArrowDown2 } from "iconsax-react";
+import { useQuery } from "@tanstack/react-query";
+import { useForm } from "@mantine/form";
 
 export function AddRegion({ opened, close }: AddressSucess) {
+  const { data: cityAddress } = useQuery({});
+  const myform = useForm({
+    initialValues: {
+      // id: ,
+      description: "",
+      region: "",
+      city: "",
+      latitude: "",
+      longitude: "",
+    },
+  });
   return (
     <Modal
       opened={opened}

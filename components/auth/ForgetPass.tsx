@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { Sso } from "../common/sso";
-import { TextInput } from "@mantine/core";
+import { Loader, TextInput } from "@mantine/core";
 import Link from "next/link";
 import { ArrowLeft2 } from "iconsax-react";
 import { useForm } from "@mantine/form";
@@ -12,13 +12,17 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 export function ForgetPass() {
   const { push } = useRouter();
-  const { mutate } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: () => builder.use().auth.api.forgetPassword(myForm.values),
     mutationKey: builder.auth.api.forgetPassword.get(),
     onSuccess(data, variables, context) {
+      console.log(data);
       toast.success("OTP sent, pls check your mail");
       cookieStorage.setItem("userEmail", myForm.values.email);
       push("/otp");
+    },
+    onError() {
+      toast.error("something went worng !");
     },
   });
   const myForm = useForm({
@@ -64,23 +68,24 @@ export function ForgetPass() {
               },
             }}
           />
-          <div className="pt-[clamp(20px,2vw,25px)] pb-[20px]">
-            <button
-              type="submit"
-              className="auth-btn font-nunito font-bold justify-center items-center"
-            >
-              <span> Submit</span>
-            </button>
-          </div>
-          <Link
-            href={"/login"}
-            className="flex justify-center items-center pt-[20px]"
+
+          <button
+            type="submit"
+            className="auth-btn font-nunito font-bold justify-center items-center mt-[clamp(20px,2vw,25px)] mb-[20px]"
           >
-            <div className="flex gap-[15px] items-center text-SCRIPT-INK font-nunito font-medium">
-              <ArrowLeft2 size="20" color="#8F9198" />
-              Back to sign in
-            </div>
-          </Link>
+            {isLoading ? <Loader size="md" /> : <span> Submit</span>}
+          </button>
+          <div>
+            <Link
+              href={"/login"}
+              className="flex justify-center items-center pt-[20px]"
+            >
+              <div className="flex gap-[15px] items-center text-SCRIPT-INK font-nunito font-medium">
+                <ArrowLeft2 size="20" color="#8F9198" />
+                Back to sign in
+              </div>
+            </Link>
+          </div>
         </form>
       </div>
     </form>

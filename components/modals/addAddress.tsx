@@ -1,13 +1,47 @@
 import { Modal, Select, Switch, TextInput, Textarea } from "@mantine/core";
-import React from "react";
-import { AddressSucess } from "../types/AllTypes";
+import React, { useState } from "react";
+import { ADDADDRESS, AddressSucess, OPENADDRESS } from "../types/AllTypes";
 import { ArrowDown2 } from "iconsax-react";
 import { AddRegion } from "./addRegion";
 import { useDisclosure } from "@mantine/hooks";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { useForm } from "@mantine/form";
 
-export function AddAddress({ opened, close }: AddressSucess) {
+export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
+  const [checked, setChecked] = useState(false);
+  const { mutate } = useMutation({
+    mutationFn: () => builder.use().address.api.addAddress(myform.values),
+    mutationKey: builder.address.api.addAddress.get(),
+  });
   const [openedRegion, { open: openRegion, close: closeRegion }] =
     useDisclosure(false);
+  const myform = useForm({
+    initialValues: {
+      id: 0,
+      is_headquarter: true || false,
+      description: "",
+      region: "",
+      city: "",
+      latitude: "",
+      longitude: "",
+    },
+  });
+
+  // geting the regions
+  const { data: region } = useQuery({
+    queryFn: () => builder.use().region.api.regionList(),
+    queryKey: builder.region.api.regionList.get(),
+    select: ({ data }) => data?.results,
+  });
+
+  // geting the city address
+  const { data: cityAddress } = useQuery({
+    queryFn: () => builder.use().schema.api.cityAddress(region_Pk as number),
+    queryKey: builder.schema.api.cityAddress.get(),
+    select: ({ data }) => data?.results,
+  });
+
   return (
     <Modal
       opened={opened}
@@ -20,10 +54,13 @@ export function AddAddress({ opened, close }: AddressSucess) {
         },
       }}
     >
-      <div>
+      <form onSubmit={myform.onSubmit(() => console.log("hello world"))}>
         <p className="pb-[16px] text-[14px] text-[#54565B]">Office Address</p>
         <div className="pb-[20px]">
-          <Textarea placeholder="Full address of the office location" />
+          <Textarea
+            placeholder="Full address of the office location"
+            {...myform.getInputProps("description")}
+          />
         </div>
         <div className="flex justify-between items-center pb-[20px]">
           <span className="text-[#54565B] text-[14px]">Region (Country)</span>
@@ -31,40 +68,50 @@ export function AddAddress({ opened, close }: AddressSucess) {
             Add New Region
           </button>
         </div>
-        <div className="pb-[20px]">
-          <Select
-            searchable
-            placeholder="Select Country"
-            rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-            data={[
-              { value: "react", label: "React" },
-              { value: "ng", label: "Angular" },
-              { value: "svelte", label: "Svelte" },
-              { value: "vue", label: "Vue" },
-            ]}
-          />
+
+        <div>
+          {region?.map((ele) => (
+            <div className="pb-[20px]">
+              <Select
+                key={ele.id}
+                {...myform.getInputProps("region")}
+                searchable
+                placeholder="Select Country"
+                rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+                data={[{ value: ele.name, label: ele.name }]}
+              />
+            </div>
+          ))}
+          <div className="pb-[25px]">
+            <Select
+              {...myform.getInputProps("city")}
+              searchable
+              placeholder="Select City"
+              rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+              data={[
+                { value: "react", label: "React" },
+                { value: "ng", label: "Angular" },
+                { value: "svelte", label: "Svelte" },
+                { value: "vue", label: "Vue" },
+              ]}
+            />
+          </div>
         </div>
-        <div className="pb-[25px]">
-          <Select
-            searchable
-            placeholder="Select City"
-            rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-            data={[
-              { value: "react", label: "React" },
-              { value: "ng", label: "Angular" },
-              { value: "svelte", label: "Svelte" },
-              { value: "vue", label: "Vue" },
-            ]}
-          />
-        </div>
+
         <p className="text-[14px] text-[#54565B]">Office Coordinates</p>
         <div className="flex justify-between items-center pt-[10px] pb-[20px]">
-          <TextInput placeholder="Latitude (e.g. 9.356767 N)" />
-          <TextInput placeholder="Longitude (e.g. 7.356700 E)" />
+          <TextInput
+            placeholder="Latitude (e.g. 9.356767 N)"
+            {...myform.getInputProps("latitude")}
+          />
+          <TextInput
+            placeholder="Longitude (e.g. 7.356700 E)"
+            {...myform.getInputProps("longitude")}
+          />
         </div>
         <div className="flex gap-[32px] items-center pb-[40px]">
           <span className="text-[#54565B] text-[14px]">Set as Headquarter</span>
-          <Switch />
+          <Switch {...myform.getInputProps("is_headquater")} />
         </div>
         <button
           type="submit"
@@ -72,7 +119,7 @@ export function AddAddress({ opened, close }: AddressSucess) {
         >
           Save Changes
         </button>
-      </div>
+      </form>
       <AddRegion opened={openedRegion} close={closeRegion} />
     </Modal>
   );

@@ -73,7 +73,7 @@ export function AddressData() {
                       display: ele.is_headquarter === true ? "flex" : "none",
                     }}
                   >
-                    {ele.is_headquarter}
+                    {ele.is_headquarter === true ? "HQ" : null}
                   </span>
                 </div>
               </div>
@@ -94,7 +94,7 @@ export function AddressData() {
       </div>
       <AddressSucess opened={openedSucess} close={closeSucess} />
       <DeleteAddress opened={openedDelete} close={closeDelete} />
-      <AddAddress opened={openedAdd} close={closeAdd} />
+      <AddAddress opened={openedAdd} close={closeAdd} region_Pk={null} />
     </div>
   );
 }

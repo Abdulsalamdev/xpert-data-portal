@@ -6,10 +6,8 @@ import {
   SearchNormal1,
 } from "iconsax-react";
 import React from "react";
-import { useDisclosure } from "@mantine/hooks";
 import { DatePickerInput } from "@mantine/dates";
 import { useState } from "react";
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import Link from "next/link";
 import { TablePagination } from "../common/pagination";
 const elements = [
