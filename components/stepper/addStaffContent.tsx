@@ -10,6 +10,14 @@ import { useDisclosure } from "@mantine/hooks";
 import { Drop } from "@/components/packages/dropzone";
 import { Select, TextInput } from "@mantine/core";
 import { ArrowDown2 } from "iconsax-react";
+import { toast } from "react-toastify";
+import Image from "next/image";
+
+import { Text, useMantineTheme, rem } from "@mantine/core";
+import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
+
+import { DocumentUpload } from "iconsax-react";
 
 export function AddStaffContent() {
   const [active, setActive] = useState(0);
@@ -23,16 +31,37 @@ export function AddStaffContent() {
     openedStaffSuccess,
     { open: openStaffSuccess, close: closeStaffSuccess },
   ] = useDisclosure(false);
+
   const { mutate } = useMutation({
     mutationFn: () => builder.use().staff.api.createStaff(myForm.values),
     mutationKey: builder.staff.api.createStaff.get(),
+    onSuccess(data, variables, context) {
+      toast.success("staff created");
+    },
   });
+
+  const theme = useMantineTheme();
+  console.log(upload);
+  function formatBytes(bytes: number, decimals = 2) {
+    if (bytes === 0) return "0 Bytes";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["Bytes", "KB", "MB"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  }
+  const fileSizeInBytes = upload?.size; // Replace with the actual file size
+  const fileSizeFormatted = formatBytes(fileSizeInBytes);
 
   function submitform() {
     myForm.onSubmit(() => {
       mutate();
       openStaffSuccess();
     });
+    // console.log("hey big guy");
   }
 
   const myForm = useForm({
@@ -74,7 +103,76 @@ export function AddStaffContent() {
                 (Required)
               </span>
             </div>
-            <Drop upImg={upload} setImg={setUplode} />
+            {/* <Drop upImg={upload} setImg={setUplode} /> */}
+            <div>
+              <Dropzone
+                onDrop={(files) => {
+                  setUplode(files[0]);
+                }}
+                onReject={(files) => console.log("rejected files", files)}
+                maxSize={3 * 1024 ** 2}
+              >
+                <Group
+                  position="center"
+                  spacing="xl"
+                  style={{ minHeight: rem(220), pointerEvents: "none" }}
+                >
+                  <Dropzone.Accept>
+                    <IconUpload
+                      size="3.2rem"
+                      stroke={1.5}
+                      color={
+                        theme.colors[theme.primaryColor][
+                          theme.colorScheme === "dark" ? 4 : 6
+                        ]
+                      }
+                    />
+                  </Dropzone.Accept>
+                  <Dropzone.Reject>
+                    <IconX
+                      size="3.2rem"
+                      stroke={1.5}
+                      color={
+                        theme.colors.red[theme.colorScheme === "dark" ? 4 : 6]
+                      }
+                    />
+                  </Dropzone.Reject>
+                  {/* <Dropzone.Idle>
+          <IconPhoto size="3.2rem" stroke={1.5} />
+        </Dropzone.Idle> */}
+                  {upload ? (
+                    <div className="flex flex-col justify-center  items-center">
+                      <Image
+                        src={URL.createObjectURL(upload)}
+                        alt={""}
+                        width={50}
+                        height={50}
+                        className="rounded-[12px]"
+                      />
+
+                      <div className="flex justify-between items-center gap-[10px] ">
+                        <span className="text-[#54565B] text-[14px]">
+                          {(upload as File)?.name}
+                        </span>
+                        <span className="text-[#B4B4B0] text-[10px] font-normal flex items-center">
+                          {fileSizeFormatted}
+                        </span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center">
+                      <div className="flex gap-[8px] items-center">
+                        <DocumentUpload size="18" color="#8F9198" />
+                        <p className="text-[14px] text-[#8F9198] font-nunito font-bold">
+                          Drop files to attach or{" "}
+                          <span className="text-[#458EE6] ">browse</span>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </Group>
+              </Dropzone>
+            </div>
             <p className="pt-[8px] text-[#C1C2C6] text-[12px]">
               You can uploade file in the following format in
               .pdf,.xls,.doc(Size limit 10mb)
@@ -84,6 +182,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">First Name</span>
 
                 <TextInput
+                  {...myForm.getInputProps("first_name")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -101,6 +200,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Last Name</span>
 
                 <TextInput
+                  {...myForm.getInputProps("last_name")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -125,6 +225,7 @@ export function AddStaffContent() {
                 </span>
 
                 <TextInput
+                  {...myForm.getInputProps("middle_name")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -142,6 +243,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Phone Number</span>
 
                 <TextInput
+                  {...myForm.getInputProps("phone_number")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -160,6 +262,7 @@ export function AddStaffContent() {
               <div className="flex flex-col gap-[8px] flex-1">
                 <span className="text-[14px] text-[#4A4C58]">Gender</span>
                 <Select
+                  {...myForm.getInputProps("gender")}
                   searchable
                   placeholder="Select Gender"
                   rightSection={<ArrowDown2 size="16" color="#8F9198" />}
@@ -174,10 +277,8 @@ export function AddStaffContent() {
                     },
                   }}
                   data={[
-                    { value: "react", label: "React" },
-                    { value: "ng", label: "Angular" },
-                    { value: "svelte", label: "Svelte" },
-                    { value: "vue", label: "Vue" },
+                    { value: "Male", label: "Male" },
+                    { value: "female", label: "Female" },
                   ]}
                 />
               </div>
@@ -186,6 +287,7 @@ export function AddStaffContent() {
                   Marital Status
                 </span>
                 <Select
+                  {...myForm.getInputProps("martial_status")}
                   searchable
                   placeholder="Select Marital Status"
                   rightSection={<ArrowDown2 size="16" color="#8F9198" />}
@@ -200,10 +302,10 @@ export function AddStaffContent() {
                     },
                   }}
                   data={[
-                    { value: "react", label: "React" },
-                    { value: "ng", label: "Angular" },
-                    { value: "svelte", label: "Svelte" },
-                    { value: "vue", label: "Vue" },
+                    { value: "married", label: "Married" },
+                    { value: "relationship", label: "Relationship" },
+                    { value: "single", label: "single" },
+                    { value: "divorce", label: "Divorce" },
                   ]}
                 />
               </div>
@@ -451,6 +553,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">First Name</span>
 
                 <TextInput
+                  {...myForm.getInputProps("next_of_kin_first_name")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -468,6 +571,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Last Name</span>
 
                 <TextInput
+                  {...myForm.getInputProps("next_of_kin_last_name")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -492,6 +596,7 @@ export function AddStaffContent() {
                 </span>
 
                 <TextInput
+                  {...myForm.getInputProps("next_of_kin_middle_name")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -509,6 +614,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Phone Number</span>
 
                 <TextInput
+                  {...myForm.getInputProps("next_of_kin_phone_number")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -530,6 +636,7 @@ export function AddStaffContent() {
                 </span>
 
                 <TextInput
+                  {...myForm.getInputProps("next_of_kin_email")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -547,6 +654,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Relationship</span>
 
                 <TextInput
+                  {...myForm.getInputProps("next_of_kin_relationship")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -583,7 +691,7 @@ export function AddStaffContent() {
           rightIcon={
             active > 1 ? null : <ArrowRight size="22" color="#FFFFFF" />
           }
-          type={active > 1 ? "button" : "submit"}
+          // type={active > 1 ? "button" : "submit"}
           onClick={active < 2 ? nextStep : submitform}
           className="bg-[#3045BC]"
         >

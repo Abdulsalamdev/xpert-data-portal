@@ -115,7 +115,7 @@ export interface CREATESTAFF {
   email: string;
   alias_email: string;
   picture: string;
-  middle_name: string;
+  middle_name?: string;
   date_of_birth: string;
   gender: string;
   martial_status: string;
