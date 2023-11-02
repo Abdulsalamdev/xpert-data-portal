@@ -14,6 +14,7 @@ export function AddStaff({ opened, close }: AddressSucess) {
       styles={{
         content: {
           borderRadius: "16px",
+          padding: "10px",
         },
         title: {
           fontSize: "16px",

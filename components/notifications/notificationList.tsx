@@ -10,74 +10,18 @@ import { DatePickerInput } from "@mantine/dates";
 import { useState } from "react";
 import Link from "next/link";
 import { TablePagination } from "../common/pagination";
-const elements = [
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-  {
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
 
 export function NotificationList() {
+  // geting list of activity
+  const { data: activity } = useQuery({
+    queryFn: () => builder.use().notification.api.activityLog(),
+    queryKey: builder.notification.api.activityLog.get(),
+    select: ({ data }) => data?.results,
+  });
   const [activePage, setPage] = useState(1);
   const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
-  const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.name}</td>
-      <td>{element.Email}</td>
-      <td>{element.Mobile}</td>
-    </tr>
-  ));
 
   return (
     <div>
@@ -137,7 +81,15 @@ export function NotificationList() {
               <th className="">Date</th>
             </tr>
           </thead>
-          <tbody className="overflow-auto">{rows}</tbody>
+          <tbody className="overflow-auto">
+            {activity?.map((item) => (
+              <tr>
+                <td>{item.actor} </td>
+                <td>{item.action}</td>
+                <td>{item.date_created}</td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
       </div>
       <div className=" py-[15px] px-[24px]">

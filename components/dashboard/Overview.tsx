@@ -2,7 +2,7 @@ import { RingProgress } from "@mantine/core";
 import { People } from "iconsax-react";
 import React from "react";
 
-export function Overview() {
+export function Overview({ staffList }: any) {
   return (
     <div className="flex gap-[20px] justify-between pb-[20px] flex-wrap">
       <div className="grow p-[18px] flex flex-col overview">
@@ -12,7 +12,7 @@ export function Overview() {
               Overall number of Staff
             </p>
             <p className="font-bold font-nunito text-[#2A332F] text-[clamp(30px,2.8vw,40px)]">
-              1009
+              {staffList?.overall_staff}
             </p>
           </div>
           <div className="bg-[#3045BC] rounded-full p-[10px] flex justify-center items-center">
@@ -43,10 +43,10 @@ export function Overview() {
           </div>
           <div className="flex flex-col gap-[5px]">
             <p className="text-[14px] font-nunito font-semibold text-[#2C2F3C]">
-              709
+              {staffList?.male_staff}
             </p>
             <p className="text-[14px] font-nunito font-semibold text-[#2C2F3C]">
-              300
+              {staffList?.female_staff}
             </p>
           </div>
         </div>
@@ -58,7 +58,7 @@ export function Overview() {
               Overall number of Tribes
             </p>
             <p className="font-bold font-nunito text-[#2A332F] text-[clamp(30px,2.8vw,40px)]">
-              20
+              {staffList?.overall_tribe}
             </p>
           </div>
           <div className="bg-[#1863BF] rounded-full p-[10px] flex justify-center items-center">
@@ -70,7 +70,7 @@ export function Overview() {
             Last created:
           </p>
           <p className="text-[14px] text-[#2C2F3C] font-nunito font-semibold">
-            10d ago
+            {staffList?.last_created_tribe}
           </p>
         </div>
       </div>
@@ -81,7 +81,7 @@ export function Overview() {
               Overall number of Squads
             </p>
             <p className="font-bold font-nunito text-[#2A332F] text-[clamp(30px,2.8vw,40px)]">
-              85
+              {staffList?.overall_squad}
             </p>
           </div>
           <div className="bg-[#5E606A] rounded-full p-[10px] flex justify-center items-center">
@@ -93,7 +93,7 @@ export function Overview() {
             Last created:
           </p>
           <p className="text-[14px] text-[#2C2F3C] font-nunito font-semibold">
-            10d ago
+            {staffList?.last_created_squad}
           </p>
         </div>
       </div>

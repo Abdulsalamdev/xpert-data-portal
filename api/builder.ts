@@ -1,6 +1,6 @@
 import { createBuilder } from "@ibnlanre/portal";
 import { AUTHAPI, USETOKEN } from "./axios-config";
-import { ADDADDRESS, AddressLisResult, AddressListData, CITYADDRESSDATA, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, REGIONDATA, VERIFY_CODE } from "@/components/types/AllTypes";
+import { ACTIVITYLOGDATA, ADDADDRESS, AddressLisResult, AddressListData, CITYADDRESSDATA, CREATESTAFF, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, REGIONDATA, STAFFDASHBOARD, VERIFY_CODE } from "@/components/types/AllTypes";
 
 export const builder = createBuilder({
   auth: {
@@ -12,10 +12,15 @@ export const builder = createBuilder({
         AUTHAPI.post("/api/auth/verify-pin/", paylode),
       passwordreset: (data: PASSWORDRESET) =>
         AUTHAPI.post("/api/auth/reset-password/", data),
-      activityLog: () => AUTHAPI.get("/api/address/{id}/update"),
-      activityLogExorted: () => AUTHAPI.get("/api/auth/activity-log/export"),
-      activityLogSorted: () => AUTHAPI.post("/api/auth/activity-log/sorted"),
+
     },
+  },
+  notification: {
+    api: {
+            activityLog: () => USETOKEN.get<ACTIVITYLOGDATA>("/api/auth/activity-log/"),
+      activityLogExorted: () => USETOKEN.get("/api/auth/activity-log/export"),
+      activityLogSorted: () => USETOKEN.post("/api/auth/activity-log/sorted"),
+    }
   },
   address: {
     api: {
@@ -45,8 +50,8 @@ export const builder = createBuilder({
       staffId: (id: any) => USETOKEN.get(`/api/staff/${id}/`),
       editStaffId: (id: any) => USETOKEN.put(`/api/staff/${id}/`),
       suspendedStaff: (id: any) => USETOKEN.get(`/api/staff/${id}/suspend`),
-      createStaff: (data: any) => USETOKEN.post(`/api/staff/create`, data),
-      dashboardStaff: () => USETOKEN.get("/api/staff/dashboard/"),
+      createStaff: (data: CREATESTAFF) => USETOKEN.post(`/api/staff/create`, data),
+      dashboardStaff: () => USETOKEN.get<STAFFDASHBOARD>("/api/staff/dashboard/"),
       staffExport: () => USETOKEN.post("/api/staff/export"),
     },
   },

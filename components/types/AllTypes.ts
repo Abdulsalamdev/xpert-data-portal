@@ -55,7 +55,7 @@ export interface CITYADDRESS {
   latitude: string;
   longitude: string;
   city: string;
-  is_headquarter: true;
+  is_headquarter: boolean;
   description: string;
 }
 
@@ -96,3 +96,66 @@ export interface PASSWORDRESET {
   new_password: string;
   confirm_password: string;
 }
+
+export interface ACTIVITYLOGDATA {
+  count: number;
+  next: null;
+  previous: null;
+  results: ACTIVITYLOG[];
+}
+
+export interface ACTIVITYLOG {
+  actor: string;
+  action: string;
+  date_created: string;
+}
+
+//create new staff
+export interface CREATESTAFF {
+  email: string;
+  alias_email: string;
+  picture: string;
+  middle_name: string;
+  date_of_birth: string;
+  gender: string;
+  martial_status: string;
+  role: string;
+  phone_number: string;
+  work_phone: string;
+  next_of_kin_first_name: string;
+  next_of_kin_last_name: string;
+  next_of_kin_middle_name: string;
+  next_of_kin_phone_number: string;
+  next_of_kin_email: string;
+  next_of_kin_relationship: string;
+  first_name: string;
+  last_name: string;
+  tribe: number;
+  squad: number;
+  address: number;
+}
+
+// dashboard
+export interface STAFFDASHBOARD {
+  name: string;
+  email: string;
+  phone_number: string;
+  tribe: string;
+  squad: string;
+  status: string;
+  url: string;
+  id: number;
+  unique_id: string;
+  male_staff: number;
+  female_staff: number;
+  last_created_squad: string;
+  last_created_tribe: string;
+  overall_squad: number;
+  overall_staff: number;
+overall_tribe:number
+}
+
+
+
+
+

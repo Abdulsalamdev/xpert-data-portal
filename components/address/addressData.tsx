@@ -12,7 +12,7 @@ import { date, number } from "yup";
 import { ADDRESSLIST } from "../types/AllTypes";
 
 export function AddressData() {
-  const [editId, setEditId] = useState<null | number>(null);
+  const [region_Pk, setregion_pk] = useState<null | number>(null);
   const [openedSucess, { open: openSuccess, close: closeSucess }] =
     useDisclosure(false);
   const [openedDelete, { open: openDelete, close: closeDelete }] =
@@ -23,8 +23,6 @@ export function AddressData() {
     queryKey: builder.address.api.addressList.get(),
     select: ({ data }) => data?.results,
   });
-
-  console.log(addressData);
 
   return (
     <div>
@@ -43,7 +41,9 @@ export function AddressData() {
         />
         <div
           className="flex gap-[5px] items-center bg-[#3045BC] rounded-[8px] py-[6px] px-[12px] text-[white] text-[14px] font-nunito font-medium"
-          onClick={openAdd}
+          onClick={() => {
+            openAdd();
+          }}
         >
           <Add size="18" color="#FFFFFF" />
           <span>Add address</span>
@@ -81,7 +81,12 @@ export function AddressData() {
                 {ele?.description}
               </div>
               <div className="flex justify-end items-center gap-[20px] pt-[20px]">
-                <div onClick={openAdd}>
+                <div
+                  onClick={() => {
+                    console.log(region_Pk);
+                    openAdd();
+                  }}
+                >
                   <Edit2 size="16" color="#3851DD" />
                 </div>
                 <div onClick={openDelete}>
@@ -94,7 +99,7 @@ export function AddressData() {
       </div>
       <AddressSucess opened={openedSucess} close={closeSucess} />
       <DeleteAddress opened={openedDelete} close={closeDelete} />
-      <AddAddress opened={openedAdd} close={closeAdd} region_Pk={null} />
+      <AddAddress opened={openedAdd} close={closeAdd} region_Pk={region_Pk} />
     </div>
   );
 }

@@ -1,6 +1,11 @@
 import { Modal, Select, Switch, TextInput, Textarea } from "@mantine/core";
 import React, { useState } from "react";
-import { ADDADDRESS, AddressSucess, OPENADDRESS } from "../types/AllTypes";
+import {
+  ADDADDRESS,
+  AddressSucess,
+  CITYADDRESSDATA,
+  OPENADDRESS,
+} from "../types/AllTypes";
 import { ArrowDown2 } from "iconsax-react";
 import { AddRegion } from "./addRegion";
 import { useDisclosure } from "@mantine/hooks";
@@ -38,7 +43,7 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
   // geting the city address
   const { data: cityAddress } = useQuery({
     queryFn: () => builder.use().schema.api.cityAddress(region_Pk as number),
-    queryKey: builder.schema.api.cityAddress.get(),
+    queryKey: [...builder.schema.api.cityAddress.get(), region_Pk],
     select: ({ data }) => data?.results,
   });
 
@@ -69,8 +74,8 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
           </button>
         </div>
 
-        <div>
-          {region?.map((ele) => (
+        {region?.map((ele) => (
+          <div>
             <div className="pb-[20px]">
               <Select
                 key={ele.id}
@@ -81,22 +86,19 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
                 data={[{ value: ele.name, label: ele.name }]}
               />
             </div>
-          ))}
+          </div>
+        ))}
+        {cityAddress?.map((item: any) => (
           <div className="pb-[25px]">
             <Select
               {...myform.getInputProps("city")}
               searchable
               placeholder="Select City"
               rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-              data={[
-                { value: "react", label: "React" },
-                { value: "ng", label: "Angular" },
-                { value: "svelte", label: "Svelte" },
-                { value: "vue", label: "Vue" },
-              ]}
+              data={[{ value: "", label: "React" }]}
             />
           </div>
-        </div>
+        ))}
 
         <p className="text-[14px] text-[#54565B]">Office Coordinates</p>
         <div className="flex justify-between items-center pt-[10px] pb-[20px]">
@@ -110,7 +112,9 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
           />
         </div>
         <div className="flex gap-[32px] items-center pb-[40px]">
-          <span className="text-[#54565B] text-[14px]">Set as Headquarter</span>
+          <span className="text-[#54565B] text-[14px]">
+            Save as Headquarter
+          </span>
           <Switch {...myform.getInputProps("is_headquater")} />
         </div>
         <button

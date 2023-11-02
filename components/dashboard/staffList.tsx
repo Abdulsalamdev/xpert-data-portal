@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { StaffTable } from "./staffTable";
 
-export function StaffList() {
+export function StaffList({ staffList }: any) {
   return (
     <div className="pt-[10px]">
       <div className="flex justify-between pb-[10px]">
@@ -19,7 +19,7 @@ export function StaffList() {
           </p>
         </Link>
       </div>
-      <StaffTable />
+      <StaffTable staffList={staffList} />
     </div>
   );
 }
