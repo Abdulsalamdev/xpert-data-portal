@@ -42,10 +42,17 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
 
   // geting the city address
   const { data: cityAddress } = useQuery({
-    queryFn: () => builder.use().schema.api.cityAddress(region_Pk as number),
-    queryKey: [...builder.schema.api.cityAddress.get(), region_Pk],
-    select: ({ data }) => data?.results,
+    queryFn: () => builder.use().schema.api.cityAddress(+myform.values.region),
+    queryKey: [...builder.schema.api.cityAddress.get(), +myform.values.region],
+    select: ({ data }) =>
+      data?.results?.map((item: any) => ({
+        label: item?.city,
+        value: item?.id,
+      })),
+    enabled: !!myform.values.region,
   });
+
+  console.log(cityAddress);
 
   return (
     <Modal
@@ -83,22 +90,21 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
                 searchable
                 placeholder="Select Country"
                 rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-                data={[{ value: ele.name, label: ele.name }]}
+                data={[{ value: String(ele.id), label: ele.name }]}
               />
             </div>
           </div>
         ))}
-        {cityAddress?.map((item: any) => (
-          <div className="pb-[25px]">
-            <Select
-              {...myform.getInputProps("city")}
-              searchable
-              placeholder="Select City"
-              rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-              data={[{ value: "", label: "React" }]}
-            />
-          </div>
-        ))}
+
+        <div className="pb-[25px]">
+          <Select
+            {...myform.getInputProps("city")}
+            searchable
+            placeholder="Select City"
+            rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+            data={cityAddress ?? []}
+          />
+        </div>
 
         <p className="text-[14px] text-[#54565B]">Office Coordinates</p>
         <div className="flex justify-between items-center pt-[10px] pb-[20px]">

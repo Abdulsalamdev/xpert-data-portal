@@ -7,7 +7,6 @@ import { builder } from "@/api/builder";
 import { useForm } from "@mantine/form";
 import { StaffSucess } from "../modals/staffSucess";
 import { useDisclosure } from "@mantine/hooks";
-import { Drop } from "@/components/packages/dropzone";
 import { Select, TextInput } from "@mantine/core";
 import { ArrowDown2 } from "iconsax-react";
 import { toast } from "react-toastify";
@@ -37,6 +36,7 @@ export function AddStaffContent() {
     mutationKey: builder.staff.api.createStaff.get(),
     onSuccess(data, variables, context) {
       toast.success("staff created");
+      openStaffSuccess();
     },
   });
 
@@ -54,13 +54,11 @@ export function AddStaffContent() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
   const fileSizeInBytes = upload?.size; // Replace with the actual file size
-  const fileSizeFormatted = formatBytes(fileSizeInBytes);
+  const fileSizeFormatted = formatBytes(fileSizeInBytes as number);
 
   function submitform() {
-    myForm.onSubmit(() => {
-      mutate();
-      openStaffSuccess();
-    });
+    mutate();
+
     // console.log("hey big guy");
   }
 
@@ -91,7 +89,12 @@ export function AddStaffContent() {
   });
 
   return (
-    <form>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        active < 2 ? nextStep() : submitform();
+      }}
+    >
       <Stepper color="#C81107" active={active} onStepClick={setActive}>
         <Stepper.Step label="Personal information" description="">
           <div>
@@ -691,8 +694,7 @@ export function AddStaffContent() {
           rightIcon={
             active > 1 ? null : <ArrowRight size="22" color="#FFFFFF" />
           }
-          // type={active > 1 ? "button" : "submit"}
-          onClick={active < 2 ? nextStep : submitform}
+          type={"submit"}
           className="bg-[#3045BC]"
         >
           {active > 1 ? "Create Staff" : "Next"}

@@ -1,8 +1,13 @@
 import { RingProgress } from "@mantine/core";
 import { People } from "iconsax-react";
 import React from "react";
+import { STAFFDASHBOARD } from "../types/AllTypes";
 
-export function Overview({ staffList }: any) {
+export function Overview({
+  staffList,
+}: {
+  staffList: STAFFDASHBOARD | undefined;
+}) {
   return (
     <div className="flex gap-[20px] justify-between pb-[20px] flex-wrap">
       <div className="grow p-[18px] flex flex-col overview">
@@ -26,8 +31,8 @@ export function Overview({ staffList }: any) {
               thickness={16}
               roundCaps
               sections={[
-                { value: 70, color: "#3851DD" },
-                { value: 30, color: "#8F9198" },
+                { value: staffList?.male_staff as number, color: "#3851DD" },
+                { value: staffList?.female_staff as number, color: "#8F9198" },
               ]}
             />
             <div className="flex flex-col gap-[5px]">

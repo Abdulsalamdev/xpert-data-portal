@@ -16,7 +16,7 @@ export function ForgetPass() {
     mutationFn: () => builder.use().auth.api.forgetPassword(myForm.values),
     mutationKey: builder.auth.api.forgetPassword.get(),
     onSuccess(data, variables, context) {
-      console.log(data);
+      // console.log(data);
       toast.success("OTP sent, pls check your mail");
       cookieStorage.setItem("userEmail", myForm.values.email);
       push("/otp");
