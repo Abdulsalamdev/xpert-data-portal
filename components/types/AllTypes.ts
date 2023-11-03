@@ -130,6 +130,8 @@ export interface CREATESTAFF {
   next_of_kin_relationship: string;
   first_name: string;
   last_name: string;
+    region: string;
+  city: string;
   tribe: number;
   squad: number;
   address: number;
@@ -155,7 +157,55 @@ export interface STAFFDASHBOARD {
 overall_tribe:number
 }
 
-
-
-
+/// staff list
+export interface STAFFLIST {
+   count: number;
+  next: null;
+  previous: null;
+  results: STAFFLISTDATA[]
+}
+// staff list data
+export interface STAFFLISTDATA {
+    name: string,
+    email: string,
+    phone_number: string,
+    tribe: string,
+    squad: string,
+    status: boolean,
+    url: string,
+    id: 0,
+    unique_id: string
+}
+// tribe list
+export interface TRIBELIST {
+   count: number;
+  next: null;
+  previous: null;
+  results: TRIBELISTDATA[]
+}
+// tribe list data
+export interface TRIBELISTDATA {
+ id: number,
+     name:string,
+     tribe_lead: number,
+     date_created:string,
+  url: string,
+  squads: string[]
+}
+// squads list 
+export interface TRIBESQUAD {
+     count: number;
+  next: null;
+  previous: null;
+  results: TRIBESQUADDATA[]
+}
+// squad list data
+export interface TRIBESQUADDATA {
+ id: number,
+     name:string,
+     tribe_lead: number,
+     date_created:string,
+  url: string,
+  squads: string[]
+}
 

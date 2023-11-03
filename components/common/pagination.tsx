@@ -16,7 +16,7 @@ export function TablePagination() {
 
   const itemsPerPage = 5; // Number of items to display per page
   return (
-    <div className="flex justify-between items-center ">
+    <div className="flex justify-between items-center pt-[50px]">
       <button
         className="border border-[#E5E6E8] bg-white rounded-lg items-center p-2 flex itmes-center gap-[7px]"
         onClick={handlePrevPage}

@@ -9,15 +9,21 @@ import {
 import { ArrowDown2 } from "iconsax-react";
 import { AddRegion } from "./addRegion";
 import { useDisclosure } from "@mantine/hooks";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { useForm } from "@mantine/form";
+import { toast } from "react-toastify";
 
 export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
   const [checked, setChecked] = useState(false);
+  const queryClient = new QueryClient();
   const { mutate } = useMutation({
     mutationFn: () => builder.use().address.api.addAddress(myform.values),
     mutationKey: builder.address.api.addAddress.get(),
+    onSuccess(data, variables, context) {
+      toast.success("Address added");
+      queryClient.invalidateQueries(builder.address.api.addressList.get());
+    },
   });
   const [openedRegion, { open: openRegion, close: closeRegion }] =
     useDisclosure(false);
@@ -52,7 +58,7 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
     enabled: !!myform.values.region,
   });
 
-  console.log(cityAddress);
+  // console.log(cityAddress);
 
   return (
     <Modal
@@ -81,7 +87,7 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
           </button>
         </div>
 
-        {region?.map((ele) => (
+        {region?.map((ele: any) => (
           <div>
             <div className="pb-[20px]">
               <Select

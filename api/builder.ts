@@ -1,6 +1,6 @@
 import { createBuilder } from "@ibnlanre/portal";
 import { AUTHAPI, USETOKEN } from "./axios-config";
-import { ACTIVITYLOGDATA, ADDADDRESS, AddressLisResult, AddressListData, CITYADDRESSDATA, CREATESTAFF, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, REGIONDATA, STAFFDASHBOARD, VERIFY_CODE } from "@/components/types/AllTypes";
+import { ACTIVITYLOGDATA, ADDADDRESS, AddressLisResult, AddressListData, CITYADDRESSDATA, CREATESTAFF, FORGETPASSWORD, LOGINAPI, PASSWORDRESET, REGIONDATA, STAFFDASHBOARD, STAFFLIST, TRIBELIST, VERIFY_CODE } from "@/components/types/AllTypes";
 
 export const builder = createBuilder({
   auth: {
@@ -46,7 +46,7 @@ export const builder = createBuilder({
   },
   staff: {
     api: {
-      staffList: () => USETOKEN.get("/api/staff/"),
+      staffList: () => USETOKEN.get<STAFFLIST>("/api/staff/"),
       staffId: (id: any) => USETOKEN.get(`/api/staff/${id}/`),
       editStaffId: (id: any) => USETOKEN.put(`/api/staff/${id}/`),
       suspendedStaff: (id: any) => USETOKEN.get(`/api/staff/${id}/suspend`),
@@ -57,10 +57,10 @@ export const builder = createBuilder({
   },
   tribes: {
     api: {
-      tribeList: () => USETOKEN.get("/api/tribes/"),
+      tribeList: () => USETOKEN.get<TRIBELIST>("/api/tribes/"),
       tribeId: (id: any) => USETOKEN.get(`/api/tribes/${id}/`),
       editTribe: (id: any) => USETOKEN.put(`/api/tribes/${id}/`),
-      tribeSquads: (tribe_pk: any) =>
+      tribeSquads: (tribe_pk: number) =>
         USETOKEN.get(`/api/tribes/${tribe_pk}/squads`),
       sendTribeSquadS: (tribe_pk: any) =>
         USETOKEN.post(`/api/tribes/${tribe_pk}/squads`),

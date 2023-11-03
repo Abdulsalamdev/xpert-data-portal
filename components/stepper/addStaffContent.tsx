@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Stepper, Button, Group } from "@mantine/core";
 import { FileWithPath } from "@mantine/dropzone";
 import { ArrowRight, ArrowLeft } from "iconsax-react";
-import { useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { useForm } from "@mantine/form";
 import { StaffSucess } from "../modals/staffSucess";
@@ -31,36 +31,17 @@ export function AddStaffContent() {
     { open: openStaffSuccess, close: closeStaffSuccess },
   ] = useDisclosure(false);
 
+  const queryClient = new QueryClient();
+  // creating new staff
   const { mutate } = useMutation({
     mutationFn: () => builder.use().staff.api.createStaff(myForm.values),
     mutationKey: builder.staff.api.createStaff.get(),
     onSuccess(data, variables, context) {
       toast.success("staff created");
       openStaffSuccess();
+      queryClient.invalidateQueries(builder.staff.api.staffList.get());
     },
   });
-
-  const theme = useMantineTheme();
-  console.log(upload);
-  function formatBytes(bytes: number, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
-  const fileSizeInBytes = upload?.size; // Replace with the actual file size
-  const fileSizeFormatted = formatBytes(fileSizeInBytes as number);
-
-  function submitform() {
-    mutate();
-
-    // console.log("hey big guy");
-  }
 
   const myForm = useForm({
     initialValues: {
@@ -82,11 +63,59 @@ export function AddStaffContent() {
       next_of_kin_relationship: "",
       first_name: "",
       last_name: "",
+      city: "",
+      region: "",
       tribe: 0,
       squad: 0,
       address: 0,
     },
   });
+
+  // geting list of tribe
+  const { data: tribe } = useQuery({
+    queryFn: () => builder.use().tribes.api.tribeList(),
+    queryKey: builder.tribes.api.tribeList.get(),
+    select: ({ data }) => data?.results,
+  });
+
+  // geting the regions
+  const { data: region } = useQuery({
+    queryFn: () => builder.use().region.api.regionList(),
+    queryKey: builder.region.api.regionList.get(),
+    select: ({ data }) => data?.results,
+  });
+
+  // geting the city address
+  const { data: cityAddress } = useQuery({
+    queryFn: () => builder.use().schema.api.cityAddress(+myForm.values.region),
+    queryKey: [...builder.schema.api.cityAddress.get(), +myForm.values.region],
+    select: ({ data }) =>
+      data?.results?.map((item: any) => ({
+        label: item?.city,
+        value: item?.id,
+      })),
+    enabled: !!myForm.values.region,
+  });
+
+  const theme = useMantineTheme();
+  console.log(upload);
+  function formatBytes(bytes: number, decimals = 2) {
+    if (bytes === 0) return "0 Bytes";
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ["Bytes", "KB", "MB"];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+  }
+  const fileSizeInBytes = upload?.size; // Replace with the actual file size
+  const fileSizeFormatted = formatBytes(fileSizeInBytes as number);
+
+  function submitform() {
+    mutate();
+  }
 
   return (
     <form
@@ -340,6 +369,7 @@ export function AddStaffContent() {
 
                   <div className="grow">
                     <TextInput
+                      {...myForm.getInputProps("email")}
                       styles={{
                         input: {
                           backgroundColor: "#F5F5F6 !important",
@@ -363,6 +393,7 @@ export function AddStaffContent() {
                 </span>
                 <div className="flex items-center gap-[8px]">
                   <TextInput
+                    {...myForm.getInputProps("alias_email")}
                     styles={{
                       input: {
                         paddingBlock: "18px",
@@ -394,10 +425,15 @@ export function AddStaffContent() {
                         },
                       }}
                       data={[
-                        { value: "react", label: "React" },
-                        { value: "ng", label: "Angular" },
-                        { value: "svelte", label: "Svelte" },
-                        { value: "vue", label: "Vue" },
+                        { value: "@afexmail.com", label: "@afexmail.com" },
+                        {
+                          value: "@afexnigeria.com",
+                          label: "@afexnigeria.com",
+                        },
+                        {
+                          value: "@afexexchange.com",
+                          label: "@afexexchange.com",
+                        },
                       ]}
                     />
                   </div>
@@ -409,27 +445,31 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">
                   Tribe/Depertment
                 </span>
-                <Select
-                  searchable
-                  placeholder="Select Tribe/Depertment"
-                  rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-                  styles={{
-                    input: {
-                      paddingBlock: "18px",
-                      paddingInline: "14px",
-                      borderRadius: "8px",
-                      border: "1px solid #DADADD",
-                      boxShadow:
-                        "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
-                    },
-                  }}
-                  data={[
-                    { value: "react", label: "React" },
-                    { value: "ng", label: "Angular" },
-                    { value: "svelte", label: "Svelte" },
-                    { value: "vue", label: "Vue" },
-                  ]}
-                />
+                <div>
+                  <div className="">
+                    <Select
+                      searchable
+                      placeholder="Select Tribe/Depertment"
+                      rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+                      styles={{
+                        input: {
+                          paddingBlock: "18px",
+                          paddingInline: "14px",
+                          borderRadius: "8px",
+                          border: "1px solid #DADADD",
+                          boxShadow:
+                            "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
+                        },
+                      }}
+                      data={
+                        tribe?.map((item) => ({
+                          value: String(item.id),
+                          label: item?.name,
+                        })) ?? []
+                      }
+                    />
+                  </div>
+                </div>
               </div>
               <div className="flex flex-col gap-[8px] flex-1">
                 <span className="text-[14px] text-[#4A4C58]">Squad/Unit</span>
@@ -461,6 +501,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Designation</span>
 
                 <TextInput
+                  {...myForm.getInputProps("role")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -478,6 +519,7 @@ export function AddStaffContent() {
                 <span className="text-[14px] text-[#4A4C58]">Work Phone</span>
 
                 <TextInput
+                  {...myForm.getInputProps("phone_number")}
                   styles={{
                     input: {
                       paddingBlock: "18px",
@@ -500,31 +542,35 @@ export function AddStaffContent() {
                     (Country)
                   </span>
                 </span>
-                <Select
-                  searchable
-                  placeholder="Select Country"
-                  rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-                  styles={{
-                    input: {
-                      paddingBlock: "18px",
-                      paddingInline: "14px",
-                      borderRadius: "8px",
-                      border: "1px solid #DADADD",
-                      boxShadow:
-                        "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
-                    },
-                  }}
-                  data={[
-                    { value: "react", label: "React" },
-                    { value: "ng", label: "Angular" },
-                    { value: "svelte", label: "Svelte" },
-                    { value: "vue", label: "Vue" },
-                  ]}
-                />
+                {region?.map((ele: any) => (
+                  <div>
+                    <div className="">
+                      <Select
+                        key={ele.id}
+                        {...myForm.getInputProps("region")}
+                        searchable
+                        placeholder="Select Country"
+                        rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+                        styles={{
+                          input: {
+                            paddingBlock: "18px",
+                            paddingInline: "14px",
+                            borderRadius: "8px",
+                            border: "1px solid #DADADD",
+                            boxShadow:
+                              "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
+                          },
+                        }}
+                        data={[{ value: String(ele.id), label: ele.name }]}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="flex flex-col gap-[8px] flex-1">
                 <span className="text-[14px] text-[#4A4C58]">City Address</span>
                 <Select
+                  {...myForm.getInputProps("city")}
                   searchable
                   placeholder="Select c1ty"
                   rightSection={<ArrowDown2 size="16" color="#8F9198" />}
@@ -538,12 +584,7 @@ export function AddStaffContent() {
                         "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                     },
                   }}
-                  data={[
-                    { value: "react", label: "React" },
-                    { value: "ng", label: "Angular" },
-                    { value: "svelte", label: "Svelte" },
-                    { value: "vue", label: "Vue" },
-                  ]}
+                  data={cityAddress ?? []}
                 />
               </div>
             </div>

@@ -9,149 +9,21 @@ import { StaffSucess } from "@/components/modals/staffSucess";
 import { DeactivateStaff } from "@/components/modals/deactivateStaff";
 import { FilterStaff } from "@/components/drawer/filterStaff";
 import { TablePagination } from "@/components/common/pagination";
+import { useQuery } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
 
-const elements = [
-  {
-    id: "1",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Carbon",
-    status: true,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "2",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Nitrogen",
-    status: true,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "3",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Yttrium",
-    status: true,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "4",
-    name: "abdulsalam",
-    check: <Checkbox color="violet" size="md" />,
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Barium",
-    status: true,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "5",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: true,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "6",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "7",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "8",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-
-  {
-    id: "9",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: false,
-    squad: "gsghghsghsggg",
-  },
-  {
-    id: "10",
-    check: <Checkbox color="violet" size="md" />,
-    name: "abdulsalam",
-    Email: "abdulsalam@gmail.com",
-    Mobile: "0812838738787",
-    tribe: "Cerium",
-    status: true,
-    squad: "gsghghsghsggg",
-  },
-];
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
     useDisclosure(false);
   const [openedFilter, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
-  const rows = elements.map((element) => (
-    <tr key={element.id}>
-      <td>{element.check}</td>
-      <td>{element.id}</td>
-      <td>{element.name}</td>
-      <td>{element.Email}</td>
-      <td>{element.Mobile}</td>
-      <td>{element.tribe}</td>
-      <td>{element.squad}</td>
-      <td>
-        <div className="flex gap-[10px] items-center">
-          <p
-            style={{
-              backgroundColor: element.status === true ? "#E7F9F0" : "#FDEEEE",
-              color: element.status === true ? "#076D3A" : "#873031",
-            }}
-            className="flex gap-[4px] p-[8px] rounded-[16px]  items-center"
-          >
-            <div
-              style={{
-                backgroundColor:
-                  element.status === true ? "#0DBF66" : "#ED5556",
-                width: "5px",
-                height: "5px",
-              }}
-              className="rounded-full"
-            ></div>
-            {element.status === true ? "Active" : "Inactive"}
-          </p>
-          {element.status === true ? <StaffActive /> : <StaffInActive />}
-        </div>
-      </td>
-    </tr>
-  ));
+  // geting list of staff
+  const { data: staff } = useQuery({
+    queryFn: () => builder.use().staff.api.staffList(),
+    queryKey: builder.staff.api.staffList.get(),
+    select: ({ data }) => data?.results,
+  });
+
   return (
     <div>
       <div className="flex justify-between pl-[20px] pb-[32px] border-b-[1px] border-[#afb4bd] pr-[20px]">
@@ -216,7 +88,49 @@ export function MemberList() {
               <th>Status</th>
             </tr>
           </thead>
-          <tbody className="overflow-auto">{rows}</tbody>
+          <tbody className="overflow-auto">
+            {staff?.map((element) => (
+              <tr key={element.id}>
+                <td>
+                  <Checkbox color="violet" size="md" />
+                </td>
+                <td>{element.id}</td>
+                <td>{element.name}</td>
+                <td>{element.email}</td>
+                <td>{element.phone_number}</td>
+                <td>{element.tribe}</td>
+                <td>{element.squad}</td>
+                <td>
+                  <div className="flex gap-[10px] items-center">
+                    <p
+                      style={{
+                        backgroundColor:
+                          element.status === true ? "#E7F9F0" : "#FDEEEE",
+                        color: element.status === true ? "#076D3A" : "#873031",
+                      }}
+                      className="flex gap-[4px] p-[8px] rounded-[16px]  items-center"
+                    >
+                      <div
+                        style={{
+                          backgroundColor:
+                            element.status === true ? "#0DBF66" : "#ED5556",
+                          width: "5px",
+                          height: "5px",
+                        }}
+                        className="rounded-full"
+                      ></div>
+                      {element.status === true ? "Active" : "Inactive"}
+                    </p>
+                    {element.status === true ? (
+                      <StaffActive />
+                    ) : (
+                      <StaffInActive />
+                    )}
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
         <div className="pb-[10px]">
           <TablePagination />
