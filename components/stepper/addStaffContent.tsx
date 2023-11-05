@@ -41,6 +41,9 @@ export function AddStaffContent() {
       openStaffSuccess();
       queryClient.invalidateQueries(builder.staff.api.staffList.get());
     },
+    onError(error, variables, context) {
+      toast.error("invalid credentials !!");
+    },
   });
 
   const myForm = useForm({
@@ -78,6 +81,20 @@ export function AddStaffContent() {
     select: ({ data }) => data?.results,
   });
 
+  // getting squad list
+
+  const { data: squad } = useQuery({
+    queryFn: () => builder.use().tribes.api.tribeSquads(+myForm.values.tribe),
+    queryKey: [...builder.tribes.api.tribeSquads.get(), +myForm.values.tribe],
+    select: ({ data }) =>
+      data?.results?.map((item: any) => ({
+        label: item?.member,
+        value: item?.id,
+      })),
+    enabled: !!myForm.values.tribe,
+  });
+
+  console.log(squad);
   // geting the regions
   const { data: region } = useQuery({
     queryFn: () => builder.use().region.api.regionList(),
@@ -487,12 +504,7 @@ export function AddStaffContent() {
                         "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                     },
                   }}
-                  data={[
-                    { value: "react", label: "React" },
-                    { value: "ng", label: "Angular" },
-                    { value: "svelte", label: "Svelte" },
-                    { value: "vue", label: "Vue" },
-                  ]}
+                  data={squad ?? []}
                 />
               </div>
             </div>
@@ -542,30 +554,33 @@ export function AddStaffContent() {
                     (Country)
                   </span>
                 </span>
-                {region?.map((ele: any) => (
-                  <div>
-                    <div className="">
-                      <Select
-                        key={ele.id}
-                        {...myForm.getInputProps("region")}
-                        searchable
-                        placeholder="Select Country"
-                        rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-                        styles={{
-                          input: {
-                            paddingBlock: "18px",
-                            paddingInline: "14px",
-                            borderRadius: "8px",
-                            border: "1px solid #DADADD",
-                            boxShadow:
-                              "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
-                          },
-                        }}
-                        data={[{ value: String(ele.id), label: ele.name }]}
-                      />
-                    </div>
+
+                <div>
+                  <div className="">
+                    <Select
+                      {...myForm.getInputProps("region")}
+                      searchable
+                      placeholder="Select Country"
+                      rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+                      styles={{
+                        input: {
+                          paddingBlock: "18px",
+                          paddingInline: "14px",
+                          borderRadius: "8px",
+                          border: "1px solid #DADADD",
+                          boxShadow:
+                            "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
+                        },
+                      }}
+                      data={
+                        region?.map((ele) => ({
+                          value: String(ele.id),
+                          label: ele?.name,
+                        })) ?? []
+                      }
+                    />
                   </div>
-                ))}
+                </div>
               </div>
               <div className="flex flex-col gap-[8px] flex-1">
                 <span className="text-[14px] text-[#4A4C58]">City Address</span>
