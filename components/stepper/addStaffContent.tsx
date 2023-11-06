@@ -191,13 +191,13 @@ export function AddStaffContent() {
         </Dropzone.Idle> */}
                   {upload ? (
                     <div className="flex flex-col justify-center  items-center">
-                      <Image
+                      {/* <Image
                         src={URL.createObjectURL(upload)}
                         alt={""}
                         width={50}
                         height={50}
                         className="rounded-[12px]"
-                      />
+                      /> */}
 
                       <div className="flex justify-between items-center gap-[10px] ">
                         <span className="text-[#54565B] text-[14px]">

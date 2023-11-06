@@ -21,7 +21,7 @@ export function AddressData() {
   const { data: addressData, isLoading } = useQuery({
     queryFn: () => builder.use().address.api.addressList(),
     queryKey: builder.address.api.addressList.get(),
-    select: ({ data }) => data?.results,
+    select: ({ data }) => data,
   });
 
   return (
@@ -55,11 +55,11 @@ export function AddressData() {
             Addresses
           </span>
           <span className="text-[12px] text-[#8F9198] p-[3px] rounded-[13px] bg-[#F0F0F1]">
-            06
+            {addressData?.count}
           </span>
         </div>
         <div className="px-[24px] py-[30px] flex flex-wrap gap-[25px]">
-          {addressData?.map((ele) => (
+          {addressData?.results?.map((ele: any) => (
             <div key={ele?.id} className="address">
               <div className="flex justify-between items-center pb-[12px] border-b-[#8F9198] border-b-[1.2px] border-solid">
                 <p>{ele?.city}</p>
