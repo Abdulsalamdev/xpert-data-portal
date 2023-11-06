@@ -21,7 +21,7 @@ export function MemberList() {
   const { data: staff } = useQuery({
     queryFn: () => builder.use().staff.api.staffList(),
     queryKey: builder.staff.api.staffList.get(),
-    select: ({ data }) => data?.results,
+    select: ({ data }) => data,
   });
 
   return (
@@ -68,7 +68,7 @@ export function MemberList() {
       <div className="pl-[20px] pt-[15px] pb-[5px] text-[#4A4C58] text-[14px] border-solid border-b-[1px] border-b-[#A1A9B8] ">
         Staff List{" "}
         <span className="text-[#8F9198] text-[12px] px-[6px] bg-[#F0F0F1] rounded-[13px]">
-          (0)
+          {staff?.count}
         </span>
       </div>
       <div className="pl-[20px] pt-[20px] pr-[20px] staffManagement">
@@ -89,7 +89,7 @@ export function MemberList() {
             </tr>
           </thead>
           <tbody className="overflow-auto">
-            {staff?.map((element) => (
+            {staff?.results?.map((element) => (
               <tr key={element.id}>
                 <td>
                   <Checkbox color="violet" size="md" />
