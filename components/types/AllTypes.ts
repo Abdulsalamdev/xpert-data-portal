@@ -116,7 +116,7 @@ export interface CREATESTAFF {
   alias_email: string;
   picture: string;
   middle_name?: string;
-  date_of_birth: string;
+  date_of_birth?: string;
   gender: string;
   martial_status: string;
   role: string;
@@ -124,13 +124,13 @@ export interface CREATESTAFF {
   work_phone: string;
   next_of_kin_first_name: string;
   next_of_kin_last_name: string;
-  next_of_kin_middle_name: string;
+  next_of_kin_middle_name?: string;
   next_of_kin_phone_number: string;
   next_of_kin_email: string;
   next_of_kin_relationship: string;
   first_name: string;
   last_name: string;
-    region: string;
+  region: string;
   city: string;
   tribe: number;
   squad: number;
@@ -154,58 +154,58 @@ export interface STAFFDASHBOARD {
   last_created_tribe: string;
   overall_squad: number;
   overall_staff: number;
-overall_tribe:number
+  overall_tribe: number;
 }
 
 /// staff list
 export interface STAFFLIST {
-   count: number;
+  count: number;
   next: null;
   previous: null;
-  results: STAFFLISTDATA[]
+  results: STAFFLISTDATA[];
 }
 // staff list data
 export interface STAFFLISTDATA {
-    name: string,
-    email: string,
-    phone_number: string,
-    tribe: string,
-    squad: string,
-    status: boolean,
-    url: string,
-    id: 0,
-    unique_id: string
+  name: string;
+  email: string;
+  phone_number: string;
+  tribe: string;
+  squad: string;
+  status: boolean;
+  url: string;
+  id: 0;
+  unique_id: string;
 }
 // tribe list
 export interface TRIBELIST {
-   count: number;
+  count: number;
   next: null;
   previous: null;
-  results: TRIBELISTDATA[]
+  results: TRIBELISTDATA[];
 }
 // tribe list data
 export interface TRIBELISTDATA {
- id: number,
-     name:string,
-     tribe_lead: number,
-     date_created:string,
-  url: string,
-  squads: string[]
+  id: number;
+  name: string;
+  tribe_lead: number;
+  date_created: string;
+  url: string;
+  squads: string[];
 }
-// squads list 
+// squads list
 export interface TRIBESQUAD {
-     count: number;
-  next: null;
-  previous: null;
-  results: TRIBESQUADDATA[]
-}
-// squad list data
-export interface TRIBESQUADDATA {
- id: number,
-     name:string,
-     tribe_lead: number,
-     date_created:string,
-  url: string,
-  squads: string[]
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: TRIBESQUADDATA[];
 }
 
+// squad list data
+export interface TRIBESQUADDATA {
+  id: number;
+  name: string;
+  squad_lead: any;
+  members: number;
+  date_created: string;
+  url: string;
+}

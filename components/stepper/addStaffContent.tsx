@@ -75,26 +75,30 @@ export function AddStaffContent() {
   });
 
   // geting list of tribe
-  const { data: tribe } = useQuery({
+  const { data: tribe = [] } = useQuery({
     queryFn: () => builder.use().tribes.api.tribeList(),
     queryKey: builder.tribes.api.tribeList.get(),
-    select: ({ data }) => data?.results,
+    select: ({ data }) =>
+      data?.results?.map((item) => ({
+        value: String(item.id),
+        label: item?.name,
+      })),
   });
 
   // getting squad list
 
-  const { data: squad } = useQuery({
+  const { data: squad = [] } = useQuery({
     queryFn: () => builder.use().tribes.api.tribeSquads(+myForm.values.tribe),
     queryKey: [...builder.tribes.api.tribeSquads.get(), +myForm.values.tribe],
     select: ({ data }) =>
-      data?.results?.map((item: any) => ({
-        label: item?.member,
-        value: item?.id,
+      data?.results?.map((item) => ({
+        label: item?.name,
+        value: String(item?.id),
       })),
     enabled: !!myForm.values.tribe,
   });
 
-  console.log(squad);
+  console.log({ squad, tribe });
   // geting the regions
   const { data: region } = useQuery({
     queryFn: () => builder.use().region.api.regionList(),
@@ -155,6 +159,7 @@ export function AddStaffContent() {
             {/* <Drop upImg={upload} setImg={setUplode} /> */}
             <div>
               <Dropzone
+                {...myForm.getInputProps("picture")}
                 onDrop={(files) => {
                   setUplode(files[0]);
                 }}
@@ -303,7 +308,7 @@ export function AddStaffContent() {
                         "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                     },
                   }}
-                  placeholder="Enter Mobile Number"
+                  placeholder="+234809000000"
                 />
               </div>
             </div>
@@ -351,10 +356,10 @@ export function AddStaffContent() {
                     },
                   }}
                   data={[
-                    { value: "married", label: "Married" },
-                    { value: "relationship", label: "Relationship" },
-                    { value: "single", label: "single" },
-                    { value: "divorce", label: "Divorce" },
+                    { value: "Married", label: "Married" },
+                    { value: "Divorced", label: "Divorced" },
+                    { value: "Single", label: "Single" },
+                    { value: "Widowed", label: "Widowed" },
                   ]}
                 />
               </div>
@@ -468,6 +473,7 @@ export function AddStaffContent() {
                       searchable
                       placeholder="Select Tribe/Depertment"
                       rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+                      {...myForm.getInputProps("tribe")}
                       styles={{
                         input: {
                           paddingBlock: "18px",
@@ -478,12 +484,7 @@ export function AddStaffContent() {
                             "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                         },
                       }}
-                      data={
-                        tribe?.map((item) => ({
-                          value: String(item.id),
-                          label: item?.name,
-                        })) ?? []
-                      }
+                      data={tribe}
                     />
                   </div>
                 </div>
@@ -493,6 +494,7 @@ export function AddStaffContent() {
                 <Select
                   searchable
                   placeholder="Select Squad/Unit"
+                  {...myForm.getInputProps("squad")}
                   rightSection={<ArrowDown2 size="16" color="#8F9198" />}
                   styles={{
                     input: {
@@ -504,7 +506,7 @@ export function AddStaffContent() {
                         "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                     },
                   }}
-                  data={squad ?? []}
+                  data={squad}
                 />
               </div>
             </div>
@@ -542,7 +544,7 @@ export function AddStaffContent() {
                         "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                     },
                   }}
-                  placeholder="Enter Phone Number"
+                  placeholder="+23489009393"
                 />
               </div>
             </div>
@@ -684,7 +686,7 @@ export function AddStaffContent() {
                         "0px 0px 0px 1px rgba(193, 194, 198, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                     },
                   }}
-                  placeholder="Enter Mobile Number"
+                  placeholder="+234566888900"
                 />
               </div>
             </div>

@@ -25,16 +25,15 @@ export function ForgetPass() {
       toast.error("something went worng !");
     },
   });
+
   const myForm = useForm({
     initialValues: {
       email: "",
     },
   });
+
   return (
-    <form
-      onSubmit={myForm.onSubmit(() => mutate())}
-      className="w-[80%] m-auto pt-[30px] "
-    >
+    <div className="w-[80%] m-auto pt-[30px] ">
       <Image
         src={"/images/logo.png"}
         alt={""}
@@ -44,7 +43,10 @@ export function ForgetPass() {
       />
       <div className="justify-between items-center gap-[10px] flex">
         <Sso />
-        <form className="p-[40px] bg-[#ffffff] sign-1 rounded-[16px]">
+        <form
+          onSubmit={myForm.onSubmit(() => mutate())}
+          className="p-[40px] bg-[#ffffff] sign-1 rounded-[16px]"
+        >
           <div className="text-[#BF2018] text-[clamp(20px,1.4vw,24px)] flex justify-center font-nunito font-bold pb-[clamp(25px,2.4vw,40px)]">
             AFEX SSO
           </div>
@@ -88,6 +90,6 @@ export function ForgetPass() {
           </div>
         </form>
       </div>
-    </form>
+    </div>
   );
 }
