@@ -7,6 +7,7 @@ import {
   AddressListData,
   CITYADDRESSDATA,
   CREATESTAFF,
+  EditAddress,
   FORGETPASSWORD,
   LOGINAPI,
   PASSWORDRESET,
@@ -43,8 +44,10 @@ export const builder = createBuilder({
       addAddress: (data: ADDADDRESS) =>
         USETOKEN.post("/api/address/create/", data),
       addressList: () => USETOKEN.get<AddressListData>("/api/address/"),
-      editAddress: (id: any) => USETOKEN.put(`/api/address/${id}/update`),
-      deleteAddress: (id: any) => USETOKEN.delete(`/api/address/${id}/delete`),
+      editAddress: (id: number, data: EditAddress) =>
+        USETOKEN.put(`/api/address/${id}/update`, data),
+      deleteAddress: (id: number) =>
+        USETOKEN.delete(`/api/address/${id}/delete`),
     },
   },
   region: {

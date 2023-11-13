@@ -1,7 +1,7 @@
 import { Input } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Add, Edit2, SearchNormal1, Trash } from "iconsax-react";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { AddressSucess } from "../modals/addressSuccess";
 import { DeleteAddress } from "../modals/deleteAddress";
 import { AddAddress } from "../modals/addAddress";
@@ -9,7 +9,8 @@ import { StaffSucess } from "../modals/staffSucess";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { date, number } from "yup";
-import { ADDRESSLIST } from "../types/AllTypes";
+import { ADDRESSLIST, AddressLisResult } from "../types/AllTypes";
+import { EditAddress } from "../modals/editAddress";
 
 export function AddressData() {
   const [region_Pk, setregion_pk] = useState<null | number>(null);
@@ -18,7 +19,19 @@ export function AddressData() {
   const [openedDelete, { open: openDelete, close: closeDelete }] =
     useDisclosure(false);
   const [openedAdd, { open: openAdd, close: closeAdd }] = useDisclosure(false);
-  const { data: addressData, isLoading } = useQuery({
+  const [{ openedEdit, editData }, setEditAddress] = useState<{
+    openedEdit: boolean;
+    editData: null | AddressLisResult;
+  }>({
+    openedEdit: false,
+    editData: null,
+  });
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const closeEdit = () => {
+    setEditAddress({ openedEdit: false, editData: null });
+  };
+
+  const { data: addressData } = useQuery({
     queryFn: () => builder.use().address.api.addressList(),
     queryKey: builder.address.api.addressList.get(),
     select: ({ data }) => data,
@@ -59,7 +72,7 @@ export function AddressData() {
           </span>
         </div>
         <div className="px-[24px] py-[30px] flex flex-wrap gap-[25px]">
-          {addressData?.results?.map((ele: any) => (
+          {addressData?.results?.map((ele) => (
             <div key={ele?.id} className="address">
               <div className="flex justify-between items-center pb-[12px] border-b-[#8F9198] border-b-[1.2px] border-solid">
                 <p>{ele?.city}</p>
@@ -83,13 +96,21 @@ export function AddressData() {
               <div className="flex justify-end items-center gap-[20px] pt-[20px]">
                 <div
                   onClick={() => {
-                    console.log(region_Pk);
-                    openAdd();
+                    setEditAddress({
+                      openedEdit: true,
+                      editData: ele,
+                    });
+                    // console.log(ele);
                   }}
                 >
                   <Edit2 size="16" color="#3851DD" />
                 </div>
-                <div onClick={openDelete}>
+                <div
+                  onClick={() => {
+                    setDeleteId(ele.id);
+                    openDelete();
+                  }}
+                >
                   <Trash size="16" color="#FF8A65" />
                 </div>
               </div>
@@ -98,8 +119,19 @@ export function AddressData() {
         </div>
       </div>
       <AddressSucess opened={openedSucess} close={closeSucess} />
-      <DeleteAddress opened={openedDelete} close={closeDelete} />
+      <DeleteAddress
+        opened={openedDelete}
+        close={closeDelete}
+        deleteData={deleteId}
+      />
       <AddAddress opened={openedAdd} close={closeAdd} region_Pk={region_Pk} />
+      {editData ? (
+        <EditAddress
+          opened={openedEdit}
+          close={closeEdit}
+          initialData={editData}
+        />
+      ) : null}
     </div>
   );
 }

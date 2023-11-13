@@ -66,6 +66,8 @@ export interface AddressLisResult {
   region: string;
   city: string;
   edit_url: string;
+  latitude?: string;
+  longitude?: string;
   delete_url: string;
 }
 
@@ -209,3 +211,29 @@ export interface TRIBESQUADDATA {
   date_created: string;
   url: string;
 }
+
+// edit address
+
+export interface EditAddressModal {
+  opened: boolean;
+  close: () => void;
+  initialData: AddressLisResult | null;
+}
+
+export interface EditAddress {
+  latitude: string;
+  longitude: string;
+  city: string;
+  is_headquarter: boolean;
+  description: string;
+}
+
+export interface DeleteAddress {
+  close: () => void;
+  opened: boolean;
+  deleteData: number | null;
+}
+
+// export interface ID {
+//   id: number;
+// }

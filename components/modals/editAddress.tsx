@@ -1,41 +1,46 @@
-import { Modal, Select, Switch, TextInput, Textarea } from "@mantine/core";
-import React, { useState } from "react";
+import React from "react";
+import { EditAddressModal } from "../types/AllTypes";
+import { builder } from "@/api/builder";
 import {
-  ADDADDRESS,
-  AddressSucess,
-  CITYADDRESSDATA,
-  OPENADDRESS,
-} from "../types/AllTypes";
+  Textarea,
+  Select,
+  TextInput,
+  Switch,
+  CloseButton,
+  Modal,
+} from "@mantine/core";
+import { useForm } from "@mantine/form";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { ArrowDown2 } from "iconsax-react";
+import { toast } from "react-toastify";
 import { AddRegion } from "./addRegion";
 import { useDisclosure } from "@mantine/hooks";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
-import { builder } from "@/api/builder";
-import { useForm } from "@mantine/form";
-import { toast } from "react-toastify";
 
-export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
-  // const [isHeadquarter, setIsHeadquarter] = useState(false);
+export function EditAddress({ opened, close, initialData }: EditAddressModal) {
   const queryClient = new QueryClient();
-  const { mutate } = useMutation({
-    mutationFn: () => builder.use().address.api.addAddress(myform.values),
-    mutationKey: builder.address.api.addAddress.get(),
-    onSuccess(data, variables, context) {
-      toast.success("Address added");
-      queryClient.invalidateQueries(builder.address.api.addressList.get());
-    },
-  });
   const [openedRegion, { open: openRegion, close: closeRegion }] =
     useDisclosure(false);
   const myform = useForm({
     initialValues: {
-      id: 0,
-      is_headquarter: false,
-      description: "",
-      region: "",
-      city: "",
-      latitude: "",
-      longitude: "",
+      id: initialData?.id ?? 0,
+      is_headquarter: initialData?.is_headquarter ?? false,
+      description: initialData?.description ?? "",
+      region: initialData?.region ?? "",
+      city: initialData?.city ?? "",
+      latitude: initialData?.latitude ?? "",
+      longitude: initialData?.longitude ?? "",
+    },
+  });
+
+  console.log(initialData);
+  const { mutate } = useMutation({
+    mutationFn: () =>
+      builder.use().address.api.editAddress(+myform.values.id, myform.values),
+    mutationKey: [...builder.address.api.editAddress.get(), +myform.values.id],
+    onSuccess(data, variables, context) {
+      queryClient.invalidateQueries(builder.address.api.addressList.get());
+      toast.success("Address edited successfully");
+      close();
     },
   });
 
@@ -62,7 +67,7 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
     <Modal
       opened={opened}
       onClose={close}
-      title="Add Address"
+      title="Edit Address"
       centered
       styles={{
         content: {
@@ -73,12 +78,13 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
       <form
         onSubmit={myform.onSubmit(() => {
           console.log(myform.values);
-          // mutate();
+          mutate();
         })}
       >
         <p className="pb-[16px] text-[14px] text-[#54565B]">Office Address</p>
         <div className="pb-[20px]">
           <Textarea
+            variant="filled"
             placeholder="Full address of the office location"
             {...myform.getInputProps("description")}
           />
@@ -90,23 +96,27 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
           </button>
         </div>
 
-        {region?.map((ele: any) => (
-          <div>
-            <div className="pb-[20px]">
-              <Select
-                key={ele.id}
-                {...myform.getInputProps("region")}
-                searchable
-                placeholder="Select Country"
-                rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-                data={[{ value: String(ele.id), label: ele.name }]}
-              />
-            </div>
+        <div>
+          <div className="pb-[20px]">
+            <Select
+              variant="filled"
+              {...myform.getInputProps("region")}
+              searchable
+              placeholder="Select Country"
+              rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+              data={
+                region?.map((ele) => ({
+                  value: String(ele.id),
+                  label: ele?.name,
+                })) ?? []
+              }
+            />
           </div>
-        ))}
+        </div>
 
         <div className="pb-[25px]">
           <Select
+            variant="filled"
             {...myform.getInputProps("city")}
             searchable
             placeholder="Select City"
@@ -118,10 +128,12 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
         <p className="text-[14px] text-[#54565B]">Office Coordinates</p>
         <div className="flex justify-between items-center pt-[10px] pb-[20px]">
           <TextInput
+            variant="filled"
             placeholder="Latitude (e.g. 9.356767 N)"
             {...myform.getInputProps("latitude")}
           />
           <TextInput
+            variant="filled"
             placeholder="Longitude (e.g. 7.356700 E)"
             {...myform.getInputProps("longitude")}
           />
@@ -131,6 +143,7 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
             Save as Headquarter
           </span>
           <Switch
+            variant="filled"
             {...myform.getInputProps("is_headquarter", { type: "checkbox" })}
           />
         </div>
@@ -141,6 +154,7 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
           Save Changes
         </button>
       </form>
+
       <AddRegion opened={openedRegion} close={closeRegion} />
     </Modal>
   );
