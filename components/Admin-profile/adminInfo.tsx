@@ -46,11 +46,10 @@ export function AdminInfo() {
   useEffect(() => {
     const user = cookieStorage.getItem("my-user");
     if (user) setUserData(JSON.parse(user));
-    console.log(user);
   }, []);
 
   const { user } = userData;
-  const { email, first_name, last_name } = { ...user };
+  const { email, first_name, last_name, is_active } = { ...user };
   // const first_name = user.first_name;
   // const last_name = user.last_name;
   // const is_active = user.is_active;
@@ -114,9 +113,26 @@ export function AdminInfo() {
                 {userData.unique_id}
               </span>
             </div>
-            <div className="bg-[#E7F9F0] p-[8px] rounded-[8px] flex gap-[5px] items-center">
-              <div className="w-[5px] h-[5px] rounded-full bg-[#076D3A]"></div>
-              <div className="text-[#076D3A] text-[14px]">Active</div>
+            <div
+              className=" p-[8px] rounded-[8px] flex gap-[5px] items-center"
+              style={{
+                backgroundColor: is_active === true ? "#E7F9F0" : "#FDEEEE",
+              }}
+            >
+              <div
+                className="w-[5px] h-[5px] rounded-full "
+                style={{
+                  backgroundColor: is_active === true ? "#076D3A" : "#ED5556",
+                }}
+              ></div>
+              <div
+                className="text-[14px]"
+                style={{
+                  color: is_active === true ? "#076D3A" : "#873031",
+                }}
+              >
+                {is_active === true ? "Active" : "Inactive"}
+              </div>
             </div>
           </div>
         </div>
