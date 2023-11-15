@@ -1,37 +1,88 @@
 import { ActionIcon, CopyButton, Tooltip } from "@mantine/core";
 import { Calendar, Call, Copy, Data, Message, Profile } from "iconsax-react";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconCheck } from "@tabler/icons-react";
+import { cookieStorage } from "@ibnlanre/portal";
 
-const info = [
-  {
-    name: "DEPERTMENT",
-    content: "Corporate Services",
-    img: <Data color="#3851DD" />,
-  },
-  {
-    name: "EMAIL ADDRESS",
-    content: "geromonsele@afexnigeria.com",
-    img: <Message color="#3851DD" />,
-  },
-  {
-    name: "MOBIE ADDRES",
-    content: "+234 810 6545 067",
-    img: <Call color="#3851DD" />,
-  },
-  {
-    name: "WORK MOBILE",
-    content: "+234 810 6545 067",
-    img: <Call color="#3851DD" />,
-  },
-  {
-    name: "DATE OF BIRTH",
-    content: "14 january, xxxx",
-    img: <Calendar color="#3851DD" />,
-  },
-];
+type UserData = {
+  id: number;
+  user: {
+    email: string;
+    first_name: string;
+    last_name: string;
+    is_active: boolean;
+  };
+  tribe: string;
+  squad: string;
+  date_created: string;
+  date_updated: string;
+  unique_id: string;
+  picture: string;
+  middle_name: string;
+  date_of_birth: any;
+  gender: string;
+  martial_status: string;
+  alias_email: string;
+  role: string;
+  phone_number: string;
+  work_phone: string;
+  next_of_kin_first_name: string;
+  next_of_kin_last_name: string;
+  next_of_kin_middle_name: string;
+  next_of_kin_phone_number: string;
+  next_of_kin_email: string;
+  next_of_kin_relationship: string;
+  address: number;
+  tokens: {
+    refresh: string;
+    access: string;
+  };
+};
+
 export function AdminInfo() {
+  const [userData, setUserData] = useState({} as UserData);
+
+  useEffect(() => {
+    const user = cookieStorage.getItem("my-user");
+    if (user) setUserData(JSON.parse(user));
+    console.log(user);
+  }, []);
+
+  const { user } = userData;
+  const { email, first_name, last_name } = { ...user };
+  // const first_name = user.first_name;
+  // const last_name = user.last_name;
+  // const is_active = user.is_active;
+
+  const info = [
+    {
+      name: "DEPERTMENT",
+      content: userData.role,
+      icon: Data,
+    },
+    {
+      name: "EMAIL ADDRESS",
+      content: email,
+      icon: Message,
+    },
+    {
+      name: "MOBIE ADDRES",
+      content: userData.phone_number,
+      icon: Call,
+    },
+    {
+      name: "WORK MOBILE",
+      content: userData.work_phone,
+      icon: Call,
+    },
+    {
+      name: "DATE OF BIRTH",
+      content: userData.date_of_birth,
+      icon: Calendar,
+    },
+  ];
+
   return (
     <div className="px-[25px] pt-[20px] flex">
       <div className="pr-[20px]">
@@ -44,10 +95,11 @@ export function AdminInfo() {
             className="rounded-[12px]"
           />
           <p className="text-[#2C2F3C] font-nunito font-medium text-[clamp(27px,2vw,32px)] py-[7px]">
-            Gloria Eromonsele
+            {/* Gloria Eromonsele */}
+            {first_name}
           </p>
           <p className="text-[#8F9198] text-[16px] font-nunito font-medium pb-[10px]">
-            Analyst, Talent Manager
+            {userData.role}
           </p>
           <div className="flex gap-[5px] items-center">
             <div className="flex items-center gap-[7px] p-[10px] rounded-[8px] bg-[#EBEEFC]">
@@ -58,7 +110,8 @@ export function AdminInfo() {
                 </span>
               </p>
               <span className="text-[#3851DD] text-[12px] font-nunito font-medium">
-                A2023272
+                {/* A2023272 */}
+                {userData.unique_id}
               </span>
             </div>
             <div className="bg-[#E7F9F0] p-[8px] rounded-[8px] flex gap-[5px] items-center">
@@ -71,7 +124,7 @@ export function AdminInfo() {
           {info.map((ele, index) => (
             <div className="flex gap-[17px] items-center" key={index}>
               <div className="bg-[#EBEEFC] p-[14px] rounded-[8px] flex justify-center items-center">
-                {ele.img}
+                <ele.icon color="#3851DD" />
               </div>
               <div className="flex flex-col gap-[5px]">
                 <p className="text-[#5E606A] text-[14px]">{ele.name}</p>
@@ -116,13 +169,15 @@ export function AdminInfo() {
               <div>
                 <p className="text-[14px] text-[#5E606A]">First Name</p>
                 <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                  Gloria
+                  {/* Gloria */}
+                  {first_name}
                 </p>
               </div>
               <div className="">
                 <p className="text-[14px] text-[#5E606A]">Gender</p>
                 <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                  Female
+                  {/* Female */}
+                  {userData.gender}
                 </p>
               </div>
             </div>
@@ -130,20 +185,23 @@ export function AdminInfo() {
               <div>
                 <p className="text-[14px] text-[#5E606A]">Last Name</p>
                 <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                  Eromonsele
+                  {/* Eromonsele */}
+                  {last_name}
                 </p>
               </div>
               <div>
                 <p className="text-[14px] text-[#5E606A]">Marital status</p>
                 <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                  Single
+                  {/* Single */}
+                  {userData.martial_status}
                 </p>
               </div>
             </div>
             <div>
               <p className="text-[14px] text-[#5E606A]">Middle Name</p>
               <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                Onosetale
+                {/* Onosetale */}
+                {userData.middle_name}
               </p>
             </div>
           </div>
@@ -156,19 +214,21 @@ export function AdminInfo() {
             <div className="">
               <p className="text-[14px] text-[#5E606A]">Tribe / Department</p>
               <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                Corporate Services
+                {/* Corporate Services */}
+                {userData.tribe}
               </p>
             </div>{" "}
             <div className="">
               <p className="text-[14px] text-[#5E606A]">Squad / Unit</p>
               <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                Talent Management
+                {/* Talent Management */}
+                {userData.squad}
               </p>
             </div>{" "}
             <div className="">
               <p className="text-[14px] text-[#5E606A]">Designation</p>
               <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                Talent Manager
+                {userData.role}
               </p>
             </div>
           </div>
@@ -182,26 +242,27 @@ export function AdminInfo() {
               <div>
                 <p className="text-[14px] text-[#5E606A]">Name</p>
                 <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                  Sylvester Eromonsele
+                  {userData.next_of_kin_first_name}
                 </p>
               </div>
               <div className="">
                 <p className="text-[14px] text-[#5E606A]">Relationship </p>
                 <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                  Father
+                  {/* Father */}
+                  {userData.next_of_kin_relationship}
                 </p>
               </div>
             </div>
             <div>
               <p className="text-[14px] text-[#5E606A]">Phone Number</p>
               <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                +234 810 6545 067
+                {userData.next_of_kin_phone_number}
               </p>
             </div>
             <div>
               <p className="text-[14px] text-[#5E606A]">Email Address</p>
               <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
-                seromonsele@gmail.com
+                {userData.next_of_kin_email}
               </p>
             </div>
           </div>
