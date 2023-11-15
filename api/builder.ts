@@ -3,6 +3,7 @@ import { AUTHAPI, USETOKEN } from "./axios-config";
 import {
   ACTIVITYLOGDATA,
   ADDADDRESS,
+  ActivityLogSorted,
   AddressLisResult,
   AddressListData,
   CITYADDRESSDATA,
@@ -10,6 +11,7 @@ import {
   EditAddress,
   FORGETPASSWORD,
   LOGINAPI,
+  NotificationData,
   PASSWORDRESET,
   REGIONDATA,
   STAFFDASHBOARD,
@@ -35,8 +37,10 @@ export const builder = createBuilder({
     api: {
       activityLog: () =>
         USETOKEN.get<ACTIVITYLOGDATA>("/api/auth/activity-log/"),
-      activityLogExorted: () => USETOKEN.get("/api/auth/activity-log/export"),
-      activityLogSorted: () => USETOKEN.post("/api/auth/activity-log/sorted"),
+      activityLogExorted: () =>
+        USETOKEN.get<NotificationData>("/api/auth/activity-log/export"),
+      activityLogSorted: (data: ActivityLogSorted) =>
+        USETOKEN.post("/api/auth/activity-log/sorted", data),
     },
   },
   address: {

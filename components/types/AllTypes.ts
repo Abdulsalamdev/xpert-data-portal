@@ -234,6 +234,13 @@ export interface DeleteAddress {
   deleteData: number | null;
 }
 
-// export interface ID {
-//   id: number;
-// }
+export interface NotificationData {
+  actor: string;
+  action: string;
+  date_created: string;
+}
+
+export interface ActivityLogSorted {
+  start_date: string;
+  end_date: string;
+}
