@@ -5,7 +5,8 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { DashMenu } from "@/components/common/dashmenu";
 import { Widget } from "@/components/common/widget";
-export function Nav() {
+import { UserData, UserStaff } from "@/components/types/AllTypes";
+export function Nav({ staffDetail }: { staffDetail: UserStaff | undefined }) {
   const { resolvedTheme, theme, setTheme } = useTheme();
   return (
     <div className="w-[100%] border-b-solid border-b-[0.5px] dark:border-b-[#252D3D] border-b-[#F0F0F1] bg-[#ffffff] dark:bg-[#1A212E]">
@@ -24,7 +25,7 @@ export function Nav() {
             </Link>
             <ArrowRight2 size="16" color="#C1C2C6" />
             <span className="text-[#3851DD] text-[12px] font-nunito font-medium">
-              Ayodele davies
+              {staffDetail?.first_name} {staffDetail?.last_name}
             </span>
           </div>
         </div>

@@ -19,6 +19,7 @@ import {
   TRIBELIST,
   TRIBESQUAD,
   UserData,
+  UserStaff,
   VERIFY_CODE,
 } from "@/components/types/AllTypes";
 
@@ -71,7 +72,7 @@ export const builder = createBuilder({
   staff: {
     api: {
       staffList: () => USETOKEN.get<STAFFLIST>("/api/staff/"),
-      staffId: (id: string) => USETOKEN.get<UserData>(`/api/staff/${id}/`),
+      staffId: (id: string) => USETOKEN.get<UserStaff>(`/api/staff/${id}/`),
       editStaffId: (id: any) => USETOKEN.put(`/api/staff/${id}/`),
       suspendedStaff: (id: any) => USETOKEN.get(`/api/staff/${id}/suspend`),
       createStaff: (data: CREATESTAFF) =>

@@ -8,7 +8,7 @@ import { UserData } from "../types/AllTypes";
 
 export function AdminInfo() {
   const [userData, setUserData] = useState({} as UserData);
-
+  console.log(userData);
   useEffect(() => {
     const user = cookieStorage.getItem("my-user");
     if (user) setUserData(JSON.parse(user));
