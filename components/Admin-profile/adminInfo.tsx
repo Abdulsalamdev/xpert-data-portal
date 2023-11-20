@@ -4,41 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IconCheck } from "@tabler/icons-react";
 import { cookieStorage } from "@ibnlanre/portal";
-
-type UserData = {
-  id: number;
-  user: {
-    email: string;
-    first_name: string;
-    last_name: string;
-    is_active: boolean;
-  };
-  tribe: string;
-  squad: string;
-  date_created: string;
-  date_updated: string;
-  unique_id: string;
-  picture: string;
-  middle_name: string;
-  date_of_birth: any;
-  gender: string;
-  martial_status: string;
-  alias_email: string;
-  role: string;
-  phone_number: string;
-  work_phone: string;
-  next_of_kin_first_name: string;
-  next_of_kin_last_name: string;
-  next_of_kin_middle_name: string;
-  next_of_kin_phone_number: string;
-  next_of_kin_email: string;
-  next_of_kin_relationship: string;
-  address: number;
-  tokens: {
-    refresh: string;
-    access: string;
-  };
-};
+import { UserData } from "../types/AllTypes";
 
 export function AdminInfo() {
   const [userData, setUserData] = useState({} as UserData);

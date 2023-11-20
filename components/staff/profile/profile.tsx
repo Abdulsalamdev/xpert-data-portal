@@ -20,6 +20,9 @@ import {
 } from "iconsax-react";
 import React from "react";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+import { builder } from "@/api/builder";
+import { useRouter } from "next/router";
 
 const info = [
   {
@@ -50,6 +53,16 @@ const info = [
 ];
 
 export function MemberProfile() {
+  const { query } = useRouter();
+
+  const { data: staffDetail } = useQuery({
+    queryFn: () => builder.use().staff.api.staffId(query?.staff as string),
+    queryKey: builder.staff.api.staffId.use(query?.staff as string),
+    select: ({ data }) => data,
+  });
+
+  console.log(staffDetail);
+
   return (
     <div className="px-[25px] pt-[20px] flex">
       <div className="pr-[20px]">
