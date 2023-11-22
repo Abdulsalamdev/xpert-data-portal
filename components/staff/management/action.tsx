@@ -36,12 +36,6 @@ export function StaffActive({ id }: { id: number }) {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item>
-            <div className="flex items-center gap-[10px]">
-              <Edit2 size="16" color="#8F9198" variant="Bold" />
-              <p className="text-[#8F9198] text-[12px]">Update member</p>
-            </div>
-          </Menu.Item>
-          <Menu.Item>
             <Link
               href={`/management/${id}`}
               className="flex items-center gap-[10px]"
@@ -91,12 +85,6 @@ export function StaffInActive({ id }: { id: number }) {
           </div>
         </Menu.Target>
         <Menu.Dropdown>
-          <Menu.Item>
-            <div className="flex items-center gap-[10px]">
-              <Edit2 size="16" color="#8F9198" variant="Bold" />
-              <p className="text-[#8F9198] text-[12px]">Update member</p>
-            </div>
-          </Menu.Item>
           <Menu.Item>
             <Link
               href={`/management/${id}`}
