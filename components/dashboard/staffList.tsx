@@ -2,12 +2,17 @@ import { ArrowRight2 } from "iconsax-react";
 import Link from "next/link";
 import React from "react";
 import { StaffTable } from "./staffTable";
+import { STAFFDASHBOARD } from "../types/AllTypes";
 
-export function StaffList({ staffList }: any) {
+export function StaffList({
+  staffList,
+}: {
+  staffList: STAFFDASHBOARD | undefined;
+}) {
   return (
     <div className="pt-[10px]">
       <div className="flex justify-between pb-[10px]">
-        <p className="text-[#2C2F3C] text-[16px] font-nunito font-semibold">
+        <p className="text-[#2C2F3C] text-[16px] font-nunito font-semibold dark:text-[white]">
           Recently Uploaded staff
         </p>
         <Link href={"/management"}>
@@ -19,7 +24,7 @@ export function StaffList({ staffList }: any) {
           </p>
         </Link>
       </div>
-      <StaffTable staffList={staffList} />
+      <StaffTable />
     </div>
   );
 }

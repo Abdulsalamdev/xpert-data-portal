@@ -256,3 +256,12 @@
   width: 100%;
   height: 100%;
 }
+.tb {
+  transition: all 0.5s linear;
+}
+.tb:hover {
+  background-color: rgb(235, 39, 39);
+}
+/* .mantine-1u0chpj[data-hover] > tbody > tr:hover {
+  background-color: #96a2e4;
+} */

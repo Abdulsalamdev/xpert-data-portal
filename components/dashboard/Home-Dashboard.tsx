@@ -12,8 +12,6 @@ export function HomeDashboard() {
     queryKey: builder.staff.api.dashboardStaff.get(),
     select: ({ data }) => data,
   });
-
-  console.log(staffList);
   return (
     <div className="h-[100vh] bg-[#FDFDFD] dark:bg-SKY-CAPTAIN">
       <NavBar />
