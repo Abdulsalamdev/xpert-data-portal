@@ -1,9 +1,10 @@
 import { Flex, Text, Button, Box, Pagination } from "@mantine/core";
+import { usePagination } from "@mantine/hooks";
 import { ArrowLeft2, ArrowRight2 } from "iconsax-react";
 import { ReactNode, useState } from "react";
 
 export function TablePagination() {
-  const [currentPage, setCurrentPage] = useState<number | string>(1);
+  const pagination = usePagination({ total: 10, initialPage: 1 });
   const [activePage, setPage] = useState(1);
 
   const handlePrevPage = () => {
@@ -16,7 +17,7 @@ export function TablePagination() {
 
   const itemsPerPage = 5; // Number of items to display per page
   return (
-    <div className="flex justify-between items-center pt-[50px]">
+    <div className="flex justify-between items-center py-[20px]">
       <button
         className="border border-[#E5E6E8] bg-white rounded-lg items-center p-2 flex itmes-center gap-[7px]"
         onClick={handlePrevPage}

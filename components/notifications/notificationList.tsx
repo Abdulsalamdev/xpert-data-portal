@@ -115,7 +115,7 @@ export function NotificationList() {
           </tbody>
         </Table>
       </div>
-      <div className=" py-[15px] px-[24px]">
+      <div className=" py-[5px] px-[24px]">
         <TablePagination />
       </div>
       <SortDate opened={openedDate} close={closeDate} />
