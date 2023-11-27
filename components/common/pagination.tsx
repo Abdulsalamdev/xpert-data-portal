@@ -4,8 +4,8 @@ import { ArrowLeft2, ArrowRight2 } from "iconsax-react";
 import { ReactNode, useState } from "react";
 
 export function TablePagination() {
-  const pagination = usePagination({ total: 10, initialPage: 1 });
   const [activePage, setPage] = useState(1);
+  const pagination = usePagination({ total: 10, initialPage: 1 });
 
   const handlePrevPage = () => {
     setPage(activePage - 1);

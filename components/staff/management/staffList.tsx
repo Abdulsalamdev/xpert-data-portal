@@ -122,9 +122,9 @@ export function MemberList() {
                       {element.status === true ? "Active" : "Inactive"}
                     </p>
                     {element.status === true ? (
-                      <StaffInActive id={element.id} />
+                      <StaffInActive id={element.id} initialData={element} />
                     ) : (
-                      <StaffActive id={element.id} />
+                      <StaffActive id={element.id} initialData={element} />
                     )}
                   </div>
                 </td>

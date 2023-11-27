@@ -73,8 +73,9 @@ export const builder = createBuilder({
     api: {
       staffList: () => USETOKEN.get<STAFFLIST>("/api/staff/"),
       staffId: (id: string) => USETOKEN.get<UserStaff>(`/api/staff/${id}/`),
-      editStaffId: (id: any) => USETOKEN.put(`/api/staff/${id}/`),
-      suspendedStaff: (id: any) => USETOKEN.get(`/api/staff/${id}/suspend`),
+      editStaffId: (id: number) => USETOKEN.put(`/api/staff/${id}/`),
+      suspendedStaff: (id: number) =>
+        USETOKEN.patch(`/api/staff/${id}/suspend`),
       createStaff: (data: CREATESTAFF) =>
         USETOKEN.post(`/api/staff/create`, data),
       dashboardStaff: () =>

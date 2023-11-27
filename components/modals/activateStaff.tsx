@@ -3,7 +3,14 @@ import { AddressSucess } from "../types/AllTypes";
 import Image from "next/image";
 import { Modal } from "@mantine/core";
 import { Calendar2 } from "iconsax-react";
-export function ActivateStaff({ close, opened }: AddressSucess) {
+import { builder } from "@/api/builder";
+import { useQuery } from "@tanstack/react-query";
+export function ActivateStaff({ close, opened, id }: AddressSucess) {
+  const { data: supendeStaff } = useQuery({
+    queryFn: () => builder.use().staff.api.staffList(id as number),
+    queryKey: builder.staff.api.suspendedStaff.get(),
+    select: ({ data }) => data,
+  });
   return (
     <Modal
       title="Activate Member"
@@ -35,7 +42,10 @@ export function ActivateStaff({ close, opened }: AddressSucess) {
               Activate later
             </span>
           </button>
-          <button className="bg-[#3045BC] text-[white] rounded-[8px] py-[6px] px-[12px] flex justify-center items-center">
+          <button
+            className="bg-[#3045BC] text-[white] rounded-[8px] py-[6px] px-[12px] flex justify-center items-center"
+            onClick={() => console.log(id)}
+          >
             <span className="text-[#FFFFFF] text-[14px] font-medium">
               Activate now
             </span>

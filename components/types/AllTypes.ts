@@ -6,6 +6,8 @@ export interface LOGINAPI {
 export interface AddressSucess {
   close: () => void;
   opened: boolean;
+  id?: number;
+  initialData?: CREATESTAFF[] | null;
 }
 
 export interface OPENADDRESS {
@@ -175,8 +177,31 @@ export interface STAFFLISTDATA {
   squad: string;
   status: boolean;
   url: string;
-  id: 0;
+
+  id: number;
+
+  first_name: string;
+  last_name: string;
+  is_active: boolean;
+
+  date_created: string;
+  date_updated: string;
   unique_id: string;
+  picture: string;
+  middle_name: string;
+  date_of_birth: any;
+  gender: string;
+  martial_status: string;
+  alias_email: string;
+  role: string;
+
+  work_phone: string;
+  next_of_kin_first_name: string;
+  next_of_kin_last_name: string;
+  next_of_kin_middle_name: string;
+  next_of_kin_phone_number: string;
+  next_of_kin_email: string;
+  next_of_kin_relationship: string;
 }
 // tribe list
 export interface TRIBELIST {

@@ -8,6 +8,7 @@ import {
 } from "@mantine/core";
 import {
   ArrowLeft2,
+  ArrowRight2,
   Calendar,
   ExportCurve,
   SearchNormal1,
@@ -21,7 +22,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { useForm } from "@mantine/form";
 import dayjs from "dayjs";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, usePagination } from "@mantine/hooks";
 import { SortDate } from "../modals/date";
 
 export function NotificationList() {
@@ -33,11 +34,24 @@ export function NotificationList() {
   const { data: activity } = useQuery({
     queryFn: () => builder.use().notification.api.activityLog(),
     queryKey: builder.notification.api.activityLog.get(),
-    select: ({ data }) => data?.results,
+    select: ({ data }) => data,
   });
+  console.log(activity?.results.length);
+  // const [activePage, setPage] = useState(1);
+  // const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
 
   const [activePage, setPage] = useState(1);
-  const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+  // pagination.setPage(5);
+
+  const handlePrevPage = () => {
+    setPage(activePage - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage(activePage + 1);
+  };
+
+  const itemsPerPage = 5; // Number of items to display per page
 
   // exporting notifications
   // const { data: notification } = useQuery({
@@ -105,7 +119,7 @@ export function NotificationList() {
             </tr>
           </thead>
           <tbody className="overflow-auto">
-            {activity?.map((item) => (
+            {activity?.results?.map((item) => (
               <tr>
                 <td>{item.actor} </td>
                 <td>{item.action}</td>
@@ -116,7 +130,52 @@ export function NotificationList() {
         </Table>
       </div>
       <div className=" py-[5px] px-[24px]">
-        <TablePagination />
+        <div className="flex justify-between items-center py-[20px]">
+          <button
+            className="border border-[#E5E6E8] bg-white rounded-lg items-center p-2 flex itmes-center gap-[7px]"
+            onClick={handlePrevPage}
+            disabled={activePage === 1}
+          >
+            <ArrowLeft2 size="16" color="#514747" variant="Outline" />
+            <span className="text-[#514747] text-[14px] ">Previous</span>
+          </button>
+          <Pagination
+            value={activePage}
+            onChange={setPage}
+            total={Math.ceil(
+              (activity?.results?.length as number) / itemsPerPage
+            )}
+            styles={(theme) => ({
+              control: {
+                "&[data-active]": {
+                  backgroundImage: theme.fn.gradient({
+                    from: "#3851DD",
+                    to: "#3851DD",
+                  }),
+                  border: 0,
+                },
+
+                "&:first-of-type": {
+                  display: "none !important",
+                },
+                "&:last-child": {
+                  display: "none !important",
+                },
+              },
+            })}
+          />
+          <button
+            className="p-2 flex border border-[#DBD9D9] gap-[7px] rounded-lg items-center"
+            onClick={handleNextPage}
+            disabled={
+              activePage ===
+              (activity?.results?.length as number) / itemsPerPage
+            }
+          >
+            <span className="text-[#514747] text-[14px] ">Next</span>
+            <ArrowRight2 size="16" color="#514747" variant="Outline" />
+          </button>
+        </div>
       </div>
       <SortDate opened={openedDate} close={closeDate} />
     </div>

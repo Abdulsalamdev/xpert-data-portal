@@ -7,9 +7,20 @@ import Link from "next/link";
 import { useDisclosure } from "@mantine/hooks";
 import { DeactivateStaff } from "@/components/modals/deactivateStaff";
 import { ActivateStaff } from "@/components/modals/activateStaff";
-export function StaffActive({ id }: { id: number }) {
+import { AddStaff } from "@/components/modals/addStaff";
+import { STAFFLIST, STAFFLISTDATA } from "@/components/types/AllTypes";
+export function StaffActive({
+  id,
+  initialData,
+}: {
+  id: number;
+  initialData: STAFFLISTDATA;
+}) {
   const { resolvedTheme, theme, setTheme } = useTheme();
   const [opened, { open, close }] = useDisclosure(false);
+  const [openedStaff, { open: openStaff, close: closeStaff }] =
+    useDisclosure(false);
+  console.log(initialData);
   return (
     <div>
       <Menu
@@ -35,6 +46,12 @@ export function StaffActive({ id }: { id: number }) {
           </div>
         </Menu.Target>
         <Menu.Dropdown>
+          <Menu.Item>
+            <div className="flex items-center gap-[10px]" onClick={openStaff}>
+              <Edit2 size="16" color="#8F9198" variant="Bold" />
+              <p className="text-[#4A4C58] text-[12px]">Edit member</p>
+            </div>
+          </Menu.Item>
           <Menu.Item>
             <Link
               href={`/management/${id}`}
@@ -52,14 +69,24 @@ export function StaffActive({ id }: { id: number }) {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
-      <ActivateStaff opened={opened} close={close} />
+      <ActivateStaff opened={opened} close={close} id={id} />
+      <AddStaff opened={openedStaff} close={closeStaff} />
     </div>
   );
 }
 
-export function StaffInActive({ id }: { id: number }) {
+export function StaffInActive({
+  id,
+  initialData,
+}: {
+  id: number;
+  initialData: STAFFLISTDATA;
+}) {
   const [opened, { open, close }] = useDisclosure(false);
   const { resolvedTheme, theme, setTheme } = useTheme();
+  const [openedStaff, { open: openStaff, close: closeStaff }] =
+    useDisclosure(false);
+  console.log(initialData);
   return (
     <div>
       <Menu
@@ -86,6 +113,12 @@ export function StaffInActive({ id }: { id: number }) {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item>
+            <div className="flex items-center gap-[10px]" onClick={openStaff}>
+              <Edit2 size="16" color="#8F9198" variant="Bold" />
+              <p className="text-[#4A4C58] text-[12px]">Edit member</p>
+            </div>
+          </Menu.Item>
+          <Menu.Item>
             <Link
               href={`/management/${id}`}
               className="flex items-center gap-[10px]"
@@ -102,7 +135,8 @@ export function StaffInActive({ id }: { id: number }) {
           </Menu.Item>
         </Menu.Dropdown>
       </Menu>
-      <DeactivateStaff opened={opened} close={close} />
+      <DeactivateStaff opened={opened} close={close} id={id} />
+      <AddStaff opened={openedStaff} close={closeStaff} />
     </div>
   );
 }

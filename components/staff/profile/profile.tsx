@@ -25,6 +25,9 @@ import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { useRouter } from "next/router";
 import { UserData, UserStaff } from "@/components/types/AllTypes";
+import { useDisclosure } from "@mantine/hooks";
+import { DeactivateStaff } from "@/components/modals/deactivateStaff";
+import { ActivateStaff } from "@/components/modals/activateStaff";
 
 interface userContent {
   email: string;
@@ -66,6 +69,9 @@ export function MemberProfile({
       img: <Calendar color="#3851DD" />,
     },
   ];
+  const [opened, { open, close }] = useDisclosure(false);
+  const [openedActivate, { open: openActivate, close: closeActivate }] =
+    useDisclosure(false);
   return (
     <div className="px-[25px] pt-[20px] flex">
       <div className="pr-[20px]">
@@ -165,6 +171,7 @@ export function MemberProfile({
             backgroundColor:
               staffDetail?.is_active === true ? "#BF2018" : " #30AD74",
           }}
+          onClick={staffDetail?.is_active === true ? openActivate : open}
         >
           {staffDetail?.is_active === true ? (
             <Trash size="22" color="#FF8A65" variant="Bulk" />
@@ -328,6 +335,8 @@ export function MemberProfile({
           </Tabs.Panel>
         </Tabs>
       </div>
+      <DeactivateStaff opened={opened} close={close} />
+      <ActivateStaff opened={openedActivate} close={closeActivate} />
     </div>
   );
 }
