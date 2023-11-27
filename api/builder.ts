@@ -73,7 +73,7 @@ export const builder = createBuilder({
     api: {
       staffList: () => USETOKEN.get<STAFFLIST>("/api/staff/"),
       staffId: (id: string) => USETOKEN.get<UserStaff>(`/api/staff/${id}/`),
-      editStaffId: (id: number) => USETOKEN.put(`/api/staff/${id}/`),
+      editStaffId: (id: number) => USETOKEN.put<STAFFLIST>(`/api/staff/${id}/`),
       suspendedStaff: (id: number) =>
         USETOKEN.patch(`/api/staff/${id}/suspend`),
       createStaff: (data: CREATESTAFF) =>

@@ -7,7 +7,11 @@ export interface AddressSucess {
   close: () => void;
   opened: boolean;
   id?: number;
-  initialData?: CREATESTAFF[] | null;
+  initialData?: STAFFLISTDATA;
+}
+
+export interface InitialData {
+  initialData?: STAFFLISTDATA;
 }
 
 export interface OPENADDRESS {
@@ -177,13 +181,13 @@ export interface STAFFLISTDATA {
   squad: string;
   status: boolean;
   url: string;
-
+  city: string;
+  region: string;
   id: number;
-
+  address: number;
   first_name: string;
   last_name: string;
   is_active: boolean;
-
   date_created: string;
   date_updated: string;
   unique_id: string;
@@ -194,7 +198,6 @@ export interface STAFFLISTDATA {
   martial_status: string;
   alias_email: string;
   role: string;
-
   work_phone: string;
   next_of_kin_first_name: string;
   next_of_kin_last_name: string;

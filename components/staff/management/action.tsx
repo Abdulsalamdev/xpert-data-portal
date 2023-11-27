@@ -20,7 +20,7 @@ export function StaffActive({
   const [opened, { open, close }] = useDisclosure(false);
   const [openedStaff, { open: openStaff, close: closeStaff }] =
     useDisclosure(false);
-  console.log(initialData);
+
   return (
     <div>
       <Menu
@@ -70,7 +70,11 @@ export function StaffActive({
         </Menu.Dropdown>
       </Menu>
       <ActivateStaff opened={opened} close={close} id={id} />
-      <AddStaff opened={openedStaff} close={closeStaff} />
+      <AddStaff
+        opened={openedStaff}
+        close={closeStaff}
+        initialData={initialData}
+      />
     </div>
   );
 }
@@ -86,7 +90,7 @@ export function StaffInActive({
   const { resolvedTheme, theme, setTheme } = useTheme();
   const [openedStaff, { open: openStaff, close: closeStaff }] =
     useDisclosure(false);
-  console.log(initialData);
+
   return (
     <div>
       <Menu
@@ -136,7 +140,11 @@ export function StaffInActive({
         </Menu.Dropdown>
       </Menu>
       <DeactivateStaff opened={opened} close={close} id={id} />
-      <AddStaff opened={openedStaff} close={closeStaff} />
+      <AddStaff
+        opened={openedStaff}
+        close={closeStaff}
+        initialData={initialData}
+      />
     </div>
   );
 }

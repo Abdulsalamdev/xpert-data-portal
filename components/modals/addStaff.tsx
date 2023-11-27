@@ -3,7 +3,7 @@ import React from "react";
 import { AddressSucess } from "../types/AllTypes";
 import { AddStaffContent } from "../stepper/addStaffContent";
 
-export function AddStaff({ opened, close }: AddressSucess) {
+export function AddStaff({ opened, close, initialData }: AddressSucess) {
   return (
     <Modal
       opened={opened}
@@ -23,7 +23,7 @@ export function AddStaff({ opened, close }: AddressSucess) {
         },
       }}
     >
-      <AddStaffContent />
+      <AddStaffContent initialData={initialData} />
     </Modal>
   );
 }

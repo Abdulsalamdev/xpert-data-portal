@@ -17,8 +17,10 @@ import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
 import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 
 import { DocumentUpload } from "iconsax-react";
+import { InitialData, STAFFLISTDATA } from "../types/AllTypes";
 
-export function AddStaffContent() {
+export function AddStaffContent({ initialData }: InitialData) {
+  console.log(initialData);
   const [active, setActive] = useState(0);
   const nextStep = () =>
     setActive((current) => (current < 3 ? current + 1 : current));
@@ -33,44 +35,33 @@ export function AddStaffContent() {
 
   const queryClient = new QueryClient();
   // creating new staff
-  const { mutate } = useMutation({
-    mutationFn: () => builder.use().staff.api.createStaff(myForm.values),
-    mutationKey: builder.staff.api.createStaff.get(),
-    onSuccess(data, variables, context) {
-      toast.success("staff created");
-      openStaffSuccess();
-      queryClient.invalidateQueries(builder.staff.api.staffList.get());
-    },
-    onError(error, variables, context) {
-      toast.error("invalid credentials !!");
-    },
-  });
+  const { mutate } = useMutation({});
 
   const myForm = useForm({
     initialValues: {
-      email: "",
-      alias_email: "",
-      picture: "",
-      middle_name: "",
-      date_of_birth: "",
-      gender: "",
-      martial_status: "",
-      role: "",
-      phone_number: "",
-      work_phone: "",
-      next_of_kin_first_name: "",
-      next_of_kin_last_name: "",
-      next_of_kin_middle_name: "",
-      next_of_kin_phone_number: "",
-      next_of_kin_email: "",
-      next_of_kin_relationship: "",
-      first_name: "",
-      last_name: "",
-      city: "",
-      region: "",
-      tribe: 0,
-      squad: 0,
-      address: 0,
+      email: initialData?.email ?? "",
+      alias_email: initialData?.alias_email ?? "",
+      picture: initialData?.picture ?? "",
+      middle_name: initialData?.middle_name ?? "",
+      date_of_birth: initialData?.date_of_birth ?? "",
+      gender: initialData?.gender ?? "",
+      martial_status: initialData?.martial_status ?? "",
+      role: initialData?.role ?? "",
+      phone_number: initialData?.phone_number ?? "",
+      work_phone: initialData?.work_phone ?? "",
+      next_of_kin_first_name: initialData?.next_of_kin_first_name ?? "",
+      next_of_kin_last_name: initialData?.next_of_kin_last_name ?? "",
+      next_of_kin_middle_name: initialData?.next_of_kin_middle_name ?? "",
+      next_of_kin_phone_number: initialData?.next_of_kin_phone_number ?? "",
+      next_of_kin_email: initialData?.next_of_kin_email ?? "",
+      next_of_kin_relationship: initialData?.next_of_kin_relationship ?? "",
+      first_name: initialData?.first_name ?? "",
+      last_name: initialData?.last_name ?? "",
+      city: initialData?.city ?? "",
+      region: initialData?.region ?? "",
+      tribe: initialData?.tribe ?? 0,
+      squad: initialData?.squad ?? 0,
+      address: initialData?.address ?? 0,
     },
   });
 
