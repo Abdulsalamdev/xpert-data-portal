@@ -119,8 +119,8 @@ export function NotificationList() {
             </tr>
           </thead>
           <tbody className="overflow-auto">
-            {activity?.results?.map((item) => (
-              <tr>
+            {activity?.results?.map((item, index) => (
+              <tr key={index}>
                 <td>{item.actor} </td>
                 <td>{item.action}</td>
                 <td>{item.date_created}</td>

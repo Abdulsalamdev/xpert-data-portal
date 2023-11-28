@@ -11,6 +11,7 @@ import { FilterStaff } from "@/components/drawer/filterStaff";
 import { TablePagination } from "@/components/common/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
+import { STAFFLISTDATA } from "@/components/types/AllTypes";
 
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
@@ -89,7 +90,7 @@ export function MemberList() {
             </tr>
           </thead>
           <tbody className="overflow-auto">
-            {staff?.results?.map((element) => (
+            {staff?.results?.map((element: STAFFLISTDATA) => (
               <tr key={element.id}>
                 <td>
                   <Checkbox color="violet" size="md" />

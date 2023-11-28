@@ -90,20 +90,22 @@ export function AddAddress({ opened, close, region_Pk }: OPENADDRESS) {
           </button>
         </div>
 
-        {region?.map((ele: any) => (
-          <div>
-            <div className="pb-[20px]">
-              <Select
-                key={ele.id}
-                {...myform.getInputProps("region")}
-                searchable
-                placeholder="Select Country"
-                rightSection={<ArrowDown2 size="16" color="#8F9198" />}
-                data={[{ value: String(ele.id), label: ele.name }]}
-              />
-            </div>
+        <div>
+          <div className="pb-[20px]">
+            <Select
+              {...myform.getInputProps("region")}
+              searchable
+              placeholder="Select Country"
+              rightSection={<ArrowDown2 size="16" color="#8F9198" />}
+              data={
+                region?.map((ele) => ({
+                  value: String(ele.id),
+                  label: ele?.name,
+                })) ?? []
+              }
+            />
           </div>
-        ))}
+        </div>
 
         <div className="pb-[25px]">
           <Select
