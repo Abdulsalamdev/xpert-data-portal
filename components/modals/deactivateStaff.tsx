@@ -7,8 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 export function DeactivateStaff({ close, opened, id }: AddressSucess) {
   const { data: supendeStaff } = useQuery({
-    queryFn: () => builder.use().staff.api.staffList(id as number),
-    queryKey: builder.staff.api.suspendedStaff.get(),
+    queryFn: () => builder.use().staff.api.staffList(),
+    queryKey: [...builder.staff.api.suspendedStaff.get(), id],
     select: ({ data }) => data,
   });
   return (
