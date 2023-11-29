@@ -73,7 +73,7 @@ export function MemberList() {
         </span>
       </div>
       <div className="pl-[20px] pt-[20px] pr-[20px] staffManagement">
-        <Table horizontalSpacing="md" highlightOnHover verticalSpacing="md">
+        <Table horizontalSpacing="md" verticalSpacing="md">
           <thead className="bg-[#F5F5F6]">
             <tr>
               <th>
@@ -91,7 +91,10 @@ export function MemberList() {
           </thead>
           <tbody className="overflow-auto">
             {staff?.results?.map((element: STAFFLISTDATA) => (
-              <tr key={element.id}>
+              <tr
+                key={element.id}
+                className="tb dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5]"
+              >
                 <td>
                   <Checkbox color="violet" size="md" />
                 </td>

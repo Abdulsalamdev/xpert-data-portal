@@ -23,7 +23,10 @@ export function StaffTable() {
         </thead>
         <tbody className="overflow-auto">
           {staffList?.map((staff) => (
-            <tr key={staff?.id} className="tb">
+            <tr
+              key={staff?.id}
+              className="tb dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5]"
+            >
               <td className=" dark:text-[#C1C2C6]">{staff?.name}</td>
               <td className=" dark:text-[#C1C2C6]">{staff?.email}</td>
               <td className=" dark:text-[#C1C2C6]">{staff?.phone_number}</td>

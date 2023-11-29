@@ -9,7 +9,7 @@ export default function Notification() {
       <Nav />
       <div className="flex">
         <Sidebar />
-        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow">
+        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow dark:bg-[#161C27]">
           <NotificationList />
         </div>
       </div>

@@ -260,9 +260,13 @@
   transition: all 0.2s linear;
 }
 .tb:hover {
-  background-color: rgb(33, 37, 18);
-  color: white;
 }
+/* dark mode */
+/* @media (prefers-color-scheme: dark) {
+  .tb.adaptive {
+    color: white;
+  }
+} */
 /* .mantine-1u0chpj[data-hover] > tbody > tr:hover {
   background-color: #96a2e4;
 } */

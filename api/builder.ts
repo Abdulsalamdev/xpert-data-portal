@@ -37,8 +37,10 @@ export const builder = createBuilder({
   },
   notification: {
     api: {
-      activityLog: () =>
-        USETOKEN.get<ACTIVITYLOGDATA>("/api/auth/activity-log/"),
+      activityLog: (page: number) =>
+        USETOKEN.get<ACTIVITYLOGDATA>(
+          `/api/auth/activity-log/?page=${page}&page_size=5`
+        ),
       activityLogExorted: () =>
         USETOKEN.get<NotificationData>("/api/auth/activity-log/export"),
       activityLogSorted: (data: ActivityLogSorted) =>

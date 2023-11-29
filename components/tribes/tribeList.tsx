@@ -56,7 +56,7 @@ export function TribeList() {
         </span>
       </div>
       <div className="pl-[20px] pt-[20px] pr-[20px] staffManagement">
-        <Table horizontalSpacing="md" highlightOnHover verticalSpacing="md">
+        <Table horizontalSpacing="md" verticalSpacing="md">
           <thead className="bg-[#F5F5F6]">
             <tr>
               <th className="">Tribe</th>
@@ -68,7 +68,10 @@ export function TribeList() {
           </thead>
           <tbody className="overflow-auto">
             {tribe?.results?.map((element: any) => (
-              <tr key={element?.id}>
+              <tr
+                key={element?.id}
+                className="tb dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5]"
+              >
                 <td>{element?.name}</td>
                 <td>{element?.squads}</td>
                 <td>{element?.tribe_lead}</td>

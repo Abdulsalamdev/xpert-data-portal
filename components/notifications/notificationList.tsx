@@ -24,23 +24,24 @@ import { useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import { useDisclosure, usePagination } from "@mantine/hooks";
 import { SortDate } from "../modals/date";
+import { useTheme } from "next-themes";
 
 export function NotificationList() {
   const [openedDate, { open: openDate, close: closeDate }] =
     useDisclosure(false);
   const [search, setSearch] = useState("");
+  const [activePage, setPage] = useState(1);
 
   // geting list of activity
   const { data: activity } = useQuery({
-    queryFn: () => builder.use().notification.api.activityLog(),
-    queryKey: builder.notification.api.activityLog.get(),
+    queryFn: () => builder.use().notification.api.activityLog(activePage),
+    queryKey: builder.notification.api.activityLog.get(activePage),
     select: ({ data }) => data,
   });
   console.log(activity?.results.length);
   // const [activePage, setPage] = useState(1);
   // const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
 
-  const [activePage, setPage] = useState(1);
   // pagination.setPage(5);
 
   const handlePrevPage = () => {
@@ -58,10 +59,10 @@ export function NotificationList() {
   //   queryFn: () => builder.use().notification.api.activityLogExorted(),
   //   queryKey: builder.notification.api.activityLogExorted.get(),
   //   select: ({ data }) => data,
-
+  const { resolvedTheme, theme, setTheme } = useTheme();
   return (
-    <div>
-      <div className="flex justify-between items-center pb-[25px] pt-[20px] px-[20px] notification">
+    <div className="dark:bg-[#161C27]">
+      <div className="flex justify-between items-center pb-[25px] pt-[20px] px-[20px] notification ">
         <div className="flex gap-[10px] items-center">
           <ArrowLeft2 size="18" color="#5E606A" />
           <Link
@@ -72,7 +73,7 @@ export function NotificationList() {
           </Link>
         </div>
         <div className="flex gap-[16px] items-center">
-          <div className="flex items-center bg-[#F7F9FC]">
+          <div className="flex items-center bg-[#F7F9FC] dark:bg-[#232A37]">
             <div
               className="flex items-center gap-[3px]  px-[12px] py-[6px] rounded-l-[8px]"
               // onClick={() => mutate()}
@@ -83,9 +84,12 @@ export function NotificationList() {
               </span>
             </div>
             <Input
+              className=" dark:bg-[#232A37]"
               styles={{
                 input: {
                   border: "1px #A1A9B8",
+                  background: theme === "light" ? "white" : "#232A37",
+                  color: theme === "light" ? "black" : "white",
                   boxShadow:
                     "0px 0px 0px 1px rgba(134, 143, 160, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                   borderRadius: "0px 8px 8px 0px",
@@ -100,7 +104,7 @@ export function NotificationList() {
               <span> Sort by:</span>
               <div
                 onClick={() => openDate()}
-                className="flex items-center gap-[10px] bg-[white] p-[15px]"
+                className="flex items-center gap-[10px] bg-[white] p-[15px] dark:bg-[#232A37]"
               >
                 <span>Date Range</span>
                 <Calendar size="16" color="#C1C2C6" />
@@ -110,20 +114,23 @@ export function NotificationList() {
         </div>
       </div>
       <div className="pl-[clamp(10px,1.3vw,20px)] pt-[25px]">
-        <Table horizontalSpacing="md" highlightOnHover verticalSpacing="md">
+        <Table horizontalSpacing="md" verticalSpacing="md">
           <thead className="bg-[#F5F5F6]">
-            <tr>
-              <th className="">User</th>
-              <th className="">Action</th>
-              <th className="">Date</th>
+            <tr className=" dark:bg-[#232A37]">
+              <th className="dark:text-[white]">User</th>
+              <th className="dark:text-[white]">Action</th>
+              <th className="dark:text-[white]">Date</th>
             </tr>
           </thead>
           <tbody className="overflow-auto">
             {activity?.results?.map((item, index) => (
-              <tr key={index}>
-                <td>{item.actor} </td>
-                <td>{item.action}</td>
-                <td>{item.date_created}</td>
+              <tr
+                key={index}
+                className="tb dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5]"
+              >
+                <td className="dark:text-[white]">{item.actor} </td>
+                <td className="dark:text-[white]">{item.action}</td>
+                <td className="dark:text-[white]">{item.date_created}</td>
               </tr>
             ))}
           </tbody>
@@ -142,9 +149,7 @@ export function NotificationList() {
           <Pagination
             value={activePage}
             onChange={setPage}
-            total={Math.ceil(
-              (activity?.results?.length as number) / itemsPerPage
-            )}
+            total={Math.ceil((activity?.count as number) / itemsPerPage)}
             styles={(theme) => ({
               control: {
                 "&[data-active]": {
