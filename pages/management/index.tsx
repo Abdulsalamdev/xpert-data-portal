@@ -8,9 +8,9 @@ export default function StaffManagement() {
   return (
     <div className="h-[100vh] bg-[#FDFDFD] dark:bg-SKY-CAPTAIN">
       <Nav />
-      <div className="flex">
+      <div className="flex ">
         <Sidebar />
-        <div className="pt-[25px]  grow ">
+        <div className="pt-[25px]  grow  dark:bg-[#161C27]">
           <MemberList />
         </div>
       </div>

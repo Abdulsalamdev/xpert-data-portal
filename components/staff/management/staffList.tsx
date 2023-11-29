@@ -12,6 +12,7 @@ import { TablePagination } from "@/components/common/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { STAFFLISTDATA } from "@/components/types/AllTypes";
+import { useTheme } from "next-themes";
 
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
@@ -25,9 +26,11 @@ export function MemberList() {
     select: ({ data }) => data,
   });
 
+  const { resolvedTheme, theme, setTheme } = useTheme();
+
   return (
     <div>
-      <div className="flex justify-between pl-[20px] pb-[32px] border-b-[1px] border-[#afb4bd] pr-[20px]">
+      <div className="flex justify-between pl-[20px] pb-[32px] border-b-[1px] border-[#afb4bd] pr-[20px] flex-wrap">
         <div className="flex gap-[16px] ">
           <div className="flex items-center gap-[3px]  px-[12px] py-[6px] rounded-[8px]  border-solid border-[1px] border-[#A1A9B8]">
             <ExportCurve size="13" color="#5E606A" variant="Bold" />
@@ -48,6 +51,8 @@ export function MemberList() {
             <Input
               styles={{
                 input: {
+                  background: theme === "light" ? "white" : "#232A37",
+                  color: theme === "light" ? "black" : "white",
                   border: "1px #A1A9B8",
                   boxShadow:
                     "0px 0px 0px 1px rgba(134, 143, 160, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
@@ -68,25 +73,27 @@ export function MemberList() {
       </div>
       <div className="pl-[20px] pt-[15px] pb-[5px] text-[#4A4C58] text-[14px] border-solid border-b-[1px] border-b-[#A1A9B8] ">
         Staff List{" "}
-        <span className="text-[#8F9198] text-[12px] px-[6px] bg-[#F0F0F1] rounded-[13px]">
+        <span className="text-[#8F9198] text-[12px] px-[6px] bg-[#F0F0F1] rounded-[13px] dark:bg-SKY-CAPTAIN dark:text-[white]">
           {staff?.count}
         </span>
       </div>
       <div className="pl-[20px] pt-[20px] pr-[20px] staffManagement">
         <Table horizontalSpacing="md" verticalSpacing="md">
           <thead className="bg-[#F5F5F6]">
-            <tr>
-              <th>
-                <Checkbox color="violet" size="md" />
-              </th>
-              <th>S/N</th>
+            <tr className=" dark:bg-[#232A37]">
+              {theme === "light" ? (
+                <th>
+                  <Checkbox color="violet" size="md" />
+                </th>
+              ) : null}
+              <th className="dark:text-[white]">S/N</th>
 
-              <th className="">Name</th>
-              <th className="">Email Address</th>
-              <th className="">Mobile Number</th>
-              <th className="">Tribe / Department</th>
-              <th className="">Squad / Unit</th>
-              <th>Status</th>
+              <th className="dark:text-[white]">Name</th>
+              <th className="dark:text-[white]">Email Address</th>
+              <th className="dark:text-[white]">Mobile Number</th>
+              <th className="dark:text-[white]">Tribe / Department</th>
+              <th className="dark:text-[white]">Squad / Unit</th>
+              <th className="dark:text-[white]">Status</th>
             </tr>
           </thead>
           <tbody className="overflow-auto">
@@ -95,21 +102,29 @@ export function MemberList() {
                 key={element.id}
                 className="tb dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5]"
               >
-                <td>
-                  <Checkbox color="violet" size="md" />
-                </td>
-                <td>{element.id}</td>
-                <td>{element.name}</td>
-                <td>{element.email}</td>
-                <td>{element.phone_number}</td>
-                <td>{element.tribe}</td>
-                <td>{element.squad}</td>
-                <td>
+                {theme === "light" ? (
+                  <td>
+                    <Checkbox color="violet" size="md" />
+                  </td>
+                ) : null}
+                <td className="dark:text-[white]">{element.id}</td>
+                <td className="dark:text-[white]">{element.name}</td>
+                <td className="dark:text-[white]">{element.email}</td>
+                <td className="dark:text-[white]">{element.phone_number}</td>
+                <td className="dark:text-[white]">{element.tribe}</td>
+                <td className="dark:text-[white]">{element.squad}</td>
+                <td className="dark:text-[white]">
                   <div className="flex gap-[10px] items-center">
                     <p
                       style={{
                         backgroundColor:
-                          element.status === true ? "#E7F9F0" : "#FDEEEE",
+                          element.status === true
+                            ? theme === "light"
+                              ? "#E7F9F0"
+                              : "rgb(161 221 191)"
+                            : theme === "dark"
+                            ? "rgb(194 104 105 / 83%)"
+                            : "#FDEEEE",
                         color: element.status === true ? "#076D3A" : "#873031",
                       }}
                       className="flex gap-[4px] p-[8px] rounded-[16px]  items-center"
