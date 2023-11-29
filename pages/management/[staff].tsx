@@ -19,9 +19,9 @@ export default function StaffManagement() {
   return (
     <div className="h-[100vh] bg-[#FDFDFD] dark:bg-SKY-CAPTAIN">
       <Nav staffDetail={staffDetail} />
-      <div className="flex gap-[clamp(10px,1.3vw,20px)]">
+      <div className="flex gap-[clamp(10px,1.3vw,20px)] dark:bg-[#161C27]">
         <Sidebar />
-        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow ">
+        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow  dark:bg-[#161C27]">
           <MemberProfile staffDetail={staffDetail} />
         </div>
       </div>

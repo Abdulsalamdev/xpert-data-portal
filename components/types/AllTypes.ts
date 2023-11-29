@@ -2,7 +2,23 @@ export interface LOGINAPI {
   email: string;
   password: string;
 }
+export interface FilterStaff {
+  close: () => void;
+  opened: boolean;
+  search?: string;
+  is_active?: boolean;
+  tribe_name?: string;
+  squad__name?: string;
+  page?: number;
+}
 
+export interface FillSearch {
+  search?: string;
+  is_active?: boolean;
+  tribe_name?: string;
+  squad__name?: string;
+  page?: number;
+}
 export interface AddressSucess {
   close: () => void;
   opened: boolean;
@@ -339,4 +355,12 @@ export interface UserStaff {
     refresh: string;
     access: string;
   };
+}
+
+export interface StaffSearch {
+  is_active: boolean;
+  page: number;
+  search: string;
+  squad__name: string;
+  tribe_name: string;
 }

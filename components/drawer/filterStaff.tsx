@@ -1,10 +1,10 @@
-import { Accordion, CloseButton, Drawer } from "@mantine/core";
+import { Accordion, Button, CloseButton, Drawer } from "@mantine/core";
 import React, { useState } from "react";
-import { AddressSucess } from "../types/AllTypes";
+import { AddressSucess, FilterStaff } from "../types/AllTypes";
 import { useDisclosure } from "@mantine/hooks";
 import { Filter } from "iconsax-react";
 
-export function FilterStaff({ close, opened }: AddressSucess) {
+export function FilterStaff({ close, opened }: FilterStaff) {
   return (
     <div>
       <Drawer
@@ -41,11 +41,13 @@ export function FilterStaff({ close, opened }: AddressSucess) {
               <Accordion.Control>Tribe / Department</Accordion.Control>
               <Accordion.Panel>
                 <div className="flex flex-col gap-[18px] items-start pt-[20px]">
-                  <button>Innovation & Technology</button>
-                  <button>Business Assurance</button>
-                  <button>Corporate Services</button>
-                  <button>Financial Market</button>
-                  <button>Physical market</button>
+                  <Button className="text-[#000000]">
+                    Innovation & Technology
+                  </Button>
+                  <Button className="text-[#000000]">Business Assurance</Button>
+                  <Button className="text-[#000000]">Corporate Services</Button>
+                  <Button className="text-[#000000]">Financial Market</Button>
+                  <Button className="text-[#000000]">Physical market</Button>
                 </div>
               </Accordion.Panel>
             </Accordion.Item>
@@ -53,10 +55,12 @@ export function FilterStaff({ close, opened }: AddressSucess) {
               <Accordion.Control>Squad / Unit</Accordion.Control>
               <Accordion.Panel>
                 <div className="flex flex-col gap-[18px] items-start pt-[20px]">
-                  <button>Innovation Lab</button>
-                  <button>Design and Apps</button>
-                  <button>Data</button>
-                  <button>Software Engineering </button>
+                  <Button className="text-[#000000]">Innovation Lab</Button>
+                  <Button className="text-[#000000]">Design and Apps</Button>
+                  <Button className="text-[#000000]">Data</Button>
+                  <Button className="text-[#000000]">
+                    Software Engineering{" "}
+                  </Button>
                 </div>
               </Accordion.Panel>
             </Accordion.Item>
@@ -64,8 +68,8 @@ export function FilterStaff({ close, opened }: AddressSucess) {
               <Accordion.Control>Status</Accordion.Control>
               <Accordion.Panel>
                 <div className="flex flex-col gap-[18px] items-start pt-[20px]">
-                  <button>Active</button>
-                  <button>Inactive</button>
+                  <Button className="text-[#000000]">Active</Button>
+                  <Button className="text-[#000000]">Inactive</Button>
                 </div>
               </Accordion.Panel>
             </Accordion.Item>

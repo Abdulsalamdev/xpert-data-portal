@@ -10,6 +10,7 @@ import {
   CREATESTAFF,
   EditAddress,
   FORGETPASSWORD,
+  FillSearch,
   LOGINAPI,
   NotificationData,
   PASSWORDRESET,
@@ -73,7 +74,8 @@ export const builder = createBuilder({
   },
   staff: {
     api: {
-      staffList: () => USETOKEN.get<STAFFLIST>("/api/staff/"),
+      staffList: (params?: Partial<FillSearch>) =>
+        USETOKEN.get<STAFFLIST>(`/api/staff/?search=${params?.search}`),
       staffId: (id: string) => USETOKEN.get<UserStaff>(`/api/staff/${id}/`),
       editStaffId: (id: number) => USETOKEN.put<STAFFLIST>(`/api/staff/${id}/`),
       suspendedStaff: (id: number) =>

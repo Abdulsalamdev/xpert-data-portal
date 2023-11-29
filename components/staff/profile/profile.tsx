@@ -28,6 +28,7 @@ import { UserData, UserStaff } from "@/components/types/AllTypes";
 import { useDisclosure } from "@mantine/hooks";
 import { DeactivateStaff } from "@/components/modals/deactivateStaff";
 import { ActivateStaff } from "@/components/modals/activateStaff";
+import { useTheme } from "next-themes";
 
 interface userContent {
   email: string;
@@ -69,6 +70,8 @@ export function MemberProfile({
       img: <Calendar color="#3851DD" />,
     },
   ];
+  const { resolvedTheme, theme, setTheme } = useTheme();
+
   const [opened, { open, close }] = useDisclosure(false);
   const [openedActivate, { open: openActivate, close: closeActivate }] =
     useDisclosure(false);
@@ -90,10 +93,10 @@ export function MemberProfile({
             {staffDetail?.role}
           </p>
           <div className="flex gap-[5px] items-center">
-            <div className="flex items-center gap-[7px] p-[10px] rounded-[8px] bg-[#EBEEFC]">
+            <div className="flex items-center gap-[7px] p-[10px] rounded-[8px] bg-[#EBEEFC] dark:bg-[#1C2433]">
               <p className="flex items-center gap-[1px]">
                 <Profile size="12" color="#3851DD" variant="Bold" />
-                <span className="text-[12px] text-[#352929] font-nunito font-medium">
+                <span className="text-[12px] text-[#352929] font-nunito font-medium dark:text-[#8F9198]">
                   Your id
                 </span>
               </p>
@@ -105,7 +108,13 @@ export function MemberProfile({
               className="bg-[#E7F9F0] p-[8px] rounded-[8px] flex gap-[5px] items-center"
               style={{
                 backgroundColor:
-                  staffDetail?.is_active === true ? "#E7F9F0" : "#FDEEEE",
+                  staffDetail?.is_active === true
+                    ? theme === "light"
+                      ? "#E7F9F0"
+                      : "rgb(161 221 191)"
+                    : theme === "dark"
+                    ? "rgb(194 104 105 / 83%)"
+                    : "#FDEEEE",
               }}
             >
               <div
@@ -130,11 +139,13 @@ export function MemberProfile({
         <div className="flex flex-col gap-[10px] pt-[30px]">
           {info.map((ele, index) => (
             <div className="flex gap-[17px] items-center" key={index}>
-              <div className="bg-[#EBEEFC] p-[14px] rounded-[8px] flex justify-center items-center">
+              <div className="bg-[#EBEEFC] p-[14px] rounded-[8px] flex justify-center items-center dark:bg-[#1C2433]">
                 {ele.img}
               </div>
               <div className="flex flex-col gap-[5px]">
-                <p className="text-[#5E606A] text-[14px]">{ele.name}</p>
+                <p className="text-[#5E606A] text-[14px] dark:text-[white]">
+                  {ele.name}
+                </p>
                 <p className="text-[#2C2F3C] text-[16px]. flex gap-[4px]">
                   {ele.content}
                   <CopyButton value={ele.content} timeout={2000}>

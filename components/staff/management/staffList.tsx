@@ -1,6 +1,13 @@
-import React from "react";
-import { Checkbox, Input, Table } from "@mantine/core";
-import { Add, ExportCurve, Filter, SearchNormal1 } from "iconsax-react";
+import React, { useState } from "react";
+import { Checkbox, Input, Pagination, Table, TextInput } from "@mantine/core";
+import {
+  Add,
+  ArrowLeft2,
+  ArrowRight2,
+  ExportCurve,
+  Filter,
+  SearchNormal1,
+} from "iconsax-react";
 import Image from "next/image";
 import { StaffActive, StaffInActive } from "./action";
 import { useDisclosure } from "@mantine/hooks";
@@ -9,24 +16,56 @@ import { StaffSucess } from "@/components/modals/staffSucess";
 import { DeactivateStaff } from "@/components/modals/deactivateStaff";
 import { FilterStaff } from "@/components/drawer/filterStaff";
 import { TablePagination } from "@/components/common/pagination";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
 import { STAFFLISTDATA } from "@/components/types/AllTypes";
 import { useTheme } from "next-themes";
+import { useForm } from "@mantine/form";
 
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
     useDisclosure(false);
   const [openedFilter, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
+
+  const myForm = useForm({
+    initialValues: {
+      search: "",
+      is_active: false,
+      tribe_name: "",
+      squad__name: "",
+      page: 1,
+    },
+  });
+
   // geting list of staff
   const { data: staff } = useQuery({
-    queryFn: () => builder.use().staff.api.staffList(),
-    queryKey: builder.staff.api.staffList.get(),
+    queryFn: (params) =>
+      builder.use().staff.api.staffList({
+        search: myForm.values.search,
+      }),
+    queryKey: builder.staff.api.staffList.get({
+      search: myForm.values.search,
+    }),
     select: ({ data }) => data,
   });
 
+  // const searchItem = () => {
+  //   setSearchStaff(searchStaff);
+  // };
+  const [activePage, setPage] = useState(1);
+  const handlePrevPage = () => {
+    setPage(activePage - 1);
+  };
+
+  const handleNextPage = () => {
+    setPage(activePage + 1);
+  };
+
+  const itemsPerPage = 5;
+
   const { resolvedTheme, theme, setTheme } = useTheme();
+  console.log(myForm.values);
 
   return (
     <div>
@@ -48,7 +87,8 @@ export function MemberList() {
                 Filter
               </span>
             </div>
-            <Input
+            <TextInput
+              {...myForm.getInputProps("search")}
               styles={{
                 input: {
                   background: theme === "light" ? "white" : "#232A37",
@@ -152,7 +192,58 @@ export function MemberList() {
           </tbody>
         </Table>
         <div className="pb-[10px]">
-          <TablePagination />
+          {/* <TablePagination /> */}
+          <div className=" py-[5px] px-[24px]">
+            <div className="flex justify-between items-center py-[20px]">
+              <button
+                className="border border-[#E5E6E8] bg-white rounded-lg items-center p-2 flex itmes-center gap-[7px]"
+                onClick={handlePrevPage}
+                disabled={activePage === 1}
+              >
+                <ArrowLeft2 size="16" color="#514747" variant="Outline" />
+                <span className="text-[#514747] text-[14px] ">Previous</span>
+              </button>
+              <Pagination
+                value={activePage}
+                onChange={setPage}
+                total={Math.ceil((staff?.count as number) / itemsPerPage)}
+                styles={(theme) => ({
+                  control: {
+                    "&[data-active]": {
+                      backgroundImage: theme.fn.gradient({
+                        from: "#3851DD",
+                        to: "#3851DD",
+                      }),
+                      border: 0,
+                    },
+
+                    "&:first-of-type": {
+                      display: "none !important",
+                    },
+                    "&:last-child": {
+                      display: "none !important",
+                    },
+                  },
+                })}
+              />
+              <button
+                className="p-2 flex border border-[#DBD9D9] gap-[7px] rounded-lg items-center  dark:bg-[#3851DD] dark:text-[#FFFFFF] dark:border-none"
+                onClick={handleNextPage}
+                disabled={
+                  activePage === (staff?.count as number) / itemsPerPage
+                }
+              >
+                <span className="text-[#514747] text-[14px] dark:text-[#FFFFFF]">
+                  Next
+                </span>
+                <ArrowRight2
+                  size="16"
+                  color={theme === "light" ? "#514747" : "#FFFFFF"}
+                  variant="Outline"
+                />
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <AddStaff opened={openedStaff} close={closeStaff} />

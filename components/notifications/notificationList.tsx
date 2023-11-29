@@ -24,7 +24,7 @@ import { useForm } from "@mantine/form";
 import dayjs from "dayjs";
 import { useDisclosure, usePagination } from "@mantine/hooks";
 import { SortDate } from "../modals/date";
-import { useTheme } from "next-themes";
+import { ThemeProvider, useTheme } from "next-themes";
 
 export function NotificationList() {
   const [openedDate, { open: openDate, close: closeDate }] =
@@ -170,15 +170,21 @@ export function NotificationList() {
             })}
           />
           <button
-            className="p-2 flex border border-[#DBD9D9] gap-[7px] rounded-lg items-center"
+            className="p-2 flex border border-[#DBD9D9] gap-[7px] rounded-lg items-center  dark:bg-[#3851DD] dark:text-[#FFFFFF] dark:border-none"
             onClick={handleNextPage}
             disabled={
               activePage ===
               (activity?.results?.length as number) / itemsPerPage
             }
           >
-            <span className="text-[#514747] text-[14px] ">Next</span>
-            <ArrowRight2 size="16" color="#514747" variant="Outline" />
+            <span className="text-[#514747] text-[14px] dark:text-[#FFFFFF]">
+              Next
+            </span>
+            <ArrowRight2
+              size="16"
+              color={theme === "light" ? "#514747" : "#FFFFFF"}
+              variant="Outline"
+            />
           </button>
         </div>
       </div>
