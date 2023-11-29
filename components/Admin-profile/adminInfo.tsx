@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { IconCheck } from "@tabler/icons-react";
 import { cookieStorage } from "@ibnlanre/portal";
 import { UserData } from "../types/AllTypes";
+import { useTheme } from "next-themes";
 
 export function AdminInfo() {
   const [userData, setUserData] = useState({} as UserData);
@@ -48,6 +49,8 @@ export function AdminInfo() {
     },
   ];
 
+  const { resolvedTheme, theme, setTheme } = useTheme();
+
   return (
     <div className="px-[25px] pt-[20px] flex">
       <div className="pr-[20px]">
@@ -59,7 +62,7 @@ export function AdminInfo() {
             height={100}
             className="rounded-[12px]"
           />
-          <p className="text-[#2C2F3C] font-nunito font-medium text-[clamp(27px,2vw,32px)] py-[7px]">
+          <p className="text-[#2C2F3C] font-nunito font-medium text-[clamp(27px,2vw,32px)] py-[7px] dark:text-[white]">
             {/* Gloria Eromonsele */}
             {first_name}
           </p>
@@ -67,10 +70,10 @@ export function AdminInfo() {
             {userData.role}
           </p>
           <div className="flex gap-[5px] items-center">
-            <div className="flex items-center gap-[7px] p-[10px] rounded-[8px] bg-[#EBEEFC]">
+            <div className="flex items-center gap-[7px] p-[10px] rounded-[8px] bg-[#EBEEFC] dark:bg-[#1C2433]">
               <p className="flex items-center gap-[1px]">
                 <Profile size="12" color="#3851DD" variant="Bold" />
-                <span className="text-[12px] text-[#352929] font-nunito font-medium">
+                <span className="text-[12px] text-[#352929] font-nunito font-medium dark:text-[#8F9198]">
                   Your id
                 </span>
               </p>
@@ -82,7 +85,14 @@ export function AdminInfo() {
             <div
               className=" p-[8px] rounded-[8px] flex gap-[5px] items-center"
               style={{
-                backgroundColor: is_active === true ? "#E7F9F0" : "#FDEEEE",
+                backgroundColor:
+                  is_active === true
+                    ? theme === "light"
+                      ? "#E7F9F0"
+                      : "rgb(161 221 191)"
+                    : theme === "dark"
+                    ? "rgb(194 104 105 / 83%)"
+                    : "#FDEEEE",
               }}
             >
               <div
@@ -105,12 +115,14 @@ export function AdminInfo() {
         <div className="flex flex-col gap-[10px] pt-[30px]">
           {info.map((ele, index) => (
             <div className="flex gap-[17px] items-center" key={index}>
-              <div className="bg-[#EBEEFC] p-[14px] rounded-[8px] flex justify-center items-center">
+              <div className="bg-[#EBEEFC] p-[14px] rounded-[8px] flex justify-center items-center dark:bg-[#1C2433]">
                 <ele.icon color="#3851DD" />
               </div>
               <div className="flex flex-col gap-[5px]">
-                <p className="text-[#5E606A] text-[14px]">{ele.name}</p>
-                <p className="text-[#2C2F3C] text-[16px]. flex gap-[4px]">
+                <p className="text-[#5E606A] text-[14px] dark:text-[white]">
+                  {ele.name}
+                </p>
+                <p className="text-[#2C2F3C] text-[16px]. flex gap-[4px] dark:text-[#5E606A]">
                   {ele.content}
                   <CopyButton value={ele.content} timeout={2000}>
                     {({ copied, copy }) => (
@@ -143,21 +155,25 @@ export function AdminInfo() {
       </div>
       <div className="grow border-l-[#DADADD] border-l-[1px] border-solid pl-[20px] pr-[40px]">
         <div className="pt-[10px] border-b-[#DADADD] pb-[30px] border-b-[1px] border-solid ">
-          <p className="text-[20px] text-[#4A4C58] font-nunito font-medium pb-[15px]">
+          <p className="text-[20px] text-[#4A4C58] font-nunito font-medium pb-[15px] dark:text-[white]">
             Personal Information
           </p>
           <div className="flex justify-between flex-wrap ">
             <div className=" flex flex-col gap-[30px]">
               <div>
-                <p className="text-[14px] text-[#5E606A]">First Name</p>
-                <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+                <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                  First Name
+                </p>
+                <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                   {/* Gloria */}
                   {first_name}
                 </p>
               </div>
               <div className="">
-                <p className="text-[14px] text-[#5E606A]">Gender</p>
-                <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+                <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                  Gender
+                </p>
+                <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                   {/* Female */}
                   {userData.gender}
                 </p>
@@ -165,23 +181,29 @@ export function AdminInfo() {
             </div>
             <div className=" flex flex-col gap-[30px]">
               <div>
-                <p className="text-[14px] text-[#5E606A]">Last Name</p>
-                <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+                <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                  Last Name
+                </p>
+                <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                   {/* Eromonsele */}
                   {last_name}
                 </p>
               </div>
               <div>
-                <p className="text-[14px] text-[#5E606A]">Marital status</p>
-                <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+                <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                  Marital status
+                </p>
+                <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                   {/* Single */}
                   {userData.martial_status}
                 </p>
               </div>
             </div>
             <div>
-              <p className="text-[14px] text-[#5E606A]">Middle Name</p>
-              <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+              <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                Middle Name
+              </p>
+              <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                 {/* Onosetale */}
                 {userData.middle_name}
               </p>
@@ -189,61 +211,75 @@ export function AdminInfo() {
           </div>
         </div>
         <div className="border-b-[#DADADD] pb-[30px] border-b-[1px] border-solid pt-[30px]">
-          <p className="text-[20px] text-[#4A4C58] font-nunito font-medium pb-[15px]">
+          <p className="text-[20px] text-[#4A4C58] font-nunito font-medium pb-[15px] dark:text-[white]">
             Organization
           </p>
           <div className="flex justify-between">
             <div className="">
-              <p className="text-[14px] text-[#5E606A]">Tribe / Department</p>
-              <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+              <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                Tribe / Department
+              </p>
+              <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                 {/* Corporate Services */}
                 {userData.tribe}
               </p>
             </div>{" "}
             <div className="">
-              <p className="text-[14px] text-[#5E606A]">Squad / Unit</p>
-              <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+              <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                Squad / Unit
+              </p>
+              <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                 {/* Talent Management */}
                 {userData.squad}
               </p>
             </div>{" "}
             <div className="">
-              <p className="text-[14px] text-[#5E606A]">Designation</p>
-              <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+              <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                Designation
+              </p>
+              <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                 {userData.role}
               </p>
             </div>
           </div>
         </div>
         <div className="pt-[20px]">
-          <p className="text-[20px] text-[#4A4C58] font-nunito font-medium pb-[15px]">
+          <p className="text-[20px] text-[#4A4C58] font-nunito font-medium pb-[15px] dark:text-[white]">
             Next of Kin
           </p>
           <div className="flex justify-between flex-wrap ">
             <div className=" flex flex-col gap-[30px]">
               <div>
-                <p className="text-[14px] text-[#5E606A]">Name</p>
-                <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+                <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                  Name
+                </p>
+                <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                   {userData.next_of_kin_first_name}
                 </p>
               </div>
               <div className="">
-                <p className="text-[14px] text-[#5E606A]">Relationship </p>
-                <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+                <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                  Relationship{" "}
+                </p>
+                <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                   {/* Father */}
                   {userData.next_of_kin_relationship}
                 </p>
               </div>
             </div>
             <div>
-              <p className="text-[14px] text-[#5E606A]">Phone Number</p>
-              <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+              <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                Phone Number
+              </p>
+              <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                 {userData.next_of_kin_phone_number}
               </p>
             </div>
             <div>
-              <p className="text-[14px] text-[#5E606A]">Email Address</p>
-              <p className="text-[16px] text-[#5E606A] font-nunito font-medium">
+              <p className="text-[14px] text-[#5E606A] dark:text-[#8F9198]">
+                Email Address
+              </p>
+              <p className="text-[16px] text-[#5E606A] font-nunito font-medium dark:text-[#C1C2C6]">
                 {userData.next_of_kin_email}
               </p>
             </div>

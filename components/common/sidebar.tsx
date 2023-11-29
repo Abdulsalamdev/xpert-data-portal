@@ -143,7 +143,7 @@ export function Sidebar() {
         <div className="flex flex-col gap-[16px] ">
           {topSide.map((ele, index) => (
             <div
-              className={`flex gap-[10px] items-center p-[8px] rounded-[8px] ${
+              className={`flex gap-[10px] items-center p-[8px] rounded-[8px] whitespace-nowrap ${
                 pathname === ele.link ? "bg-[#E1E5FA] dark:bg-[#3045BC]" : ""
               }`}
               key={ele.id}

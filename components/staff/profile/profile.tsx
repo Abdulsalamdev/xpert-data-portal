@@ -83,7 +83,7 @@ export function MemberProfile({
             height={100}
             className="rounded-[12px]"
           />
-          <p className="text-[#2C2F3C] font-nunito font-medium text-[clamp(27px,2vw,32px)] py-[7px]">
+          <p className="text-[#2C2F3C] font-nunito font-medium text-[clamp(27px,2vw,32px)] py-[7px] dark:text-[white]">
             {staffDetail?.first_name} {staffDetail?.last_name}
           </p>
           <p className="text-[#8F9198] text-[16px] font-nunito font-medium pb-[10px]">

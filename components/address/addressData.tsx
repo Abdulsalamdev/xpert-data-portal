@@ -11,6 +11,7 @@ import { builder } from "@/api/builder";
 import { date, number } from "yup";
 import { ADDRESSLIST, AddressLisResult } from "../types/AllTypes";
 import { EditAddress } from "../modals/editAddress";
+import { useTheme } from "next-themes";
 
 export function AddressData() {
   const [region_Pk, setregion_pk] = useState<null | number>(null);
@@ -36,6 +37,7 @@ export function AddressData() {
     queryKey: builder.address.api.addressList.get(),
     select: ({ data }) => data,
   });
+  const { resolvedTheme, theme, setTheme } = useTheme();
 
   return (
     <div>
@@ -43,6 +45,8 @@ export function AddressData() {
         <Input
           styles={{
             input: {
+              background: theme === "light" ? "white" : "#232A37",
+              color: theme === "light" ? "black" : "white",
               border: "1px  #A1A9B8",
               boxShadow:
                 "0px 0px 0px 1px rgba(134, 143, 160, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
@@ -64,24 +68,27 @@ export function AddressData() {
       </div>
       <div>
         <div className="flex gap-[7px] items-center pl-[clamp(10px,1.3vw,20px)]  border-b-[1px] border-solid border-[#D9DFE4] pt-[20px] pb-[10px]">
-          <span className="text-[14px] text-[#4A4C58] font-nunito font-medium">
+          <span className="text-[14px] text-[#4A4C58] font-nunito font-medium dark:text-[white]">
             Addresses
           </span>
-          <span className="text-[12px] text-[#8F9198] p-[3px] rounded-[13px] bg-[#F0F0F1]">
+          <span className="text-[12px] text-[#8F9198] p-[3px] rounded-[13px] bg-[#F0F0F1] dark:bg-SKY-CAPTAIN dark:text-[white]">
             {addressData?.count}
           </span>
         </div>
         <div className="px-[24px] py-[30px] flex flex-wrap gap-[25px]">
           {addressData?.results?.map((ele) => (
-            <div key={ele?.id} className="address">
+            <div
+              key={ele?.id}
+              className="address dark:bg-[#232A37] dark:border-[#252D3D] dark:border-t-[#3851DD]"
+            >
               <div className="flex justify-between items-center pb-[12px] border-b-[#8F9198] border-b-[1.2px] border-solid">
                 <p>{ele?.city}</p>
                 <div className="flex gap-[7px]">
-                  <span className="py-[4px] px-[10px] bg-[#E8F1FC] text-[#1C75E1] text-[12px] font-nunito font-medium rounded-[4px]">
+                  <span className="py-[4px] px-[10px] bg-[#E8F1FC] text-[#1C75E1] text-[12px] font-nunito font-medium rounded-[4px] dark:bg-[#273040]">
                     {ele?.region}
                   </span>
                   <span
-                    className="py-[4px] px-[10px] bg-[#E8F1FC] text-[#1C75E1] text-[12px] font-nunito font-medium rounded-[4px]"
+                    className="py-[4px] px-[10px] bg-[#E8F1FC] text-[#1C75E1] text-[12px] font-nunito font-medium rounded-[4px] dark:bg-[#273040]"
                     style={{
                       display: ele.is_headquarter === true ? "flex" : "none",
                     }}

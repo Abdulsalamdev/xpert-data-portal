@@ -6,6 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { TablePagination } from "../common/pagination";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
+import { useTheme } from "next-themes";
 
 export function TribeList() {
   const { data: tribe } = useQuery({
@@ -16,6 +17,7 @@ export function TribeList() {
 
   const [openedTribe, { open: openTribe, close: closeTribe }] =
     useDisclosure(false);
+  const { resolvedTheme, theme, setTheme } = useTheme();
 
   return (
     <div>
@@ -32,6 +34,8 @@ export function TribeList() {
               styles={{
                 input: {
                   border: "1px #A1A9B8",
+                  background: theme === "light" ? "white" : "#232A37",
+                  color: theme === "light" ? "black" : "white",
                   boxShadow:
                     "0px 0px 0px 1px rgba(134, 143, 160, 0.16), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)",
                   borderRadius: "8px 8px 8px 8px",
@@ -49,21 +53,21 @@ export function TribeList() {
           <span>Create Tribe</span>
         </div>
       </div>
-      <div className="pl-[20px] pt-[15px] pb-[5px] text-[#4A4C58] text-[14px] border-solid border-b-[1px] border-b-[#A1A9B8] ">
+      <div className="pl-[20px] pt-[15px] pb-[5px] text-[#4A4C58] text-[14px] border-solid border-b-[1px] border-b-[#A1A9B8] dark:text-[white]">
         Tribe List{" "}
-        <span className="text-[#8F9198] text-[12px] px-[6px] bg-[#F0F0F1] rounded-[13px]">
+        <span className="text-[#8F9198] text-[12px] px-[6px] bg-[#F0F0F1] rounded-[13px] dark:bg-SKY-CAPTAIN dark:text-[white]">
           ({tribe?.count})
         </span>
       </div>
       <div className="pl-[20px] pt-[20px] pr-[20px] staffManagement">
         <Table horizontalSpacing="md" verticalSpacing="md">
           <thead className="bg-[#F5F5F6]">
-            <tr>
-              <th className="">Tribe</th>
-              <th className="">Squads</th>
-              <th className="">Tribe Lead</th>
-              <th className="">Date Created</th>
-              <th className="">Action</th>
+            <tr className=" dark:bg-[#232A37]">
+              <th className="dark:text-[white]">Tribe</th>
+              <th className="dark:text-[white]">Squads</th>
+              <th className="dark:text-[white]">Tribe Lead</th>
+              <th className="dark:text-[white]">Date Created</th>
+              <th className="dark:text-[white]">Action</th>
             </tr>
           </thead>
           <tbody className="overflow-auto">
@@ -72,10 +76,10 @@ export function TribeList() {
                 key={element?.id}
                 className="tb dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5]"
               >
-                <td>{element?.name}</td>
-                <td>{element?.squads}</td>
-                <td>{element?.tribe_lead}</td>
-                <td>{element?.date_created}</td>
+                <td className="dark:text-[white]">{element?.name}</td>
+                <td className="dark:text-[white]">{element?.squads}</td>
+                <td className="dark:text-[white]">{element?.tribe_lead}</td>
+                <td className="dark:text-[white]">{element?.date_created}</td>
                 <td className="flex gap-[16px] items-center">
                   <div
                     onClick={openTribe}
@@ -87,7 +91,7 @@ export function TribeList() {
                     </span>
                   </div>
                   <div className="flex gap-[16px] items-center">
-                    <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium">
+                    <div className="py-[5px] px-[10px] bg-[#EBEEFC] border-solid border-[1px] border-[#EBEEFC] text-[#3851DD] text-[12px] font-medium dark:bg-[#1C2433] dark:border-none">
                       View Tribe
                     </div>
                   </div>

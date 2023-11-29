@@ -10,7 +10,7 @@ export default function StaffManagement() {
       <Nav />
       <div className="flex ">
         <Sidebar />
-        <div className="pt-[25px]  grow  dark:bg-[#161C27]">
+        <div className="pt-[25px]  grow  dark:bg-[#161C27] ">
           <MemberList />
         </div>
       </div>

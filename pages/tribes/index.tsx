@@ -11,7 +11,7 @@ export default function Tribs() {
       <Nav />
       <div className="flex ">
         <Sidebar />
-        <div className="pt-[25px] grow ">
+        <div className="pt-[25px] grow dark:bg-[#161C27]">
           {/* <EmptyTribe /> */}
           <TribeList />
         </div>

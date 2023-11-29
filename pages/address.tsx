@@ -9,7 +9,7 @@ export default function address() {
       <Nav />
       <div className="flex">
         <Sidebar />
-        <div className="pt-[30px] pr-[clamp(9px,1.1vw,18px)] grow">
+        <div className="pt-[30px] pr-[clamp(9px,1.1vw,18px)] grow dark:bg-[#161C27]">
           <AddressData />
         </div>
       </div>

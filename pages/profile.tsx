@@ -10,7 +10,7 @@ export default function profile() {
       <Nav />
       <div className="flex gap-[clamp(10px,1.3vw,20px)]">
         <Sidebar />
-        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow">
+        <div className="pt-[clamp(9px,1.1vw,18px)] pr-[clamp(9px,1.1vw,18px)] grow dark:bg-[#161C27]">
           <AdminInfo />
         </div>
       </div>
