@@ -259,14 +259,16 @@
 .tb {
   transition: all 0.2s linear;
 }
-.tb:hover {
+/* .tb:hover {
+  background-color: whitesmoke;
 }
 /* dark mode */
 /* @media (prefers-color-scheme: dark) {
-  .tb.adaptive {
-    color: white;
+  .tb:hover {
+    background-color: #0ba257;
   }
 } */
-/* .mantine-1u0chpj[data-hover] > tbody > tr:hover {
-  background-color: #96a2e4;
+/* .mantine-1u0chpj[data-hover] > tbody > tr:hover { */
+/* background-color: #96a2e4;
 } */
+/* dark:hover:bg-[#2f313a] hover:bg-[#f5f5f5] */
