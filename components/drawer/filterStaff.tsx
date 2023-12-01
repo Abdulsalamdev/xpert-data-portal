@@ -3,8 +3,16 @@ import React, { useState } from "react";
 import { AddressSucess, FilterStaff } from "../types/AllTypes";
 import { useDisclosure } from "@mantine/hooks";
 import { Filter } from "iconsax-react";
+import { builder } from "@/api/builder";
+import { useQuery } from "@tanstack/react-query";
 
 export function FilterStaff({ close, opened }: FilterStaff) {
+  const { data: tribe } = useQuery({
+    queryFn: () => builder.use().tribes.api.tribeList(),
+    queryKey: builder.tribes.api.tribeList.get(),
+    select: ({ data }) => data,
+  });
+  console.log(tribe);
   return (
     <div>
       <Drawer

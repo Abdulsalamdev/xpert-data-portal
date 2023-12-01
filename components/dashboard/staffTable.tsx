@@ -9,6 +9,8 @@ export function StaffTable() {
     queryKey: builder.staff.api.staffList.get(),
     select: ({ data }) => data?.results,
   });
+  console.log({ staffList });
+
   return (
     <div className="">
       <Table horizontalSpacing="md" verticalSpacing="md">

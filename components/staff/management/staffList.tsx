@@ -21,12 +21,16 @@ import { builder } from "@/api/builder";
 import { STAFFLISTDATA } from "@/components/types/AllTypes";
 import { useTheme } from "next-themes";
 import { useForm } from "@mantine/form";
+import { usePortal } from "@ibnlanre/portal";
+// import { staffListAtom } from "@/components/types/query-store";
 
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
     useDisclosure(false);
   const [openedFilter, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
+
+  // const [query, setQuery] = usePortal.atom(staffListAtom);
 
   const myForm = useForm({
     initialValues: {
@@ -43,8 +47,12 @@ export function MemberList() {
     queryFn: (params) =>
       builder.use().staff.api.staffList({
         search: myForm.values.search,
+        is_active: myForm.values.is_active,
+        tribe_name: myForm.values.tribe_name,
+        squad__name: myForm.values.squad__name,
+        page: myForm.values.page,
       }),
-    queryKey: builder.staff.api.staffList.get({
+    queryKey: builder.staff.api.staffList.use({
       search: myForm.values.search,
     }),
     select: ({ data }) => data,

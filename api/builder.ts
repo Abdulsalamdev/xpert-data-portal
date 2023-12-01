@@ -23,6 +23,7 @@ import {
   UserStaff,
   VERIFY_CODE,
 } from "@/components/types/AllTypes";
+import { SanitiseParams } from "@/components/types/sanitise-params";
 
 export const builder = createBuilder({
   auth: {
@@ -74,8 +75,10 @@ export const builder = createBuilder({
   },
   staff: {
     api: {
-      staffList: (params?: Partial<FillSearch>) =>
-        USETOKEN.get<STAFFLIST>(`/api/staff/?search=${params?.search}`),
+      staffList: (params?: FillSearch) =>
+        USETOKEN.get<STAFFLIST>(`/api/staff/`, {
+          params: SanitiseParams(params),
+        }),
       staffId: (id: string) => USETOKEN.get<UserStaff>(`/api/staff/${id}/`),
       editStaffId: (id: number) => USETOKEN.put<STAFFLIST>(`/api/staff/${id}/`),
       suspendedStaff: (id: number) =>
