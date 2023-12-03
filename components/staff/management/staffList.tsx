@@ -22,7 +22,7 @@ import { STAFFLISTDATA } from "@/components/types/AllTypes";
 import { useTheme } from "next-themes";
 import { useForm } from "@mantine/form";
 import { usePortal } from "@ibnlanre/portal";
-// import { staffListAtom } from "@/components/types/query-store";
+import { staffListAtom } from "@/components/types/query-store";
 
 export function MemberList() {
   const [openedStaff, { open: openStaff, close: closeStaff }] =
@@ -30,7 +30,7 @@ export function MemberList() {
   const [openedFilter, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
 
-  // const [query, setQuery] = usePortal.atom(staffListAtom);
+  const [query, setQuery] = usePortal.atom(staffListAtom);
 
   const myForm = useForm({
     initialValues: {
@@ -58,9 +58,6 @@ export function MemberList() {
     select: ({ data }) => data,
   });
 
-  // const searchItem = () => {
-  //   setSearchStaff(searchStaff);
-  // };
   const [activePage, setPage] = useState(1);
   const handlePrevPage = () => {
     setPage(activePage - 1);
@@ -73,7 +70,6 @@ export function MemberList() {
   const itemsPerPage = 5;
 
   const { resolvedTheme, theme, setTheme } = useTheme();
-  console.log(myForm.values);
 
   return (
     <div>

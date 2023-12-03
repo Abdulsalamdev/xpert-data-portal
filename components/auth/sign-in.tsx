@@ -33,7 +33,7 @@ export function Sign_in() {
     },
     onError(err) {
       console.log(err);
-      toast.error(err?.AxiosError?.message as string);
+      toast.error(`${err?.AxiosError?.message}`);
     },
   });
 
