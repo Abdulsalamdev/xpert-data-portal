@@ -30,7 +30,7 @@ export function MemberList() {
   const [openedFilter, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
 
-  const [query, setQuery] = usePortal.atom(staffListAtom);
+  // const [query, setQuery] = usePortal.atom(staffListAtom);
 
   const myForm = useForm({
     initialValues: {
