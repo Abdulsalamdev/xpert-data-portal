@@ -5,6 +5,8 @@ import { useDisclosure } from "@mantine/hooks";
 import { Filter } from "iconsax-react";
 import { builder } from "@/api/builder";
 import { useQuery } from "@tanstack/react-query";
+import { usePortal } from "@ibnlanre/portal";
+import { staffListAtom } from "../types/query-store";
 
 export function FilterStaff({ close, opened }: FilterStaff) {
   const { data: tribe } = useQuery({
@@ -13,6 +15,9 @@ export function FilterStaff({ close, opened }: FilterStaff) {
     select: ({ data }) => data,
   });
   console.log(tribe);
+  //calling the atom
+  const [query, setQuery] = usePortal.atom(staffListAtom);
+
   return (
     <div>
       <Drawer
@@ -49,13 +54,11 @@ export function FilterStaff({ close, opened }: FilterStaff) {
               <Accordion.Control>Tribe / Department</Accordion.Control>
               <Accordion.Panel>
                 <div className="flex flex-col gap-[18px] items-start pt-[20px]">
-                  <Button className="text-[#000000]">
-                    Innovation & Technology
-                  </Button>
-                  <Button className="text-[#000000]">Business Assurance</Button>
-                  <Button className="text-[#000000]">Corporate Services</Button>
-                  <Button className="text-[#000000]">Financial Market</Button>
-                  <Button className="text-[#000000]">Physical market</Button>
+                  {tribe?.results?.map((item) => (
+                    <Button className="text-[#000000]" key={item.id}>
+                      {item?.name}
+                    </Button>
+                  ))}
                 </div>
               </Accordion.Panel>
             </Accordion.Item>
@@ -63,12 +66,7 @@ export function FilterStaff({ close, opened }: FilterStaff) {
               <Accordion.Control>Squad / Unit</Accordion.Control>
               <Accordion.Panel>
                 <div className="flex flex-col gap-[18px] items-start pt-[20px]">
-                  <Button className="text-[#000000]">Innovation Lab</Button>
-                  <Button className="text-[#000000]">Design and Apps</Button>
-                  <Button className="text-[#000000]">Data</Button>
-                  <Button className="text-[#000000]">
-                    Software Engineering{" "}
-                  </Button>
+                  <Button className="text-[#000000]"></Button>
                 </div>
               </Accordion.Panel>
             </Accordion.Item>

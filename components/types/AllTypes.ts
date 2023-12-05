@@ -14,10 +14,10 @@ export interface FilterStaff {
 
 export interface FillSearch {
   search?: string;
-  is_active?: boolean;
+  is_active?: string;
   tribe_name?: string;
   squad__name?: string;
-  page?: number;
+  page?: string;
 }
 export interface AddressSucess {
   close: () => void;

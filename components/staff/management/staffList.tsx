@@ -29,16 +29,12 @@ export function MemberList() {
     useDisclosure(false);
   const [openedFilter, { open: openFilter, close: closeFilter }] =
     useDisclosure(false);
-
-  // const [query, setQuery] = usePortal.atom(staffListAtom);
+  // calling the atom
+  const [query, setQuery] = usePortal.atom(staffListAtom);
 
   const myForm = useForm({
     initialValues: {
       search: "",
-      is_active: false,
-      tribe_name: "",
-      squad__name: "",
-      page: 1,
     },
   });
 
@@ -47,13 +43,18 @@ export function MemberList() {
     queryFn: (params) =>
       builder.use().staff.api.staffList({
         search: myForm.values.search,
-        is_active: myForm.values.is_active,
-        tribe_name: myForm.values.tribe_name,
-        squad__name: myForm.values.squad__name,
-        page: myForm.values.page,
+        //query the atom
+        is_active: query?.is_active,
+        tribe_name: query?.tribe_name,
+        squad__name: query?.squad__name,
+        page: query?.page,
       }),
     queryKey: builder.staff.api.staffList.use({
       search: myForm.values.search,
+      is_active: query?.is_active,
+      tribe_name: query?.tribe_name,
+      squad__name: query?.squad__name,
+      page: query?.page,
     }),
     select: ({ data }) => data,
   });
