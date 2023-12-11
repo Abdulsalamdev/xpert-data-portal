@@ -35,7 +35,7 @@ export function NotificationList() {
   // geting list of activity
   const { data: activity } = useQuery({
     queryFn: () => builder.use().notification.api.activityLog(activePage),
-    queryKey: builder.notification.api.activityLog.get(activePage),
+    queryKey: builder.notification.api.activityLog.get(),
     select: ({ data }) => data,
   });
   console.log(activity?.results.length);

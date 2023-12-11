@@ -39,7 +39,7 @@ export const builder = createBuilder({
   },
   notification: {
     api: {
-      activityLog: (page: number) =>
+      activityLog: (page?: number) =>
         USETOKEN.get<ACTIVITYLOGDATA>(
           `/api/auth/activity-log/?page=${page}&page_size=5`
         ),
