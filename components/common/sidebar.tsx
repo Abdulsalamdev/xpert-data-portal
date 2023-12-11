@@ -123,7 +123,7 @@ export function Sidebar() {
         <LogoutCurve
           size="25"
           color={
-            pathname.includes("/logout")
+            pathname.includes("/login")
               ? theme === "light"
                 ? "#3045BC"
                 : "#ffffff"
@@ -133,7 +133,7 @@ export function Sidebar() {
           }
         />
       ),
-      link: "/logout",
+      link: "/login",
     },
   ];
 
