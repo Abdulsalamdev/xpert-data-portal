@@ -1,14 +1,13 @@
 import { Input } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Add, Edit2, SearchNormal1, Trash } from "iconsax-react";
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { AddressSucess } from "../modals/addressSuccess";
 import { DeleteAddress } from "../modals/deleteAddress";
 import { AddAddress } from "../modals/addAddress";
-import { StaffSucess } from "../modals/staffSucess";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
-import { ADDRESSLIST, AddressLisResult } from "../types/AllTypes";
+import { AddressLisResult } from "../types/AllTypes";
 import { EditAddress } from "../modals/editAddress";
 import { useTheme } from "next-themes";
 
