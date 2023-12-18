@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { cookieStorage } from "@ibnlanre/portal";
 import * as Yup from "yup";
 import { yupResolver } from "@mantine/form";
+import axios, { AxiosError } from "axios";
 
 const schema = Yup.object().shape({
   password: Yup.string()
@@ -31,9 +32,9 @@ export function Sign_in() {
       cookieStorage.setItem("my-user", JSON.stringify(data.data));
       myForm.reset();
     },
-    onError(err) {
+    onError(err: Error | AxiosError) {
       console.log(err);
-      // toast.error(`${err?.AxiosError?.message}`);
+      toast.error(`${err?.message}`);
     },
   });
 
