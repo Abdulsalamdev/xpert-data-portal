@@ -8,7 +8,7 @@ import { AddAddress } from "../modals/addAddress";
 import { StaffSucess } from "../modals/staffSucess";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
-import { date, number } from "yup";
+
 import { ADDRESSLIST, AddressLisResult } from "../types/AllTypes";
 import { EditAddress } from "../modals/editAddress";
 import { useTheme } from "next-themes";
@@ -20,6 +20,7 @@ export function AddressData() {
   const [openedDelete, { open: openDelete, close: closeDelete }] =
     useDisclosure(false);
   const [openedAdd, { open: openAdd, close: closeAdd }] = useDisclosure(false);
+  // edit modals function
   const [{ openedEdit, editData }, setEditAddress] = useState<{
     openedEdit: boolean;
     editData: null | AddressLisResult;
@@ -31,7 +32,7 @@ export function AddressData() {
   const closeEdit = () => {
     setEditAddress({ openedEdit: false, editData: null });
   };
-
+  // geting the list of addresses
   const { data: addressData } = useQuery({
     queryFn: () => builder.use().address.api.addressList(),
     queryKey: builder.address.api.addressList.get(),
@@ -107,7 +108,6 @@ export function AddressData() {
                       openedEdit: true,
                       editData: ele,
                     });
-                    // console.log(ele);
                   }}
                 >
                   <Edit2 size="16" color="#3851DD" />
