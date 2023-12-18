@@ -8,7 +8,6 @@ import { AddAddress } from "../modals/addAddress";
 import { StaffSucess } from "../modals/staffSucess";
 import { useQuery } from "@tanstack/react-query";
 import { builder } from "@/api/builder";
-
 import { ADDRESSLIST, AddressLisResult } from "../types/AllTypes";
 import { EditAddress } from "../modals/editAddress";
 import { useTheme } from "next-themes";
