@@ -7,6 +7,7 @@ import { builder } from "@/api/builder";
 import { useQuery } from "@tanstack/react-query";
 
 export function HomeDashboard() {
+  //geting the total  number of staff members
   const { data: staffList } = useQuery({
     queryFn: () => builder.use().staff.api.dashboardStaff(),
     queryKey: builder.staff.api.dashboardStaff.get(),
