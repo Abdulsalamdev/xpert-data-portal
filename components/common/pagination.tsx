@@ -7,6 +7,7 @@ export function TablePagination() {
   const [activePage, setPage] = useState(1);
   const pagination = usePagination({ total: 10, initialPage: 1 });
 
+  //control pagination
   const handlePrevPage = () => {
     setPage(activePage - 1);
   };
